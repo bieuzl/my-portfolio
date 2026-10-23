@@ -5,5 +5,5 @@
  * the pointer, dispose. Callers never touch Three.js concepts.
  */
 export { isWebGLAvailable } from "./support";
-export { mountCapybaraScene } from "./CapybaraScene";
-export type { SceneHandle, SceneOptions } from "./CapybaraScene";
+export { mountKeycapScene } from "./KeycapScene";
+export type { SceneHandle, SceneOptions } from "./KeycapScene";

@@ -1,8 +1,10 @@
 # Portfólio Gabriel
 
 Portfólio pessoal de desenvolvimento de software, com identidade visual própria:
-capivara low-poly em 3D (WebGL/Three.js) como peça central, tipografia editorial
-(Fraunces + Space Grotesk + JetBrains Mono) e paleta escura com acento vermelho.
+tecla de teclado mecânico em 3D (WebGL/Three.js, 100% procedural — zero assets
+binários) como peça central, tipografia monumental (Archivo expandida + Inter +
+JetBrains Mono) com letras preenchidas e vazadas atravessando a composição, e
+paleta escura com acento azul.
 
 ## Executar
 
@@ -23,11 +25,12 @@ src/
                interface getPortfolioContent(locale). Paridade entre idiomas
                é garantida por tipos + testes.
   i18n/        Configuração i18next e strings de UI (locales/*.json).
-  scene3d/     Módulo 3D: mountCapybaraScene(canvas, opts) esconde todo o
-               Three.js (renderer, shader iridescente, loop, resize).
+  scene3d/     Módulo 3D: mountKeycapScene(canvas, opts) esconde todo o
+               Three.js (geometria procedural, shader fresnel, loop, resize).
   sections/    Hero, About, Skills, Projects, Experience, Contact, Header.
   hooks/       useReducedMotion, useInView.
-  test/        Testes de comportamento (idioma, navegação, fallback 3D).
+  test/        Testes de comportamento (idioma, navegação, fallback 3D,
+               hero monumental).
 ```
 
 ## Conteúdo pendente (placeholders)
@@ -46,13 +49,18 @@ estruturados) e `src/i18n/locales/*.json` (textos de interface):
 
 ## Técnicas
 
-- **3D**: modelo GLB gerado por IA (7.9k triângulos, 246 KB) em
-  `public/models/capybara.glb`, renderizado com ShaderMaterial iridescente
-  (fresnel índigo→violeta→rosa), rotação ambiente em dois eixos e parallax de
-  cursor. Three.js carrega via import dinâmico (fora do caminho crítico).
-- **Fallbacks**: pôster estático (`capybara-poster.png`) antes do primeiro
+- **3D**: keycap gerado por código (ExtrudeGeometry com taper trapezoidal e
+  glifo `>_` em relevo), renderizado com ShaderMaterial fresnel
+  grafite→ciano→azul, rotação ambiente em dois eixos e parallax de cursor.
+  Three.js carrega via import dinâmico (fora do caminho crítico).
+- **Hero monumental**: o nome é desenhado duas vezes em SVG (camada preenchida
+  atrás do canvas, camada vazada na frente, `paint-order: stroke` mantém o
+  traço fora do glifo), com microtextos ancorados nos quatro cantos.
+- **Motion**: coreografia de entrada escalonada (letras, cena, cantos) sobre
+  `cubic-bezier(0.16, 1, 0.3, 1)`; header ganha vidro fosco só após o scroll.
+- **Fallbacks**: pôster estático (`keycap-poster.svg`) antes do primeiro
   frame, na ausência de WebGL ou falha de carregamento; `prefers-reduced-motion`
   renderiza um único frame estático e desativa animações CSS.
 - **Acessibilidade**: skip link, navegação por teclado (menu mobile com Esc),
-  `aria-label`/`aria-pressed`, foco visível, contraste ≥ 4.5:1.
+  `aria-label`/`aria-pressed`, h1 real para leitores de tela, contraste ≥ 4.5:1.
 - **i18n**: pt-BR padrão; troca PT/EN persistida em localStorage.

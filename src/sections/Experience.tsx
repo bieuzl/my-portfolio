@@ -34,7 +34,7 @@ export function Experience() {
                 <p className="font-mono text-xs uppercase tracking-widest text-primary">
                   {entry.period}
                 </p>
-                <h3 className="mt-2 font-display text-xl font-light text-foreground md:text-2xl">
+                <h3 className="mt-2 font-display text-xl font-semibold text-foreground md:text-2xl">
                   {entry.role}
                 </h3>
                 <p className="mt-0.5 font-mono text-xs text-muted-foreground">{entry.org}</p>

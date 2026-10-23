@@ -13,7 +13,7 @@ export function About() {
 
       <div ref={ref} className="grid gap-10 md:grid-cols-12">
         <p
-          className={`rv font-display text-2xl font-light leading-snug text-foreground md:col-span-7 md:text-3xl${inView ? " in-view" : ""}`}
+          className={`rv font-display text-2xl font-medium leading-snug text-foreground md:col-span-7 md:text-3xl${inView ? " in-view" : ""}`}
         >
           {t("about.lead")}
         </p>

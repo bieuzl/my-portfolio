@@ -15,7 +15,7 @@ export function Contact() {
 
         <div ref={ref} className="grid gap-10 md:grid-cols-12">
           <h3
-            className={`rv font-display text-4xl font-light italic leading-tight tracking-tight text-foreground md:col-span-7 md:text-6xl${inView ? " in-view" : ""}`}
+            className={`rv font-display text-4xl font-semibold leading-tight tracking-tight text-foreground md:col-span-7 md:text-6xl${inView ? " in-view" : ""}`}
           >
             {t("contact.lead")}
           </h3>
@@ -52,10 +52,10 @@ export function Contact() {
               {Array.from({ length: 6 }).map((_, i) => (
                 <span
                   key={i}
-                  className="mx-6 font-display text-2xl font-light italic text-muted-foreground/60 md:text-4xl"
+                  className="mx-6 font-display text-2xl font-light text-muted-foreground/60 md:text-4xl"
                 >
                   {t("contact.marquee")}
-                  <span className="ml-12 not-italic text-primary">↗</span>
+                  <span className="ml-12 text-primary">↗</span>
                 </span>
               ))}
             </div>

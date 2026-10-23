@@ -7,7 +7,7 @@ interface SectionHeadingProps {
 }
 
 /**
- * Section header: mono index + display-serif title + animated red rule.
+ * Section header: mono index + display title + animated accent rule.
  */
 export function SectionHeading({ id, index, title }: SectionHeadingProps) {
   const { ref, inView } = useInView<HTMLDivElement>();
@@ -18,7 +18,7 @@ export function SectionHeading({ id, index, title }: SectionHeadingProps) {
         <span className="font-mono text-xs text-primary">{index}</span>
         <h2
           id={id}
-          className={`rv font-display text-3xl font-light tracking-tight text-foreground md:text-5xl${inView ? " in-view" : ""}`}
+          className={`rv font-display text-3xl font-semibold tracking-tight text-foreground md:text-5xl${inView ? " in-view" : ""}`}
         >
           {title}
         </h2>

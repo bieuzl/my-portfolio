@@ -21,7 +21,7 @@ function ProjectCard({ project, index }: { project: ProjectEntry; index: number 
           </span>
           <span className="font-mono text-xs text-muted-foreground">{project.year}</span>
         </div>
-        <h3 className="mt-3 font-display text-2xl font-light tracking-tight text-foreground md:text-3xl">
+        <h3 className="mt-3 font-display text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
           {project.title}
         </h3>
         {project.placeholder && (

@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { ScrollBackdrop } from "@/components/ScrollBackdrop";
 import { Header } from "@/sections/Header";
 import { Hero } from "@/sections/Hero";
 import { About } from "@/sections/About";
@@ -12,6 +13,7 @@ export default function Home() {
 
   return (
     <>
+      <ScrollBackdrop />
       <Header />
       <main id="conteudo">
         <Hero />

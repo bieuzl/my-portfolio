@@ -2,9 +2,11 @@
 
 Portfólio pessoal de desenvolvimento de software, com identidade visual própria:
 tipografia monumental (Archivo expandida + Inter + JetBrains Mono) com letras
-preenchidas e vazadas sobre uma aurora azul animada, escultura 3D procedural
-(nó toroidal, WebGL/Three.js) como detalhe em movimento na seção de projetos,
-e paleta escura cinematográfica com acento azul.
+preenchidas e vazadas sobre uma aurora azul animada, fundo global que reage ao
+scroll (aurora que surge após o hero e muda de paleta conforme a página avança,
+com poeira estelar), escultura 3D procedural (nó toroidal, WebGL/Three.js) como
+detalhe em movimento na seção de projetos, e paleta escura cinematográfica com
+acento azul.
 
 ## Executar
 
@@ -21,7 +23,8 @@ npm run lint     # ESLint
 
 ```
 src/
-  components/  HeroBackdrop (aurora animada em canvas 2D), SectionHeading,
+  components/  HeroBackdrop (aurora do hero em canvas 2D), ScrollBackdrop
+               (aurora global guiada pelo scroll), SectionHeading,
                PlaceholderBadge.
   content/     Dados do portfólio por idioma (pt-BR.ts, en.ts) atrás da
                interface getPortfolioContent(locale). Paridade entre idiomas
@@ -55,6 +58,10 @@ estruturados) e `src/i18n/locales/*.json` (textos de interface):
   vazada, `paint-order: stroke` mantém o traço fora do glifo) sempre 100%
   visível; fundo com aurora azul animada em canvas 2D (sem WebGL), vinheta e
   grão de filme; microtextos ancorados nos quatro cantos.
+- **Fundo global reativo ao scroll**: aurora fixa em canvas 2D que surge após
+  o hero, morfa de azul para índigo/violeta ao longo da página e ganha
+  "poeira" de partículas que aceleram com a velocidade do scroll; parada total
+  sob `prefers-reduced-motion` (frame estático que só atualiza com o scroll).
 - **3D como detalhe**: nó toroidal gerado por código na seção de projetos,
   com ShaderMaterial fresnel grafite→ciano→azul, rotação ambiente somada a
   uma volta extra guiada pelo scroll da seção e parallax de cursor. Three.js

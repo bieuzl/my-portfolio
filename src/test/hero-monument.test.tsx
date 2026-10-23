@@ -6,7 +6,7 @@ import { Hero } from "@/sections/Hero";
  * Monumental hero contract:
  * - the name renders as two stacked SVG layers (filled + outlined)
  * - exactly one microtext anchors each of the four corners
- * - the 3D layer exposes an accessible description
+ * - the animated backdrop stays invisible to assistive tech
  */
 describe("monumental hero", () => {
   it("renders the name in two SVG layers with per-letter tspans", () => {
@@ -43,12 +43,13 @@ describe("monumental hero", () => {
     expect(container.querySelectorAll("[data-corner]").length).toBe(4);
   });
 
-  it("describes the 3D layer for assistive tech and keeps a real h1", () => {
+  it("keeps a real h1 and an aria-hidden animated backdrop", () => {
     const { container } = render(<Hero />);
     expect(screen.getByRole("heading", { level: 1 })).toBeInTheDocument();
-    const scene = container.querySelector('[role="img"]');
-    expect(scene).toBeInTheDocument();
-    expect(scene?.getAttribute("aria-label")).toMatch(/tecla|keycap/i);
+    const backdrop = container.querySelector('[aria-hidden="true"] canvas');
+    expect(backdrop).toBeInTheDocument();
+    // nothing sits between the word and the reader: no role="img" overlay
+    expect(container.querySelector('[role="img"]')).not.toBeInTheDocument();
   });
 
   it("links project and contact corners to their sections", () => {

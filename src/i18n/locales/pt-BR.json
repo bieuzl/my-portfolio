@@ -4,10 +4,10 @@
     "mainNav": "Navegação principal",
     "openMenu": "Abrir menu",
     "closeMenu": "Fechar menu",
-    "heroScene": "Cena decorativa em 3D de uma tecla de teclado mecânico com o símbolo de prompt >_ em relevo",
     "scrollDown": "Role para explorar",
     "languageSwitcher": "Idioma",
-    "placeholderBadge": "Conteúdo de exemplo"
+    "placeholderBadge": "Conteúdo de exemplo",
+    "projectsScene": "Escultura 3D decorativa de um nó toroidal azul"
   },
   "nav": {
     "about": "Apresentação",

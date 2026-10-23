@@ -4,10 +4,10 @@
     "mainNav": "Main navigation",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
-    "heroScene": "Decorative 3D scene of a mechanical keyboard keycap with a raised >_ prompt glyph",
     "scrollDown": "Scroll to explore",
     "languageSwitcher": "Language",
-    "placeholderBadge": "Sample content"
+    "placeholderBadge": "Sample content",
+    "projectsScene": "Decorative 3D sculpture of a blue torus knot"
   },
   "nav": {
     "about": "About",

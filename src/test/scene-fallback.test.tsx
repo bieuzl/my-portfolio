@@ -15,6 +15,7 @@ describe("3D hero fallback", () => {
     // the page never shows a black canvas.
     const posters = document.querySelectorAll("img");
     expect(posters.length).toBeGreaterThan(0);
+    expect(posters[0].getAttribute("src")).toContain("keycap-poster.svg");
     const canvas = document.querySelector("canvas");
     expect(canvas).toHaveClass("opacity-0");
     expect(screen.getByRole("heading", { level: 1 })).toBeInTheDocument();

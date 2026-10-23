@@ -2,11 +2,11 @@
 
 Portfólio pessoal de desenvolvimento de software, com identidade visual própria:
 tipografia monumental (Archivo expandida + Inter + JetBrains Mono) com letras
-preenchidas e vazadas sobre uma aurora azul animada, fundo global que reage ao
-scroll (aurora que surge após o hero e muda de paleta conforme a página avança,
-com poeira estelar), escultura 3D procedural (nó toroidal, WebGL/Three.js) como
-detalhe em movimento na seção de projetos, e paleta escura cinematográfica com
-acento azul.
+preenchidas e vazadas sobre uma atmosfera viva em WebGL — aurora líquida em
+shader (fbm com domain warping), estrelas com paralaxe e paleta que morfa de
+azul para índigo/violeta conforme o scroll —, escultura 3D procedural
+(nó toroidal, WebGL/Three.js) como detalhe em movimento na seção de projetos,
+e paleta escura cinematográfica com acento azul.
 
 ## Executar
 
@@ -23,14 +23,14 @@ npm run lint     # ESLint
 
 ```
 src/
-  components/  HeroBackdrop (aurora do hero em canvas 2D), ScrollBackdrop
-               (aurora global guiada pelo scroll), SectionHeading,
+  components/  Atmosphere (aurora WebGL global + fallback 2D), SectionHeading,
                PlaceholderBadge.
   content/     Dados do portfólio por idioma (pt-BR.ts, en.ts) atrás da
                interface getPortfolioContent(locale). Paridade entre idiomas
                é garantida por tipos + testes.
   i18n/        Configuração i18next e strings de UI (locales/*.json).
-  scene3d/     Módulo 3D: mountSculptureScene(canvas, opts) esconde todo o
+  scene3d/     atmosphere.ts (renderer WebGL2 cru da aurora, sem Three.js)
+               e mountSculptureScene(canvas, opts), que esconde todo o
                Three.js (shader fresnel, loop, resize, scroll).
   sections/    Hero, About, Skills, Projects, Experience, Contact, Header.
   hooks/       useReducedMotion, useInView.
@@ -56,12 +56,15 @@ estruturados) e `src/i18n/locales/*.json` (textos de interface):
 
 - **Hero**: nome desenhado duas vezes em SVG (camada preenchida + camada
   vazada, `paint-order: stroke` mantém o traço fora do glifo) sempre 100%
-  visível; fundo com aurora azul animada em canvas 2D (sem WebGL), vinheta e
-  grão de filme; microtextos ancorados nos quatro cantos.
-- **Fundo global reativo ao scroll**: aurora fixa em canvas 2D que surge após
-  o hero, morfa de azul para índigo/violeta ao longo da página e ganha
-  "poeira" de partículas que aceleram com a velocidade do scroll; parada total
-  sob `prefers-reduced-motion` (frame estático que só atualiza com o scroll).
+  visível sobre a atmosfera; microtextos ancorados nos quatro cantos.
+- **Atmosfera global (WebGL2, sem Three.js)**: fragment shader com fbm e
+  domain warping desenha fitas de aurora "líquidas"; duas camadas de estrelas
+  cintilantes com paralaxe de scroll; paleta que morfa de azul para
+  índigo/violeta ao longo da página; campo que curva suavemente ao redor do
+  cursor; boost de fluxo proporcional à velocidade do scroll; renderização em
+  0.6× da resolução (upscale via CSS) para custo mínimo de fill-rate. Sem
+  WebGL2, uma aurora equivalente em canvas 2D assume. Grão de filme por cima
+  evita banding nos gradientes.
 - **3D como detalhe**: nó toroidal gerado por código na seção de projetos,
   com ShaderMaterial fresnel grafite→ciano→azul, rotação ambiente somada a
   uma volta extra guiada pelo scroll da seção e parallax de cursor. Three.js

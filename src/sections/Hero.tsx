@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next";
-import { HeroBackdrop } from "@/components/HeroBackdrop";
 import { getPortfolioContent } from "@/content";
 import { normalizeLocale } from "@/i18n";
 
@@ -70,7 +69,7 @@ function MonumentWord({ word, variant }: MonumentWordProps) {
 }
 
 /**
- * Full-viewport hero: monumental name floating over an animated aurora
+ * Full-viewport hero: monumental name floating above the global Atmosphere
  * backdrop, microtexts anchored to the four corners. Nothing overlaps the
  * word — motion lives in the atmosphere, not on top of the typography.
  */
@@ -88,9 +87,6 @@ export function Hero() {
       <h1 className="sr-only">
         {name} — {t("hero.role")}
       </h1>
-
-      {/* animated atmosphere: aurora + vignette + grain */}
-      <HeroBackdrop />
 
       {/* monumental word, fully visible — the two layers stack exactly */}
       <div

@@ -6,7 +6,8 @@ import { Hero } from "@/sections/Hero";
  * Monumental hero contract:
  * - the name renders as two stacked SVG layers (filled + outlined)
  * - exactly one microtext anchors each of the four corners
- * - the animated backdrop stays invisible to assistive tech
+ * - the hero carries no media of its own — the global Atmosphere (rendered
+ *   at page root, aria-hidden) is the only backdrop
  */
 describe("monumental hero", () => {
   it("renders the name in two SVG layers with per-letter tspans", () => {
@@ -43,12 +44,11 @@ describe("monumental hero", () => {
     expect(container.querySelectorAll("[data-corner]").length).toBe(4);
   });
 
-  it("keeps a real h1 and an aria-hidden animated backdrop", () => {
+  it("keeps a real h1 and nothing between the word and the reader", () => {
     const { container } = render(<Hero />);
     expect(screen.getByRole("heading", { level: 1 })).toBeInTheDocument();
-    const backdrop = container.querySelector('[aria-hidden="true"] canvas');
-    expect(backdrop).toBeInTheDocument();
-    // nothing sits between the word and the reader: no role="img" overlay
+    // no canvas or role="img" overlay inside the hero — atmosphere is global
+    expect(container.querySelector("canvas")).not.toBeInTheDocument();
     expect(container.querySelector('[role="img"]')).not.toBeInTheDocument();
   });
 

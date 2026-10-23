@@ -1,9 +1,9 @@
 /**
- * scene3d — deep module for the hero's 3D centerpiece.
+ * scene3d — deep module for the decorative 3D sculpture.
  *
  * Public interface is deliberately tiny: detect support, mount, steer with
- * the pointer, dispose. Callers never touch Three.js concepts.
+ * pointer and scroll, dispose. Callers never touch Three.js concepts.
  */
 export { isWebGLAvailable } from "./support";
-export { mountKeycapScene } from "./KeycapScene";
-export type { SceneHandle, SceneOptions } from "./KeycapScene";
+export { mountSculptureScene } from "./SculptureScene";
+export type { SceneHandle, SceneOptions } from "./SculptureScene";

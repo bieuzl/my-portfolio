@@ -4,15 +4,15 @@
 
 @layer base {
   :root {
-    /* Dark-led palette: navy off-black ground, warm off-white ink, one red accent */
+    /* Dark-led palette: navy off-black ground, warm off-white ink, electric blue accent */
     --background: 240 20% 5%;
     --foreground: 45 15% 96%;
     --card: 240 16% 7%;
     --card-foreground: 45 15% 96%;
     --popover: 240 16% 7%;
     --popover-foreground: 45 15% 96%;
-    --primary: 0 100% 60%;
-    --primary-foreground: 45 15% 96%;
+    --primary: 217 100% 62%;
+    --primary-foreground: 240 20% 5%;
     --secondary: 240 12% 12%;
     --secondary-foreground: 45 15% 96%;
     --muted: 240 12% 12%;
@@ -23,16 +23,22 @@
     --destructive-foreground: 45 15% 96%;
     --border: 240 10% 16%;
     --input: 240 10% 16%;
-    --ring: 0 100% 60%;
+    --ring: 217 100% 62%;
     --radius: 0.25rem;
     --sidebar-background: 240 16% 7%;
     --sidebar-foreground: 45 15% 96%;
-    --sidebar-primary: 0 100% 60%;
-    --sidebar-primary-foreground: 45 15% 96%;
+    --sidebar-primary: 217 100% 62%;
+    --sidebar-primary-foreground: 240 20% 5%;
     --sidebar-accent: 240 12% 12%;
     --sidebar-accent-foreground: 45 15% 96%;
     --sidebar-border: 240 10% 16%;
-    --sidebar-ring: 0 100% 60%;
+    --sidebar-ring: 217 100% 62%;
+
+    /* Motion system: one easing family for the whole site */
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-standard: cubic-bezier(0.28, 0.11, 0.32, 1);
+    --dur-reveal: 0.9s;
+    --dur-hover: 0.25s;
   }
 }
 
@@ -50,6 +56,12 @@
     font-size: 16px;
     line-height: 1.6;
     text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Anchored sections clear the fixed header when scrolled to */
+  section[id] {
+    scroll-margin-top: 4.5rem;
   }
 
   ::selection {
@@ -78,12 +90,13 @@
 }
 
 @layer utilities {
+  /* Display: Archivo Expanded — heavy, tight, editorial */
   .font-display {
-    font-family: "Fraunces", "Georgia", serif;
-    font-optical-sizing: auto;
+    font-family: "Archivo", "Inter", ui-sans-serif, system-ui, sans-serif;
+    font-stretch: 125%;
   }
   .font-sans {
-    font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
   }
   .font-mono {
     font-family: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
@@ -92,7 +105,7 @@
 
 /* ---- Signature details ---- */
 
-/* Thin animated red accent line */
+/* Thin animated accent line */
 .accent-line {
   position: relative;
   overflow: hidden;
@@ -104,33 +117,10 @@
   inset: 0;
   background: hsl(var(--primary));
   transform: translateX(-100%);
-  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform var(--dur-reveal) var(--ease-out-expo);
 }
 .accent-line.in-view > span {
   transform: translateX(0);
-}
-
-/* Per-letter hero reveal */
-.letter-reveal .lr-letter {
-  display: inline-block;
-  opacity: 0;
-  transform: translateY(0.35em) scale(0.95);
-  transition:
-    opacity 0.5s ease-out,
-    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-  transition-delay: var(--lr-delay, 0ms);
-  will-change: opacity, transform;
-}
-.letter-reveal.is-on .lr-letter {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-@media (prefers-reduced-motion: reduce) {
-  .letter-reveal .lr-letter {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
 }
 
 /* Scroll entrance (fade-up) via IntersectionObserver */
@@ -138,8 +128,8 @@
   opacity: 0;
   transform: translateY(28px);
   transition:
-    opacity 0.6s ease-out,
-    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity calc(var(--dur-reveal) * 0.8) var(--ease-out-expo),
+    transform var(--dur-reveal) var(--ease-out-expo);
   transition-delay: var(--rv-delay, 0ms);
 }
 .rv.in-view {
@@ -196,10 +186,70 @@
   background: currentColor;
   transform: scaleX(0);
   transform-origin: right;
-  transition: transform 0.25s ease-out;
+  transition: transform var(--dur-hover) var(--ease-standard);
 }
 .link-line:hover::after,
 .link-line:focus-visible::after {
   transform: scaleX(1);
   transform-origin: left;
+}
+
+/* ---- Hero: monumental word + choreographed entrance ---- */
+
+/* Each letter of the SVG word rises once, staggered via --hl-delay. */
+.hero-letter {
+  opacity: 0;
+  transform: translateY(60px);
+  animation: hero-letter-in 1s var(--ease-out-expo) forwards;
+  animation-delay: var(--hl-delay, 0ms);
+  will-change: opacity, transform;
+}
+@keyframes hero-letter-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Corner microtexts fade in last, after the word and the keycap. */
+.hero-corner {
+  opacity: 0;
+  animation: hero-corner-in 0.8s var(--ease-out-expo) forwards;
+  animation-delay: var(--hc-delay, 1100ms);
+}
+@keyframes hero-corner-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Keycap layer enters with a gentle scale-up + fade. */
+.hero-scene-in {
+  animation: hero-scene-in 1.1s var(--ease-out-expo) both;
+  animation-delay: 250ms;
+}
+@keyframes hero-scene-in {
+  from {
+    opacity: 0;
+    transform: scale(0.94) translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-letter,
+  .hero-corner,
+  .hero-scene-in {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }

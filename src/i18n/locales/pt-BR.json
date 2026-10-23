@@ -1,0 +1,66 @@
+{
+  "a11y": {
+    "skipToContent": "Pular para o conteúdo",
+    "mainNav": "Navegação principal",
+    "openMenu": "Abrir menu",
+    "closeMenu": "Fechar menu",
+    "heroScene": "Cena decorativa em 3D de uma capivara em estilo low-poly",
+    "scrollDown": "Role para explorar",
+    "languageSwitcher": "Idioma",
+    "placeholderBadge": "Conteúdo de exemplo"
+  },
+  "nav": {
+    "about": "Apresentação",
+    "skills": "Habilidades",
+    "projects": "Projetos",
+    "experience": "Experiência",
+    "contact": "Contato"
+  },
+  "hero": {
+    "kicker": "Portfólio — desenvolvimento de software",
+    "role": "Desenvolvedor de Software",
+    "pitch": "[Escreva aqui 2–3 frases sobre quem você é, o que faz e o tipo de oportunidade ou projeto que procura.]",
+    "scroll": "Role"
+  },
+  "sections": {
+    "about": "Apresentação",
+    "skills": "Habilidades",
+    "projects": "Projetos em destaque",
+    "experience": "Experiência e formação",
+    "contact": "Contato"
+  },
+  "about": {
+    "lead": "[Substitua por um parágrafo de abertura com a sua voz: o que você constrói, como trabalha e o que busca no próximo passo.]",
+    "body": "[Substitua por 1–2 parágrafos sobre sua trajetória, seus interesses em tecnologia e como você gosta de trabalhar. Este texto é um placeholder e não descreve fatos reais.]",
+    "lookingForTitle": "O que procuro",
+    "lookingFor": "[Descreva o tipo de oportunidade, projeto ou colaboração que você está buscando.]"
+  },
+  "skills": {
+    "note": "Agrupe aqui as tecnologias e áreas em que você realmente trabalha — os itens abaixo são exemplos para substituir."
+  },
+  "projects": {
+    "contextLabel": "Contexto",
+    "contributionLabel": "Minha contribuição",
+    "techLabel": "Tecnologias",
+    "linksLabel": "Links",
+    "placeholderLink": "Link a definir"
+  },
+  "experience": {
+    "note": "Linha do tempo com sua trajetória profissional e de estudos — substitua as entradas de exemplo."
+  },
+  "contact": {
+    "lead": "Vamos conversar?",
+    "body": "[Indique a melhor forma de contato e em quanto tempo costuma responder.]",
+    "pendingTitle": "Canais a configurar",
+    "pendingBody": "Os links abaixo serão ativados assim que você fornecer seus dados: e-mail, GitHub, LinkedIn e outros perfis profissionais.",
+    "marquee": "Vamos construir algo juntos"
+  },
+  "footer": {
+    "built": "Projetado e construído por Gabriel",
+    "placeholderNotice": "Os trechos entre colchetes são placeholders aguardando seu conteúdo."
+  },
+  "language": {
+    "pt": "PT",
+    "en": "EN"
+  }
+}

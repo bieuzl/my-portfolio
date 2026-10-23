@@ -1,0 +1,66 @@
+{
+  "a11y": {
+    "skipToContent": "Skip to content",
+    "mainNav": "Main navigation",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "heroScene": "Decorative 3D scene of a low-poly capybara",
+    "scrollDown": "Scroll to explore",
+    "languageSwitcher": "Language",
+    "placeholderBadge": "Sample content"
+  },
+  "nav": {
+    "about": "About",
+    "skills": "Skills",
+    "projects": "Projects",
+    "experience": "Experience",
+    "contact": "Contact"
+  },
+  "hero": {
+    "kicker": "Portfolio — software development",
+    "role": "Software Developer",
+    "pitch": "[Write 2–3 sentences here about who you are, what you do, and the kind of opportunity or project you are looking for.]",
+    "scroll": "Scroll"
+  },
+  "sections": {
+    "about": "About",
+    "skills": "Skills",
+    "projects": "Selected projects",
+    "experience": "Experience and education",
+    "contact": "Contact"
+  },
+  "about": {
+    "lead": "[Replace with an opening paragraph in your own voice: what you build, how you work, and what you want next.]",
+    "body": "[Replace with 1–2 paragraphs about your background, your interests in technology, and how you like to work. This text is a placeholder and does not describe real facts.]",
+    "lookingForTitle": "What I'm looking for",
+    "lookingFor": "[Describe the kind of opportunity, project, or collaboration you are looking for.]"
+  },
+  "skills": {
+    "note": "Group here the technologies and areas you actually work with — the items below are examples to replace."
+  },
+  "projects": {
+    "contextLabel": "Context",
+    "contributionLabel": "My contribution",
+    "techLabel": "Technologies",
+    "linksLabel": "Links",
+    "placeholderLink": "Link TBD"
+  },
+  "experience": {
+    "note": "A timeline of your professional and education path — replace the sample entries."
+  },
+  "contact": {
+    "lead": "Let's talk?",
+    "body": "[Share the best way to reach you and how quickly you usually reply.]",
+    "pendingTitle": "Channels to configure",
+    "pendingBody": "The links below will be activated once you provide your details: email, GitHub, LinkedIn, and other professional profiles.",
+    "marquee": "Let's build something together"
+  },
+  "footer": {
+    "built": "Designed and built by Gabriel",
+    "placeholderNotice": "Bracketed passages are placeholders waiting for your content."
+  },
+  "language": {
+    "pt": "PT",
+    "en": "EN"
+  }
+}

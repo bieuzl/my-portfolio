@@ -44,8 +44,18 @@ function LanguageSwitch() {
 export function Header() {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   const close = useCallback(() => setOpen(false), []);
+
+  /* frosted glass engages only after leaving the hero — Apple-style:
+     chrome appears when it's useful, invisible when it's not. */
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -57,7 +67,13 @@ export function Header() {
   }, [open, close]);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-md">
+    <header
+      className={`fixed inset-x-0 top-0 z-40 border-b transition-[background-color,border-color,backdrop-filter] duration-500 ease-[var(--ease-out-expo)] ${
+        scrolled || open
+          ? "border-border/60 bg-background/75 backdrop-blur-xl"
+          : "border-transparent bg-transparent"
+      }`}
+    >
       <a
         href="#conteudo"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-background focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:text-foreground"

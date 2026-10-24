@@ -30,7 +30,7 @@ export function About() {
       const rect = el.getBoundingClientRect();
       const px = (event.clientX - rect.left) / rect.width - 0.5;
       const py = (event.clientY - rect.top) / rect.height - 0.5;
-      el.style.transform = `rotateX(${(-py * 4.5).toFixed(2)}deg) rotateY(${( 
+      el.style.transform = `rotateX(${(-py * 4.5).toFixed(2)}deg) rotateY(${(
         px * 5.5
       ).toFixed(2)}deg)`;
     },

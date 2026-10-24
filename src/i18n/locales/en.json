@@ -33,7 +33,9 @@
     "lead": "[Replace with an opening paragraph in your own voice: what you build, how you work, and what you want next.]",
     "body": "[Replace with 1–2 paragraphs about your background, your interests in technology, and how you like to work. This text is a placeholder and does not describe real facts.]",
     "lookingForTitle": "What I'm looking for",
-    "lookingFor": "[Describe the kind of opportunity, project, or collaboration you are looking for.]"
+    "lookingFor": "[Describe the kind of opportunity, project, or collaboration you are looking for.]",
+    "portraitAlt": "Portrait of Gabriel in blue duotone, looking toward the camera",
+    "portraitCaption": "portrait — blue duotone"
   },
   "skills": {
     "note": "Group here the technologies and areas you actually work with — the items below are examples to replace."

@@ -33,7 +33,9 @@
     "lead": "[Substitua por um parágrafo de abertura com a sua voz: o que você constrói, como trabalha e o que busca no próximo passo.]",
     "body": "[Substitua por 1–2 parágrafos sobre sua trajetória, seus interesses em tecnologia e como você gosta de trabalhar. Este texto é um placeholder e não descreve fatos reais.]",
     "lookingForTitle": "O que procuro",
-    "lookingFor": "[Descreva o tipo de oportunidade, projeto ou colaboração que você está buscando.]"
+    "lookingFor": "[Descreva o tipo de oportunidade, projeto ou colaboração que você está buscando.]",
+    "portraitAlt": "Retrato de Gabriel em duotone azul, olhando na direção da câmera",
+    "portraitCaption": "retrato — duotone azul"
   },
   "skills": {
     "note": "Agrupe aqui as tecnologias e áreas em que você realmente trabalha — os itens abaixo são exemplos para substituir."

@@ -58,13 +58,14 @@ estruturados) e `src/i18n/locales/*.json` (textos de interface):
   vazada, `paint-order: stroke` mantém o traço fora do glifo) sempre 100%
   visível sobre a atmosfera; microtextos ancorados nos quatro cantos.
 - **Atmosfera global (WebGL2, sem Three.js)**: fragment shader com fbm e
-  domain warping desenha fitas de aurora "líquidas"; duas camadas de estrelas
-  cintilantes com paralaxe de scroll; paleta que morfa de azul para
-  índigo/violeta ao longo da página; campo que curva suavemente ao redor do
-  cursor; boost de fluxo proporcional à velocidade do scroll; renderização em
-  0.6× da resolução (upscale via CSS) para custo mínimo de fill-rate. Sem
-  WebGL2, uma aurora equivalente em canvas 2D assume. Grão de filme por cima
-  evita banding nos gradientes.
+  domain warping mesclado a billow desenha fumaça líquida volumétrica; o
+  campo inteiro é advectado pelo scroll (rolar = atravessar a névoa) e
+  rajadas de velocidade empurram a fumaça com inércia; duas camadas de
+  estrelas cintilantes com paralaxe; paleta que morfa de azul para
+  índigo/violeta ao longo da página; lente suave ao redor do cursor;
+  renderização em 0.6× da resolução (upscale via CSS) para custo mínimo de
+  fill-rate. Sem WebGL2, uma aurora equivalente em canvas 2D assume. Grão de
+  filme por cima evita banding nos gradientes.
 - **3D como detalhe**: nó toroidal gerado por código na seção de projetos,
   com ShaderMaterial fresnel grafite→ciano→azul, rotação ambiente somada a
   uma volta extra guiada pelo scroll da seção e parallax de cursor. Three.js

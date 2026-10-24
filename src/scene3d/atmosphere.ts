@@ -3,17 +3,18 @@
  * bundle (Atmosphere.tsx imports this file directly, never via scene3d/index,
  * which pulls in three for the sculpture chunk).
  *
- * The fragment shader paints a domain-warped fbm aurora ("liquid northern
- * lights"), two parallax star layers with twinkle, a palette that morphs from
- * blue to indigo/violet as page progress advances, and a soft pointer warp
- * that bends the field around the cursor.
+ * The fragment shader paints a domain-warped fbm smoke field ("liquid
+ * northern lights"), advected by page scroll so rolling down travels through
+ * the fog, with two parallax star layers, a palette that morphs from blue to
+ * indigo/violet as progress advances, and a soft lens around the cursor.
  */
 
 export interface AtmosphereHandle {
   /** Normalized pointer, -1..1 on both axes (y up). */
   setPointer(x: number, y: number): void;
-  /** Page scroll progress 0..1 plus a transient 0..1 velocity boost. */
-  setScroll(progress: number, boost: number): void;
+  /** Page scroll progress 0..1 plus a transient gust (in viewport heights)
+      that pushes the fog and settles with inertia. */
+  setScroll(progress: number, gust: number): void;
   setReducedMotion(reduced: boolean): void;
   dispose(): void;
 }
@@ -33,7 +34,7 @@ uniform vec2 uRes;
 uniform float uTime;
 uniform float uProgress;
 uniform vec2 uPointer;
-uniform float uBoost;
+uniform float uGust;
 
 float hash21(vec2 p) {
   p = fract(p * vec2(123.34, 456.21));
@@ -81,38 +82,46 @@ vec3 starLayer(vec2 uv, float scale, float parallax, float t) {
 void main() {
   vec2 uv = gl_FragCoord.xy / uRes;
   vec2 p = (gl_FragCoord.xy - 0.5 * uRes) / uRes.y;
-  float t = uTime * (0.055 + uBoost * 0.20);
+  float t = uTime * 0.05;
+
+  /* scrolling advects the whole field: rolling down travels through the
+     fog, and a fast flick adds a gust that settles back with inertia */
+  vec2 advect = vec2(sin(uProgress * 2.2) * 0.18, uProgress * 1.5 + uGust * 0.5);
+  vec2 sp = p * 1.25 + advect;
 
   /* the cursor gently bends the field around itself — displacement
      proportional to dp keeps it smooth at the center (no pinch) */
   vec2 ptr = uPointer * vec2(0.5 * uRes.x / uRes.y, 0.5);
   vec2 dp = p - ptr;
-  p -= dp * 0.10 * exp(-dot(dp, dp) * 3.0);
+  sp -= dp * 0.08 * exp(-dot(dp, dp) * 3.0);
 
-  /* domain-warped fbm — the "liquid silk" look */
-  vec2 q = vec2(fbm(p * 1.3 + vec2(0.0, t)), fbm(p * 1.3 + vec2(5.2, t * 1.2)));
+  /* domain-warped fbm blended toward billow — smokier, softer filaments */
+  vec2 q = vec2(fbm(sp + vec2(0.0, t)), fbm(sp + vec2(5.2, t * 1.15)));
   vec2 r = vec2(
-    fbm(p * 1.3 + 2.0 * q + vec2(1.7, 9.2) + 0.6 * t),
-    fbm(p * 1.3 + 2.0 * q + vec2(8.3, 2.8) - 0.4 * t)
+    fbm(sp + 2.2 * q + vec2(1.7, 9.2) + 0.5 * t),
+    fbm(sp + 2.2 * q + vec2(8.3, 2.8) - 0.35 * t)
   );
-  float f = fbm(p * 1.3 + 2.3 * r);
+  float f = fbm(sp + 2.4 * r);
+  float billow = 1.0 - abs(2.0 * f - 1.0);
+  float smoke = mix(f, billow, 0.45);
+  smoke = smoke * smoke * (3.0 - 2.0 * smoke);
 
   /* palette morphs with page progress: blue -> indigo/violet */
   vec3 deep = mix(vec3(0.028, 0.045, 0.125), vec3(0.052, 0.038, 0.145), uProgress);
   vec3 blue = mix(vec3(0.240, 0.545, 1.000), vec3(0.410, 0.380, 0.960), uProgress);
   vec3 cyan = mix(vec3(0.220, 0.885, 1.000), vec3(0.560, 0.450, 1.000), uProgress);
 
-  vec3 col = deep * (0.25 + 0.9 * f);
-  float ribbon = smoothstep(0.38, 0.78, f);
-  col += blue * ribbon * (0.30 + 0.35 * q.y) * 0.85;
-  col += cyan * smoothstep(0.52, 0.92, fbm(p * 1.8 - 1.6 * r + vec2(0.0, t * 0.7))) * 0.30;
+  vec3 col = deep * (0.28 + 0.85 * smoke);
+  float wisp = smoothstep(0.40, 0.82, smoke);
+  col += blue * wisp * (0.28 + 0.32 * q.y) * 0.8;
+  col += cyan * smoothstep(0.55, 0.95, fbm(sp * 1.7 - 1.8 * r + vec2(0.0, t * 0.6))) * 0.26;
 
   col += starLayer(uv, 55.0, 0.4, uTime);
   col += starLayer(uv, 105.0, 1.0, uTime * 1.3);
 
-  /* cinematic vignette */
+  /* cinematic vignette + master dim keep type comfortable over the smoke */
   float vig = 1.0 - 0.48 * length((uv - vec2(0.5, 0.45)) * vec2(1.05, 1.0));
-  col *= vig;
+  col *= vig * 0.85;
 
   /* soft tonemap keeps highlights silky instead of clipped */
   col = 1.0 - exp(-col * 1.35);
@@ -156,7 +165,7 @@ export function mountAtmosphere(canvas: HTMLCanvasElement): AtmosphereHandle | n
   const uTime = gl.getUniformLocation(program, "uTime");
   const uProgress = gl.getUniformLocation(program, "uProgress");
   const uPointer = gl.getUniformLocation(program, "uPointer");
-  const uBoost = gl.getUniformLocation(program, "uBoost");
+  const uGust = gl.getUniformLocation(program, "uGust");
 
   const state = {
     raf: 0,
@@ -165,7 +174,7 @@ export function mountAtmosphere(canvas: HTMLCanvasElement): AtmosphereHandle | n
     lastNow: 0,
     progress: 0,
     targetProgress: 0,
-    boost: 0,
+    gust: 0,
     pointer: { x: 0, y: 0, tx: 0, ty: 0 },
     disposed: false,
   };
@@ -192,7 +201,7 @@ export function mountAtmosphere(canvas: HTMLCanvasElement): AtmosphereHandle | n
     gl!.uniform1f(uTime, state.time);
     gl!.uniform1f(uProgress, state.progress);
     gl!.uniform2f(uPointer, state.pointer.x, state.pointer.y);
-    gl!.uniform1f(uBoost, state.boost);
+    gl!.uniform1f(uGust, state.gust);
     gl!.drawArrays(gl!.TRIANGLES, 0, 3);
   }
 
@@ -202,8 +211,8 @@ export function mountAtmosphere(canvas: HTMLCanvasElement): AtmosphereHandle | n
     const dt = Math.min((now - state.lastNow) / 1000, 0.1);
     state.lastNow = now;
     state.time += dt;
-    state.progress += (state.targetProgress - state.progress) * 0.07;
-    state.boost *= 0.94;
+    state.progress += (state.targetProgress - state.progress) * 0.05;
+    state.gust *= 0.93;
     state.pointer.x += (state.pointer.tx - state.pointer.x) * 0.06;
     state.pointer.y += (state.pointer.ty - state.pointer.y) * 0.06;
     renderFrame();
@@ -226,12 +235,12 @@ export function mountAtmosphere(canvas: HTMLCanvasElement): AtmosphereHandle | n
       state.pointer.tx = x;
       state.pointer.ty = y;
     },
-    setScroll(progress, boost) {
+    setScroll(progress, gust) {
       state.targetProgress = Math.min(1, Math.max(0, progress));
-      state.boost = Math.min(1, state.boost + boost);
+      state.gust = Math.min(1, state.gust + gust);
       if (state.reduced) {
         state.progress = state.targetProgress;
-        state.boost = 0;
+        state.gust = 0;
         renderFrame();
       }
     },

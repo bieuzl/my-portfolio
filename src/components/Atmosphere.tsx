@@ -126,7 +126,8 @@ export function Atmosphere() {
     const onScroll = () => {
       const dy = window.scrollY - lastY;
       lastY = window.scrollY;
-      glHandle.setScroll(pageProgress(), Math.min(Math.abs(dy) / 600, 0.6));
+      /* gust in viewport heights: a full-screen flick reads as ~0.5 */
+      glHandle.setScroll(pageProgress(), Math.min(Math.abs(dy) / window.innerHeight, 0.5));
     };
     const onPointer = (e: PointerEvent) => {
       glHandle.setPointer(

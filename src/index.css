@@ -233,6 +233,67 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
+/* About portrait — editorial reveal choreography.
+   The frame wipes up (clip-path), the photo settles from a slight zoom,
+   and the gradient ring draws itself around the frame — an echo of the
+   ring painted over the "A" glyph in the hero. */
+.about-portrait-frame {
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path var(--dur-reveal) var(--ease-out-expo) 120ms;
+}
+.in-view .about-portrait-frame {
+  clip-path: inset(0 0 0 0);
+}
+.about-portrait-img {
+  transform: scale(1.07);
+  transition: transform 1.6s var(--ease-out-expo) 120ms;
+}
+.in-view .about-portrait-img {
+  transform: scale(1);
+}
+.about-portrait-ring {
+  /* com vector-effect: non-scaling-stroke o Chromium interpreta o dasharray em px
+     de tela — 2500px cobre o perimetro maximo do quadro (~1900px no desktop) */
+  stroke-dasharray: 2500;
+  stroke-dashoffset: 2500;
+  transition: stroke-dashoffset 1.3s var(--ease-out-expo) 550ms;
+}
+.in-view .about-portrait-ring {
+  stroke-dashoffset: 0;
+}
+.about-portrait-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  opacity: 0.4;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.about-portrait-tilt {
+  transition: transform var(--dur-hover) var(--ease-standard);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .about-portrait-frame {
+    clip-path: inset(0 0 0 0);
+    transition: none;
+  }
+  .about-portrait-img {
+    transform: none;
+    transition: none;
+  }
+  .about-portrait-ring {
+    stroke-dashoffset: 0;
+    transition: none;
+  }
+  .about-portrait-tilt {
+    transition: none;
+    transform: none !important;
+  }
+}
+
 /* Slow orbital spin for the static projects ornament */
 .orbit-spin {
   transform-origin: 50% 50%;

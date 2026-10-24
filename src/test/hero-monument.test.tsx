@@ -22,14 +22,14 @@ describe("monumental hero", () => {
     expect(filledLetters.length).toBe(7);
     expect(outlineLetters.length).toBe(7);
 
-    // filled layer: 4 solid letters (G, B, I, L), none stroked
-    const solid = [...filledLetters].filter(
-      (t) => (t as SVGTSpanElement).style.fill === "currentcolor" || (t as SVGTSpanElement).style.fill === "currentColor",
+    // filled layer: 4 solid letters (G, B, I, L) with the ice gradient fill
+    const solid = [...filledLetters].filter((t) =>
+      (t.getAttribute("fill") ?? "").includes("url("),
     );
     expect(solid.length).toBe(4);
-    // outline layer: 3 stroked letters (A, R, E), none filled
-    const stroked = [...outlineLetters].filter(
-      (t) => (t as SVGTSpanElement).style.stroke === "currentcolor" || (t as SVGTSpanElement).style.stroke === "currentColor",
+    // outline layer: 3 stroked letters (A, R, E) with the gradient stroke
+    const stroked = [...outlineLetters].filter((t) =>
+      (t.getAttribute("stroke") ?? "").includes("url("),
     );
     expect(stroked.length).toBe(3);
   });

@@ -18,6 +18,9 @@ interface MonumentWordProps {
  * textLength distributes spacing identically — the two layers stack
  * pixel-perfect. SVG text + paint-order keeps the stroke OUTSIDE the glyph
  * (unlike -webkit-text-stroke, which eats the interior and reads "thin").
+ * Solid letters take an ice gradient; outlined letters take a blue→cyan
+ * gradient stroke. Bricolage Grotesque brings the character; Archivo is the
+ * fallback while the webfont loads.
  */
 function MonumentWord({ word, variant }: MonumentWordProps) {
   const letters = [...word.toUpperCase()];
@@ -27,6 +30,20 @@ function MonumentWord({ word, variant }: MonumentWordProps) {
       className="w-[min(94vw,1150px)] select-none"
       role="presentation"
     >
+      <defs>
+        {variant === "filled" ? (
+          <linearGradient id="heroFillGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#ffffff" />
+            <stop offset="55%" stopColor="#dcebff" />
+            <stop offset="100%" stopColor="#9cc3ff" />
+          </linearGradient>
+        ) : (
+          <linearGradient id="heroStrokeGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#5aa2ff" />
+            <stop offset="100%" stopColor="#38e1ff" />
+          </linearGradient>
+        )}
+      </defs>
       <text
         x="500"
         y="198"
@@ -35,26 +52,27 @@ function MonumentWord({ word, variant }: MonumentWordProps) {
         lengthAdjust="spacingAndGlyphs"
         className={variant === "outline" ? "text-primary" : "text-foreground"}
         style={{
-          fontFamily: "'Archivo', sans-serif",
-          fontStretch: "125%",
-          fontWeight: 900,
-          fontSize: "228px",
-          letterSpacing: "0.01em",
+          fontFamily: "'Bricolage Grotesque', 'Archivo', sans-serif",
+          fontWeight: 800,
+          fontSize: "232px",
+          letterSpacing: "0.005em",
         }}
       >
         {letters.map((letter, i) => {
           const active =
             variant === "filled" ? FILLED_INDICES.has(i) : !FILLED_INDICES.has(i);
+          const filledActive = variant === "filled" && active;
+          const strokedActive = variant === "outline" && active;
           return (
             <tspan
               key={`${letter}-${i}`}
               className="hero-letter"
+              fill={filledActive ? "url(#heroFillGrad)" : "none"}
+              stroke={strokedActive ? "url(#heroStrokeGrad)" : "none"}
+              strokeWidth={strokedActive ? 3.5 : 0}
               style={
                 {
                   "--hl-delay": `${200 + i * LETTER_STAGGER_MS}ms`,
-                  fill: active ? (variant === "filled" ? "currentColor" : "none") : "none",
-                  stroke: active && variant === "outline" ? "currentColor" : "none",
-                  strokeWidth: 4,
                   paintOrder: "stroke",
                 } as React.CSSProperties
               }

@@ -20,9 +20,10 @@ interface MonumentWordProps {
  * (unlike -webkit-text-stroke, which eats the interior and reads "thin").
  *
  * Finishing, layer by layer:
- * - filled: Bricolage Grotesque 800 at optical size 96 with a diagonal ice
- *   gradient that a slow sheen sweeps across (SMIL, skipped under
- *   prefers-reduced-motion) — every letter solid, one continuous monument
+ * - filled: Archivo 800 Expanded — a professional, editorial grotesque —
+ *   with a diagonal ice gradient that a slow sheen sweeps across (SMIL,
+ *   skipped under prefers-reduced-motion); every letter solid, one continuous
+ *   monument
  * - outline: blue→cyan gradient stroke tracing every glyph, with a blurred
  *   neon halo behind it (a <use> clone, so the glow matches the glyphs
  *   exactly)
@@ -79,10 +80,10 @@ function MonumentWord({ word, variant, sheen = false }: MonumentWordProps) {
         lengthAdjust="spacingAndGlyphs"
         className={variant === "outline" ? "text-primary" : "text-foreground"}
         style={{
-          fontFamily: "'Bricolage Grotesque', 'Archivo', sans-serif",
+          fontFamily: "'Archivo', 'Inter', sans-serif",
           fontWeight: 800,
+          fontStretch: "125%",
           fontSize: "232px",
-          fontVariationSettings: "'opsz' 96",
           letterSpacing: "0.005em",
         }}
       >

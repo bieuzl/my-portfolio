@@ -11,7 +11,7 @@ import { About } from "@/sections/About";
  * - the caption row carries the localized mono caption
  */
 describe("about portrait", () => {
-  it("renders the duotone portrait as an inline WebP with localized alt", () => {
+  it("renders the portrait as an inline WebP with localized alt", () => {
     const { container } = render(<About />);
     const img = container.querySelector("img");
     expect(img).not.toBeNull();
@@ -45,7 +45,7 @@ describe("about portrait", () => {
   it("renders the localized caption row", () => {
     const { container } = render(<About />);
     const caption = container.querySelector("figcaption");
-    expect(caption?.textContent?.toLowerCase()).toContain("duotone");
+    expect(caption?.textContent?.toLowerCase()).toContain("gabriel");
     expect(caption?.textContent).toContain("gabriel.dev");
   });
 });

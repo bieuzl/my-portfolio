@@ -24,50 +24,31 @@ describe("monumental hero", () => {
     expect(filledLetters.length).toBe(7);
     expect(outlineLetters.length).toBe(7);
 
-    // filled layer: 4 solid letters (G, B, I, L) with the ice gradient fill
+    // filled layer: all 7 letters solid with the ice gradient fill
     const solid = [...filledLetters].filter((t) =>
       (t.getAttribute("fill") ?? "").includes("url("),
     );
-    expect(solid.length).toBe(4);
-    // outline layer: 3 stroked letters (A, R, E) with the gradient stroke
+    expect(solid.length).toBe(7);
+    // outline layer: all 7 letters traced with the gradient stroke
     const stroked = [...outlineLetters].filter((t) =>
       (t.getAttribute("stroke") ?? "").includes("url("),
     );
-    expect(stroked.length).toBe(3);
+    expect(stroked.length).toBe(7);
   });
 
-  it("embeds the portrait inside the A glyph of the outline layer", () => {
+  it("is pure typography — no raster media embedded in the monument", () => {
     const { container } = render(<Hero />);
-    // glyph-shaped clip built from a standalone "A" at the measured spot
-    const clip = container.querySelector('clipPath[id="aGlyphClip"]');
-    expect(clip).not.toBeNull();
-    expect(clip?.querySelector("text")?.textContent).toBe("A");
+    expect(container.querySelector("svg image")).toBeNull();
+    expect(container.querySelector("clipPath")).toBeNull();
 
-    // the photo paints through that clip…
-    const photo = container.querySelector("svg image");
-    expect(photo?.getAttribute("clip-path")).toBe("url(#aGlyphClip)");
-    expect(photo?.getAttribute("href")).toContain("data:image/jpeg;base64,");
-
-    // …and a fill:none stroke-only "A" repaints the gradient ring on top
-    const ring = [
-      ...container.querySelectorAll<SVGTextElement>("svg > text"),
-    ].find(
-      (t) =>
-        t.textContent === "A" &&
-        t.getAttribute("fill") === "none" &&
-        (t.getAttribute("stroke") ?? "").includes("url("),
-    );
-    expect(ring).toBeDefined();
-
-    // the word's own A tspan keeps its gradient stroke under the photo
+    // every outline-layer letter: transparent fill + gradient stroke
     const outline = [
       ...container.querySelectorAll<SVGTextElement>("svg > text"),
     ].filter((t) => t.querySelectorAll("tspan").length === 7)[1];
-    const a = [...outline.querySelectorAll("tspan")].find(
-      (t) => t.textContent === "A",
-    );
-    expect(a?.getAttribute("fill")).toBe("none");
-    expect(a?.getAttribute("stroke")).toContain("url(");
+    for (const tspan of outline.querySelectorAll("tspan")) {
+      expect(tspan.getAttribute("fill")).toBe("none");
+      expect(tspan.getAttribute("stroke")).toContain("url(");
+    }
   });
 
   it("anchors exactly one microtext to each of the four corners", () => {

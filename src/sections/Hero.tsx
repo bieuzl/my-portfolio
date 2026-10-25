@@ -2,16 +2,12 @@ import { useTranslation } from "react-i18next";
 import { getPortfolioContent } from "@/content";
 import { normalizeLocale } from "@/i18n";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
-import { PORTRAIT_DATA_URI } from "@/assets/portrait";
-
-/** Letters rendered solid (even indices); the rest render as outline only. */
-const FILLED_INDICES = new Set([0, 2, 4, 6]);
 
 const LETTER_STAGGER_MS = 40;
 
 interface MonumentWordProps {
   word: string;
-  /** "filled" paints solid letters; "outline" paints thick-stroke letters. */
+  /** "filled" paints solid letters; "outline" paints the electric rim. */
   variant: "filled" | "outline";
   /** filled only: drift a light sheen across the gradient (motion-safe). */
   sheen?: boolean;
@@ -24,12 +20,12 @@ interface MonumentWordProps {
  * (unlike -webkit-text-stroke, which eats the interior and reads "thin").
  *
  * Finishing, layer by layer:
- * - filled: Bricolage Grotesque 800 with a diagonal ice gradient that a slow
- *   sheen sweeps across (SMIL, skipped under prefers-reduced-motion)
- * - outline: blue→cyan gradient stroke with a blurred neon halo behind it
- *   (a <use> clone, so the glow matches the glyphs exactly), and the "A"
- *   carries Gabriel's portrait — a blue-duotone photo clipped by a clipPath
- *   carved from the glyph shape, with the gradient ring repainted on top
+ * - filled: Bricolage Grotesque 800 at optical size 96 with a diagonal ice
+ *   gradient that a slow sheen sweeps across (SMIL, skipped under
+ *   prefers-reduced-motion) — every letter solid, one continuous monument
+ * - outline: blue→cyan gradient stroke tracing every glyph, with a blurred
+ *   neon halo behind it (a <use> clone, so the glow matches the glyphs
+ *   exactly)
  */
 function MonumentWord({ word, variant, sheen = false }: MonumentWordProps) {
   const letters = [...word.toUpperCase()];
@@ -62,30 +58,6 @@ function MonumentWord({ word, variant, sheen = false }: MonumentWordProps) {
               <stop offset="0%" stopColor="#5aa2ff" />
               <stop offset="100%" stopColor="#38e1ff" />
             </linearGradient>
-            {/* portrait clipped by the "A" glyph. Measured in the browser
-                (Bricolage 800 @232px, word textLength=960 from x=20): the A
-                ink box is x=184.67 y=-17.65 w=167.5 h=278.26 — aspect 0.602,
-                ~the photo's 240x400 (0.6), so slice barely crops. A clipPath
-                + userSpace image is used instead of an objectBoundingBox
-                pattern because Chromium mishandles fractional units on
-                <image> inside patterns. Re-measure if word/font changes. */}
-            <clipPath id="aGlyphClip">
-              <text
-                x="268.42"
-                y="198"
-                textAnchor="middle"
-                textLength="167.5"
-                lengthAdjust="spacingAndGlyphs"
-                style={{
-                  fontFamily: "'Bricolage Grotesque', 'Archivo', sans-serif",
-                  fontWeight: 800,
-                  fontSize: "232px",
-                  letterSpacing: "0.005em",
-                }}
-              >
-                A
-              </text>
-            </clipPath>
             <filter id="heroGlow" x="-15%" y="-30%" width="130%" height="160%">
               <feGaussianBlur stdDeviation="9" />
             </filter>
@@ -110,24 +82,19 @@ function MonumentWord({ word, variant, sheen = false }: MonumentWordProps) {
           fontFamily: "'Bricolage Grotesque', 'Archivo', sans-serif",
           fontWeight: 800,
           fontSize: "232px",
+          fontVariationSettings: "'opsz' 96",
           letterSpacing: "0.005em",
         }}
       >
         {letters.map((letter, i) => {
-          const active =
-            variant === "filled" ? FILLED_INDICES.has(i) : !FILLED_INDICES.has(i);
-          const filledActive = variant === "filled" && active;
-          const strokedActive = variant === "outline" && active;
-          const portraitGlyph = variant === "outline" && letter === "A";
+          const filledLayer = variant === "filled";
           return (
             <tspan
               key={`${letter}-${i}`}
               className="hero-letter"
-              fill={filledActive ? "url(#heroFillGrad)" : "none"}
-              stroke={
-                strokedActive || portraitGlyph ? "url(#heroStrokeGrad)" : "none"
-              }
-              strokeWidth={strokedActive || portraitGlyph ? 3.5 : 0}
+              fill={filledLayer ? "url(#heroFillGrad)" : "none"}
+              stroke={filledLayer ? "none" : "url(#heroStrokeGrad)"}
+              strokeWidth={filledLayer ? 0 : 3.5}
               style={
                 {
                   "--hl-delay": `${200 + i * LETTER_STAGGER_MS}ms`,
@@ -140,42 +107,6 @@ function MonumentWord({ word, variant, sheen = false }: MonumentWordProps) {
           );
         })}
       </text>
-
-      {/* portrait inside the A: photo clipped to the glyph, then the gradient
-          stroke repainted on top so the ring stays crisp over the photo */}
-      {variant === "outline" && (
-        <>
-          <image
-            href={PORTRAIT_DATA_URI}
-            x="184.67"
-            y="-17.65"
-            width="167.5"
-            height="278.26"
-            preserveAspectRatio="xMidYMid slice"
-            clipPath="url(#aGlyphClip)"
-            aria-hidden="true"
-          />
-          <text
-            x="268.42"
-            y="198"
-            textAnchor="middle"
-            textLength="167.5"
-            lengthAdjust="spacingAndGlyphs"
-            fill="none"
-            stroke="url(#heroStrokeGrad)"
-            strokeWidth="3.5"
-            aria-hidden="true"
-            style={{
-              fontFamily: "'Bricolage Grotesque', 'Archivo', sans-serif",
-              fontWeight: 800,
-              fontSize: "232px",
-              letterSpacing: "0.005em",
-            }}
-          >
-            A
-          </text>
-        </>
-      )}
     </svg>
   );
 }

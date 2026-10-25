@@ -9,12 +9,12 @@ import { ABOUT_PORTRAIT_URI } from "@/assets/about-portrait";
 /**
  * Apresentação — retrato editorial + texto.
  *
- * A foto real do Gabriel recebe o mesmo tratamento duotone azul do glifo "A"
- * do hero, emoldurada numa composição técnica: um "A" fantasma atrás (eco do
- * hero), moldura deslocada, anel de gradiente que se desenha por cima (mesmas
- * cores de heroStrokeGrad), grão de filme e um tilt sutil ao passar o mouse.
- * A coreografia de entrada (clip wipe + ring draw) dispara via useInView e é
- * neutralizada sob prefers-reduced-motion (ver index.css).
+ * A foto real do Gabriel é encaixada no quadro 3:4 sem filtros de cor,
+ * emoldurada numa composição técnica: um "A" fantasma atrás (eco do hero),
+ * moldura deslocada, anel de gradiente que se desenha por cima (mesmas cores
+ * de heroStrokeGrad) e um tilt sutil ao passar o mouse. A coreografia de
+ * entrada (clip wipe + ring draw) dispara via useInView e é neutralizada sob
+ * prefers-reduced-motion (ver index.css).
  */
 export function About() {
   const { t } = useTranslation();
@@ -95,7 +95,7 @@ export function About() {
             ref={tiltRef}
             className="about-portrait-tilt relative z-10 m-0"
           >
-            <div className="about-portrait-frame about-portrait-grain relative aspect-[3/4] overflow-hidden bg-card shadow-[0_30px_80px_-20px_rgba(56,140,255,0.25)]">
+            <div className="about-portrait-frame relative aspect-[3/4] overflow-hidden bg-card shadow-[0_30px_80px_-20px_rgba(56,140,255,0.25)]">
               <img
                 src={ABOUT_PORTRAIT_URI}
                 alt={t("about.portraitAlt")}

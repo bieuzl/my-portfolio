@@ -308,6 +308,16 @@ function ProjectDetailsSubpage({
 
           {/* Notion Document Content Blocks */}
           <div className="mt-8 space-y-8 font-sans text-[15px] leading-[1.75] text-[#cfcfcf]">
+            {project.previewImage && (
+              <div className="py-1">
+                <img
+                  src={project.previewImage}
+                  alt={`${project.title} — Gastei R$ 50 no Uber`}
+                  className="mx-auto w-full select-none object-contain"
+                />
+              </div>
+            )}
+
             {project.subpageSections ? (
               project.subpageSections.map((sec) => (
                 <section key={sec.heading} className="space-y-4">

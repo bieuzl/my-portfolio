@@ -118,22 +118,86 @@ export const en: PortfolioContent = {
       id: "proj-financer-ai",
       year: "In development",
       title: "FinancerAI",
-      subtitle: "Expense and income tracking via chat messages",
+      subtitle: "Smart message-driven financial control · In development",
       role: "Java and Spring Boot back-end: business rules, JWT authentication, security, and PostgreSQL persistence.",
       stackSummary:
-        "Java 17, Spring Boot, Spring Security, Spring Data JPA, PostgreSQL, Node.js (Fastify), React, Google Gemini API",
+        "Java 17 · Spring Boot · Spring Security · Spring Data JPA · PostgreSQL · Node.js (Fastify) · React · Google Gemini API",
       team: "3 developers",
       privateRepo: false,
       previewImage: "/models/financerai-preview.svg",
       context:
-        "Financial tracking system in development: users send WhatsApp messages like “Gastei R$ 50 no Uber” (“Spent R$ 50 on Uber”) and the application records categorized income and expenses.",
+        "Message-based financial tracking: AI reads WhatsApp messages like “Gastei R$ 50 no Uber” (“Spent R$ 50 on Uber”) and turns them into categorized income and expenses.",
       contribution:
-        "I develop the Java 17 and Spring Boot back-end service (backend-java module). I structured the layered architecture (controller, service, repository, entity, dto, and config), PostgreSQL persistence with Spring Data JPA, payload validation, and JWT authentication with Spring Security.",
-      details: [
-        "Node.js (Fastify) service receives WhatsApp messages and calls the Google Gemini API to extract transaction amount, type (income or expense), description, and category.",
-        "Java 17 and Spring Boot 4 API handles financial business rules, user management, and request validation (Bean Validation).",
-        "Stateless JWT authentication and route protection configured with Spring Security.",
-        "Relational persistence in PostgreSQL via Spring Data JPA, serving consolidated transaction data to the React dashboard.",
+        "Responsible for developing the Java 17 and Spring Boot back-end module (backend-java): layered architecture, financial business rules, JWT authentication with Spring Security, and PostgreSQL persistence.",
+      details: [],
+      subpageSections: [
+        {
+          heading: "About the product",
+          paragraphs: [
+            "FinancerAI is a financial tracking platform that uses Artificial Intelligence to automate logging income, expenses, and financial reports directly through WhatsApp.",
+            "The goal is to let users record daily financial transactions in natural language without filling out spreadsheets or manual forms.",
+          ],
+        },
+        {
+          heading: "How it works",
+          paragraphs: [
+            "The user sends a simple message on WhatsApp, such as “Gastei R$ 50 no Uber” (“Spent R$ 50 on Uber”).",
+            "The integration service receives the message and calls the AI model (Google Gemini) to parse the text and extract the transaction type (income or expense), amount, description, and category.",
+            "Next, the core Java and Spring Boot API validates the business rules, persists the transaction in PostgreSQL, and serves the updated data to the React dashboard.",
+          ],
+        },
+        {
+          heading: "My role",
+          paragraphs: [
+            "I am responsible for developing the Java and Spring Boot back-end module (backend-java), which handles the platform's business rules, security, and data persistence.",
+          ],
+          items: [
+            {
+              title: "Layered Architecture — Java 17 & Spring Boot",
+              body: "Structuring the backend-java module with clear separation of concerns across controller (HTTP/JSON requests), service (business rules and validations), repository (data access), entity (JPA mapping), dto, and config.",
+            },
+            {
+              title: "JWT Authentication & Security — Spring Security",
+              body: "Implementing stateless authentication and authorization with JWT tokens, route protection, and credential validation.",
+            },
+            {
+              title: "Business Rules & Persistence — Spring Data JPA & PostgreSQL",
+              body: "Modeling user and financial entities in PostgreSQL, validating payloads with Bean Validation, and exposing REST endpoints.",
+            },
+          ],
+        },
+        {
+          heading: "Architecture and technical decisions",
+          paragraphs: [
+            "The system uses a distributed service architecture: the Node.js (Fastify) service handles WhatsApp communication (Baileys) and Google Gemini API calls, while the Java (Spring Boot) service acts as the core engine for financial business rules and data integrity.",
+            "This separation keeps the financial domain isolated in a strongly typed Java API backed by PostgreSQL and consumed by the React dashboard.",
+          ],
+        },
+        {
+          heading: "Technologies",
+          items: [
+            {
+              title: "Documented repository stack",
+              body: "Java 17 · Spring Boot · Spring Security · Spring Data JPA · JWT · PostgreSQL · Node.js (Fastify) · Google Gemini API · React · Docker",
+            },
+          ],
+        },
+        {
+          heading: "Team and development",
+          paragraphs: [
+            "Developed by a 3-developer team, splitting responsibilities across the Java/Spring Boot back-end, the Node.js/AI integration service, and the React front-end dashboard.",
+          ],
+          items: [
+            {
+              title: "Status",
+              body: "In development.",
+            },
+            {
+              title: "GitHub Repository",
+              body: "https://github.com/EzequielMags/FinancerAI",
+            },
+          ],
+        },
       ],
       technologies: [
         "Java 17",

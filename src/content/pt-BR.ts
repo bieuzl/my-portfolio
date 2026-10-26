@@ -118,22 +118,86 @@ export const ptBR: PortfolioContent = {
       id: "proj-financer-ai",
       year: "Em desenvolvimento",
       title: "FinancerAI",
-      subtitle: "Registro de receitas e despesas por mensagem",
+      subtitle: "Controle financeiro inteligente por mensagem · Em desenvolvimento",
       role: "Back-end em Java e Spring Boot: regras de negócio, autenticação JWT, segurança e persistência no PostgreSQL.",
       stackSummary:
-        "Java 17, Spring Boot, Spring Security, Spring Data JPA, PostgreSQL, Node.js (Fastify), React, Google Gemini API",
+        "Java 17 · Spring Boot · Spring Security · Spring Data JPA · PostgreSQL · Node.js (Fastify) · React · Google Gemini API",
       team: "3 desenvolvedores",
       privateRepo: false,
       previewImage: "/models/financerai-preview.svg",
       context:
-        "Sistema de controle financeiro em desenvolvimento: o usuário envia mensagens como “Gastei R$ 50 no Uber” pelo WhatsApp e a aplicação registra receitas e despesas classificadas por categoria.",
+        "Controle financeiro por mensagem: a IA lê frases como “Gastei R$ 50 no Uber” enviadas pelo WhatsApp e as transforma em receitas e despesas organizadas por categoria.",
       contribution:
-        "Atuo no desenvolvimento do back-end em Java 17 e Spring Boot (módulo backend-java). Estruturei a arquitetura em camadas (controller, service, repository, entity, dto e config), a persistência no PostgreSQL com Spring Data JPA, a validação de payloads e a configuração de segurança e autenticação JWT com Spring Security.",
-      details: [
-        "Serviço em Node.js (Fastify) recebe as mensagens do WhatsApp e consulta a API do Google Gemini para extrair valor, tipo da transação, descrição e categoria.",
-        "API em Java 17 e Spring Boot 4 centraliza as regras de negócio financeiras, o cadastro de usuários e as validações de entrada (Bean Validation).",
-        "Autenticação stateless com tokens JWT e controle de acesso configurados no Spring Security.",
-        "Persistência relacional no PostgreSQL via Spring Data JPA, fornecendo os dados consolidados para o dashboard em React.",
+        "Responsável pelo desenvolvimento do módulo back-end em Java 17 e Spring Boot (backend-java): arquitetura em camadas, regras de negócio financeiras, autenticação JWT com Spring Security e persistência no PostgreSQL.",
+      details: [],
+      subpageSections: [
+        {
+          heading: "Sobre o produto",
+          paragraphs: [
+            "O FinancerAI é uma plataforma de controle financeiro que utiliza Inteligência Artificial para automatizar o registro de receitas, despesas e geração de relatórios diretamente pelo WhatsApp.",
+            "A proposta é permitir que o usuário registre suas movimentações financeiras em linguagem natural no dia a dia, sem precisar preencher planilhas ou formulários manuais.",
+          ],
+        },
+        {
+          heading: "Como funciona",
+          paragraphs: [
+            "O usuário envia uma mensagem simples no WhatsApp, como “Gastei R$ 50 no Uber” ou “Recebi R$ 500 pela criação de um site”.",
+            "O serviço de integração recebe a mensagem e aciona o modelo de IA (Google Gemini) para interpretar o texto e extrair estruturadamente o tipo da movimentação (receita ou despesa), o valor, a descrição e a categoria.",
+            "Em seguida, a API principal em Java e Spring Boot valida as regras de negócio, persiste a transação no PostgreSQL e disponibiliza os dados atualizados para visualização em tempo real no dashboard em React.",
+          ],
+        },
+        {
+          heading: "Minha atuação",
+          paragraphs: [
+            "Sou responsável pelo desenvolvimento do módulo back-end em Java e Spring Boot (backend-java), que concentra as regras de negócio, a segurança e a persistência de dados da plataforma.",
+          ],
+          items: [
+            {
+              title: "Arquitetura em camadas — Java 17 e Spring Boot",
+              body: "Estruturação do módulo backend-java separando responsabilidades entre controller (requisições HTTP/JSON), service (regras de negócio e validações), repository (acesso a dados), entity (mapeamento JPA), dto e config.",
+            },
+            {
+              title: "Autenticação JWT e Segurança — Spring Security",
+              body: "Implementação do fluxo de autenticação e autorização com tokens JWT, proteção de rotas da API e validação das credenciais de acesso ao painel.",
+            },
+            {
+              title: "Regras de Negócio e Persistência — Spring Data JPA & PostgreSQL",
+              body: "Modelagem das entidades financeiras e de usuários no PostgreSQL, validação de dados com Bean Validation e criação dos endpoints REST consumidos pelos demais serviços.",
+            },
+          ],
+        },
+        {
+          heading: "Arquitetura e decisões técnicas",
+          paragraphs: [
+            "O sistema adota uma arquitetura distribuída em serviços especializados: o serviço em Node.js (Fastify) cuida da comunicação com o WhatsApp (Baileys) e da integração com a API do Google Gemini, enquanto o serviço em Java (Spring Boot) atua como o núcleo central das regras de negócio e integridade dos dados.",
+            "Essa separação mantém o domínio financeiro isolado e protegido em uma API fortemente tipada em Java, com persistência relacional no PostgreSQL e consumo direto pelo front-end em React.",
+          ],
+        },
+        {
+          heading: "Tecnologias",
+          items: [
+            {
+              title: "Stack documentada no repositório",
+              body: "Java 17 · Spring Boot · Spring Security · Spring Data JPA · JWT · PostgreSQL · Node.js (Fastify) · Google Gemini API · React · Docker",
+            },
+          ],
+        },
+        {
+          heading: "Equipe e desenvolvimento",
+          paragraphs: [
+            "Projeto desenvolvido por uma equipe de 3 desenvolvedores, com divisão clara entre o back-end Java/Spring Boot, o serviço de integrações Node.js/IA e o dashboard front-end em React.",
+          ],
+          items: [
+            {
+              title: "Status",
+              body: "Em desenvolvimento.",
+            },
+            {
+              title: "Repositório no GitHub",
+              body: "https://github.com/EzequielMags/FinancerAI",
+            },
+          ],
+        },
       ],
       technologies: [
         "Java 17",

@@ -7,8 +7,7 @@
     "scrollDown": "Scroll to explore",
     "languageSwitcher": "Language",
     "placeholderBadge": "Sample content",
-    "projectsScene": "Decorative 3D sculpture of a blue torus knot",
-    "heroScene": "Abstract 3D crystal sculpture in optical glass, with two mirrored prismatic halves"
+    "projectsScene": "Decorative 3D sculpture of a blue torus knot"
   },
   "nav": {
     "about": "About",
@@ -19,11 +18,12 @@
   },
   "hero": {
     "kicker": "Portfolio — software development",
-    "greeting": "Hello, I'm",
     "role": "Software Developer",
     "pitch": "[Write 2–3 sentences here about who you are, what you do, and the kind of opportunity or project you are looking for.]",
     "scroll": "Scroll",
-    "personalPortfolio": "Personal portfolio"
+    "wireframeHint": "spin the structure",
+    "greeting1": "HELLO,",
+    "greeting2": "I'M"
   },
   "sections": {
     "about": "About",

@@ -90,10 +90,10 @@
 }
 
 @layer utilities {
-  /* Display: Geist — grotesca geométrica precisa, tracking fechado (Apple/Vercel) */
+  /* Display: Archivo Expanded — heavy, tight, editorial */
   .font-display {
-    font-family: "Geist", "Inter", ui-sans-serif, system-ui, sans-serif;
-    letter-spacing: -0.02em;
+    font-family: "Archivo", "Inter", ui-sans-serif, system-ui, sans-serif;
+    font-stretch: 125%;
   }
   .font-sans {
     font-family: "Inter", ui-sans-serif, system-ui, sans-serif;

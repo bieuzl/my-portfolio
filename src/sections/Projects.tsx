@@ -174,11 +174,11 @@ export function Projects() {
       ref={sectionRef}
       aria-labelledby="projetos-titulo"
       onPointerMove={onPointerMove}
-      className="relative overflow-hidden border-t border-border/60"
+      className="relative border-t border-border/60"
     >
       {/* decorative sculpture — detail beside the heading */}
       <div
-        className="pointer-events-none absolute right-5 top-4 z-0 h-24 w-24 opacity-70 md:right-8 md:top-24 md:h-64 md:w-64 md:opacity-100"
+        className="pointer-events-none absolute right-5 top-20 z-0 h-36 w-36 opacity-70 md:right-8 md:top-24 md:h-64 md:w-64 md:opacity-100"
         role="img"
         aria-label={t("a11y.projectsScene")}
       >

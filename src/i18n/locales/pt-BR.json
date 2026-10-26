@@ -7,8 +7,7 @@
     "scrollDown": "Role para explorar",
     "languageSwitcher": "Idioma",
     "placeholderBadge": "Conteúdo de exemplo",
-    "projectsScene": "Escultura 3D decorativa de um nó toroidal azul",
-    "heroScene": "Escultura cristalina 3D abstrata em vidro óptico, com duas metades prismáticas espelhadas"
+    "projectsScene": "Escultura 3D decorativa de um nó toroidal azul"
   },
   "nav": {
     "about": "Apresentação",
@@ -19,11 +18,12 @@
   },
   "hero": {
     "kicker": "Portfólio — desenvolvimento de software",
-    "greeting": "Olá, eu sou",
     "role": "Desenvolvedor de Software",
     "pitch": "[Escreva aqui 2–3 frases sobre quem você é, o que faz e o tipo de oportunidade ou projeto que procura.]",
     "scroll": "Role",
-    "personalPortfolio": "Portfólio pessoal"
+    "wireframeHint": "gire a estrutura",
+    "greeting1": "OLÁ,",
+    "greeting2": "EU SOU"
   },
   "sections": {
     "about": "Apresentação",

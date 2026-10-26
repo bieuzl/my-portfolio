@@ -21,13 +21,15 @@ describe("3D sculpture fallback", () => {
     expect(screen.getByRole("heading", { name: /projetos/i })).toBeInTheDocument();
   });
 
-  it("hero keeps content and the static crystal silhouette with no WebGL", () => {
+  it("hero renders the monumental word with no 3D dependency", () => {
     render(<Hero />);
     expect(screen.getByRole("heading", { level: 1 })).toBeInTheDocument();
-    expect(screen.getByText("Olá, eu sou")).toBeInTheDocument();
-    // canvas escondido; a silhueta SVG da escultura assume o centro do painel
-    expect(document.querySelector("canvas")).toHaveClass("opacity-0");
-    expect(document.querySelectorAll('path[stroke="currentColor"]').length).toBe(2);
+    // two word layers (filled + outline); helper texts (glyph clip, stroke
+    // ring) carry no tspans and don't count as layers
+    const wordLayers = [
+      ...document.querySelectorAll<SVGTextElement>("svg > text"),
+    ].filter((t) => t.querySelectorAll("tspan").length === 7);
+    expect(wordLayers.length).toBe(2);
   });
 });
 

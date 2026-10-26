@@ -76,8 +76,9 @@ export function About() {
               stroke="currentColor"
               strokeWidth="2.5"
               style={{
-                fontFamily: "'Geist', 'Inter', sans-serif",
-                fontWeight: 600,
+                fontFamily: "'Archivo', 'Inter', sans-serif",
+                fontWeight: 800,
+                fontStretch: "125%",
                 fontSize: "400px",
               }}
             >

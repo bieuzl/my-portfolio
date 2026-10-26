@@ -18,15 +18,15 @@ interface MonumentWordProps {
 }
 
 /**
- * One layer of the monumental name — a handwritten signature in Caveat.
+ * One layer of the monumental name — a calligraphic script signature in Great Vibes.
  * Both variants render every glyph so the two layers stack pixel-perfect.
  * SVG text + paint-order keeps the stroke OUTSIDE the glyph (unlike
  * -webkit-text-stroke, which eats the interior and reads "thin").
  *
  * Finishing, layer by layer:
- * - filled: Caveat 600 with a diagonal ice gradient that a slow sheen
+ * - filled: Great Vibes with a diagonal ice gradient that a slow sheen
  *   sweeps across (SMIL, skipped under prefers-reduced-motion) — every
- *   letter solid, one continuous signature
+ *   letter solid, one continuous calligraphic signature
  * - outline: blue→cyan gradient stroke tracing every glyph, with a blurred
  *   neon halo behind it (a <use> clone, so the glow matches the glyphs
  *   exactly)
@@ -35,8 +35,8 @@ function MonumentWord({ word, variant, sheen = false, className = "w-[min(94vw,1
   const letters = [...word];
   return (
     <svg
-      viewBox="0 0 1000 260"
-      className={`${className} select-none`}
+      viewBox="0 0 1000 300"
+      className={`${className} select-none overflow-visible`}
       role="presentation"
     >
       <defs>
@@ -77,13 +77,13 @@ function MonumentWord({ word, variant, sheen = false, className = "w-[min(94vw,1
       <text
         id={variant === "outline" ? "heroWordOutline" : undefined}
         x="500"
-        y="190"
+        y="205"
         textAnchor="middle"
         className={variant === "outline" ? "text-primary" : "text-foreground"}
         style={{
-          fontFamily: "'Caveat', cursive",
-          fontWeight: 600,
-          fontSize: "250px",
+          fontFamily: "'Great Vibes', cursive",
+          fontWeight: 400,
+          fontSize: "240px",
         }}
       >
         {letters.map((letter, i) => {
@@ -292,10 +292,10 @@ export function Hero() {
               />
             </div>
           </div>
-          {/* surname as a signature — handwritten, slightly tilted */}
+          {/* surname as a signature — calligraphic script, slightly tilted */}
           <p
-            className="mt-1 text-3xl font-medium text-foreground md:text-4xl"
-            style={{ fontFamily: "'Caveat', cursive", transform: "rotate(-2deg)" }}
+            className="mt-1 text-3xl font-normal text-foreground md:text-4xl"
+            style={{ fontFamily: "'Great Vibes', cursive", transform: "rotate(-2deg)" }}
           >
             {t("hero.surname")}
           </p>

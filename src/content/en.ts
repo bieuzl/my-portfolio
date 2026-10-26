@@ -126,13 +126,12 @@ export const en: PortfolioContent = {
   ],
   experience: [
     {
-      id: "exp-impacta",
-      period: "August 2026",
-      role: "Systems Analysis and Development (1st semester)",
-      org: "Faculdade Impacta",
+      id: "exp-ayni",
+      period: "2026",
+      role: "Back-end & AI Developer",
+      org: "Ayni · Technology Startup",
       summary:
-        "Degree focused on software engineering, systems architecture, data modeling, and back-end development.",
-      note: "Note: Completed 3 semesters at Cruzeiro do Sul University (started March 2024) before restarting the degree at Faculdade Impacta.",
+        "Building the Ayni startup and developing Ayni CRM, working on commercial solutions architecture, autonomous agent orchestration, and AI-driven automation.",
       placeholder: false,
     },
     {
@@ -145,12 +144,13 @@ export const en: PortfolioContent = {
       placeholder: false,
     },
     {
-      id: "exp-ayni",
-      period: "2026",
-      role: "Back-end & AI Developer",
-      org: "Ayni · Technology Startup",
+      id: "exp-impacta",
+      period: "August 2026",
+      role: "Systems Analysis and Development (1st semester)",
+      org: "Faculdade Impacta",
       summary:
-        "Building the Ayni startup and developing Ayni CRM, working on commercial solutions architecture, autonomous agent orchestration, and AI-driven automation.",
+        "Degree focused on software engineering, systems architecture, data modeling, and back-end development.",
+      note: "Note: Completed 3 semesters at Cruzeiro do Sul University (started March 2024) before restarting the degree at Faculdade Impacta.",
       placeholder: false,
     },
   ],

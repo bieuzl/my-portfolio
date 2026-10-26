@@ -126,13 +126,12 @@ export const ptBR: PortfolioContent = {
   ],
   experience: [
     {
-      id: "exp-impacta",
-      period: "Agosto de 2026",
-      role: "Análise e Desenvolvimento de Sistemas (1º semestre)",
-      org: "Faculdade Impacta",
+      id: "exp-ayni",
+      period: "2026",
+      role: "Desenvolvedor Back-end & IA",
+      org: "Ayni · Startup de Tecnologia",
       summary:
-        "Graduação focada em engenharia de software, arquitetura de sistemas, modelagem de dados e desenvolvimento back-end.",
-      note: "Obs.: Cursei 3 semestres na Cruzeiro do Sul (início em março de 2024) e reiniciei a graduação na Faculdade Impacta.",
+        "Construção da startup Ayni e desenvolvimento do Ayni CRM, atuando na arquitetura de soluções comerciais, orquestração de agentes autônomos e automação com inteligência artificial.",
       placeholder: false,
     },
     {
@@ -145,12 +144,13 @@ export const ptBR: PortfolioContent = {
       placeholder: false,
     },
     {
-      id: "exp-ayni",
-      period: "2026",
-      role: "Desenvolvedor Back-end & IA",
-      org: "Ayni · Startup de Tecnologia",
+      id: "exp-impacta",
+      period: "Agosto de 2026",
+      role: "Análise e Desenvolvimento de Sistemas (1º semestre)",
+      org: "Faculdade Impacta",
       summary:
-        "Construção da startup Ayni e desenvolvimento do Ayni CRM, atuando na arquitetura de soluções comerciais, orquestração de agentes autônomos e automação com inteligência artificial.",
+        "Graduação focada em engenharia de software, arquitetura de sistemas, modelagem de dados e desenvolvimento back-end.",
+      note: "Obs.: Cursei 3 semestres na Cruzeiro do Sul (início em março de 2024) e reiniciei a graduação na Faculdade Impacta.",
       placeholder: false,
     },
   ],

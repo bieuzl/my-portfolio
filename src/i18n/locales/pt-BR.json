@@ -6,7 +6,6 @@
     "closeMenu": "Fechar menu",
     "scrollDown": "Role para explorar",
     "languageSwitcher": "Idioma",
-    "placeholderBadge": "Conteúdo de exemplo",
     "projectsScene": "Estrutura 3D modular em visão explodida"
   },
   "nav": {
@@ -58,7 +57,6 @@
     "privateRepo": "Repositório privado",
     "techLabel": "Tecnologias",
     "linksLabel": "Links",
-    "placeholderLink": "Link a definir",
     "viewGithub": "Ver no GitHub",
     "viewDetails": "Detalhes da construção",
     "caseStudyBadge": "Estudo de caso técnico",

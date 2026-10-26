@@ -1,6 +1,5 @@
 import { useTranslation } from "react-i18next";
 import { SectionHeading } from "@/components/SectionHeading";
-import { PlaceholderBadge } from "@/components/PlaceholderBadge";
 import { useInView } from "@/hooks/useInView";
 import { getPortfolioContent } from "@/content";
 import { normalizeLocale } from "@/i18n";
@@ -45,11 +44,6 @@ export function Experience() {
                   <p className="mt-2 max-w-2xl text-xs leading-relaxed text-muted-foreground/70 italic">
                     {entry.note}
                   </p>
-                )}
-                {entry.placeholder && (
-                  <div className="mt-3">
-                    <PlaceholderBadge />
-                  </div>
                 )}
               </li>
             ))}

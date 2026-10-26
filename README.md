@@ -1,79 +1,66 @@
-# Portfólio Gabriel
+# Gabriel de França Castro — Portfólio
 
-Portfólio pessoal de desenvolvimento de software, com identidade visual própria:
-tipografia monumental (Archivo expandida + Inter + JetBrains Mono) com letras
-preenchidas e vazadas sobre uma atmosfera viva em WebGL — aurora líquida em
-shader (fbm com domain warping), estrelas com paralaxe e paleta que morfa de
-azul para índigo/violeta conforme o scroll —, escultura 3D procedural
-(nó toroidal, WebGL/Three.js) como detalhe em movimento na seção de projetos,
-e paleta escura cinematográfica com acento azul.
+Portfólio pessoal de desenvolvimento de software com foco em **Back-end (Java & Spring Boot)**, **APIs REST**, **bancos de dados relacionais (PostgreSQL)** e **aplicações com Inteligência Artificial**.
 
-## Executar
+---
+
+## Visão Geral
+
+O projeto foi construído em **React 19 + TypeScript + Vite**, combinando tipografia editorial, atmosfera procedural em **WebGL2** e elementos **3D interativos em Three.js**, com suporte bilíngue (**Português / Inglês**) e documentação técnica detalhada de cada projeto em subpáginas dedicadas.
+
+### Projetos em Destaque
+
+- **Ayni CRM** *(Startup Ayni · Em desenvolvimento)* — Plataforma de CRM com Inteligência Artificial voltada para profissionais e empresas que comercializam serviços de tecnologia. Atuação nos módulos de orquestração de agentes (`Atlas` e `Astas`), canais de atendimento, prospecção e propostas comerciais com **TypeScript, React, Supabase, PostgreSQL (RLS), Deno Edge Functions e Zod**.
+- **[FinancerAI](https://github.com/EzequielMags/FinancerAI)** *(Em desenvolvimento)* — Plataforma full-stack de controle financeiro pessoal por mensagens em linguagem natural. Atuação no desenvolvimento completo do back-end principal em **Java 17 e Spring Boot** (`Spring Security`, autenticação stateless com **JWT** e `BCrypt`, `Spring Data JPA`, regras de negócio e persistência em **PostgreSQL**), integrado ao microsserviço de IA em **Node.js (Fastify) + Google Gemini API**.
+
+---
+
+## Stack do Portfólio
+
+- **Front-end:** React 19, TypeScript, React Router, Tailwind CSS
+- **Gráficos & 3D:** Three.js (geometria facetada interativa em 360° no Hero e estrutura modular 3D na seção de projetos) + WebGL2 custom shader (`atmosphere.ts`) com fallback automático em Canvas 2D e SVG
+- **Internacionalização:** `i18next` e `react-i18next` (`pt-BR` e `en`) com paridade estrutural verificada por tipos e testes automatizados
+- **Qualidade & Testes:** Vitest, Testing Library (`@testing-library/react`), ESLint e TypeScript (`tsc -b`)
+
+---
+
+## Estrutura do Projeto
+
+```text
+src/
+  assets/       Retrato otimizado da seção Sobre mim
+  components/   Atmosphere (shader WebGL2 + fallback 2D), Magnetic, SectionHeading
+  content/      Dados estruturados do portfólio (pt-BR.ts, en.ts, types.ts)
+  hooks/        useInView, useMagnetic, useReducedMotion
+  i18n/         Configuração i18next e dicionários de interface (pt-BR.json, en.json)
+  pages/        Home
+  scene3d/      WireframeScene (Hero 3D), SculptureScene (Projetos 3D), atmosphere.ts
+  sections/     Header, Hero, About, Skills, Projects, Experience, Contact
+  test/         Suíte de testes automatizados (Vitest + Testing Library)
+```
+
+---
+
+## Como Executar Localmente
 
 ```bash
+# Instalar dependências
 npm install
-npm run dev      # desenvolvimento (porta 3000)
-npm run build    # build de produção em dist/
-npm run preview  # serve o build
-npm test         # suíte de testes (Vitest + Testing Library)
-npm run lint     # ESLint
+
+# Iniciar servidor de desenvolvimento (http://localhost:3000)
+npm run dev
+
+# Executar suíte de testes
+npm test
+
+# Gerar build de produção
+npm run build
 ```
 
-## Estrutura
+---
 
-```
-src/
-  components/  Atmosphere (aurora WebGL global + fallback 2D), SectionHeading,
-               PlaceholderBadge.
-  content/     Dados do portfólio por idioma (pt-BR.ts, en.ts) atrás da
-               interface getPortfolioContent(locale). Paridade entre idiomas
-               é garantida por tipos + testes.
-  i18n/        Configuração i18next e strings de UI (locales/*.json).
-  scene3d/     atmosphere.ts (renderer WebGL2 cru da aurora, sem Three.js)
-               e mountSculptureScene(canvas, opts), que esconde todo o
-               Three.js (shader fresnel, loop, resize, scroll).
-  sections/    Hero, About, Skills, Projects, Experience, Contact, Header.
-  hooks/       useReducedMotion, useInView.
-  test/        Testes de comportamento (idioma, navegação, fallback 3D,
-               hero monumental).
-```
+## Contato
 
-## Conteúdo pendente (placeholders)
-
-Todo texto entre `[colchetes]` e marcado como "Conteúdo de exemplo" deve ser
-substituído. Edite `src/content/pt-BR.ts` e `src/content/en.ts` (dados
-estruturados) e `src/i18n/locales/*.json` (textos de interface):
-
-1. **Hero/Apresentação**: pitch de 2–3 frases, parágrafos da bio e o que procura.
-2. **Habilidades**: substituir os grupos e itens de exemplo.
-3. **Projetos**: título, ano, contexto, contribuição, tecnologias e links
-   (preencher `href` ativa o link; vazio renderiza "Link a definir").
-4. **Experiência**: períodos, cargos, organizações e resumos.
-5. **Contato**: e-mail, GitHub, LinkedIn — hoje exibidos como texto inerte
-   até que os dados reais sejam fornecidos.
-
-## Técnicas
-
-- **Hero**: nome desenhado duas vezes em SVG (camada preenchida + camada
-  vazada, `paint-order: stroke` mantém o traço fora do glifo) sempre 100%
-  visível sobre a atmosfera; microtextos ancorados nos quatro cantos.
-- **Atmosfera global (WebGL2, sem Three.js)**: fragment shader com fbm e
-  domain warping mesclado a billow desenha fumaça líquida volumétrica; o
-  campo inteiro é advectado pelo scroll (rolar = atravessar a névoa) e
-  rajadas de velocidade empurram a fumaça com inércia; duas camadas de
-  estrelas cintilantes com paralaxe; paleta que morfa de azul para
-  índigo/violeta ao longo da página; lente suave ao redor do cursor;
-  renderização em 0.6× da resolução (upscale via CSS) para custo mínimo de
-  fill-rate. Sem WebGL2, uma aurora equivalente em canvas 2D assume. Grão de
-  filme por cima evita banding nos gradientes.
-- **3D como detalhe**: nó toroidal gerado por código na seção de projetos,
-  com ShaderMaterial fresnel grafite→ciano→azul, rotação ambiente somada a
-  uma volta extra guiada pelo scroll da seção e parallax de cursor. Three.js
-  carrega via import dinâmico (fora do caminho crítico).
-- **Fallbacks**: sem WebGL, um ornamento SVG girando substitui a escultura;
-  `prefers-reduced-motion` renderiza frame estático e desativa animações CSS.
-- **Motion**: coreografia de entrada escalonada (letras, cantos) sobre
-  `cubic-bezier(0.16, 1, 0.3, 1)`; header ganha vidro fosco só após o scroll.
-- **Acessibilidade**: skip link, navegação por teclado (menu mobile com Esc),
-  `aria-label`/`aria-pressed`, h1 real para leitores de tela, contraste ≥ 4.5:1.
-- **i18n**: pt-BR padrão; troca PT/EN persistida em localStorage.
+- **E-mail:** [gabrielcastro.dev01@gmail.com](mailto:gabrielcastro.dev01@gmail.com)
+- **LinkedIn:** [linkedin.com/in/bieuzl](https://www.linkedin.com/in/bieuzl/)
+- **GitHub:** [github.com/bieuzl](https://github.com/bieuzl)

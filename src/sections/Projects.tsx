@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { SectionHeading } from "@/components/SectionHeading";
-import { PlaceholderBadge } from "@/components/PlaceholderBadge";
 import { useInView } from "@/hooks/useInView";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import type { SceneHandle } from "@/scene3d";
@@ -50,12 +49,6 @@ function ProjectCard({
           <p className="mt-1.5 font-sans text-sm text-muted-foreground">
             {project.subtitle}
           </p>
-        )}
-
-        {project.placeholder && (
-          <div className="mt-3">
-            <PlaceholderBadge />
-          </div>
         )}
 
         <div className="mt-7 flex flex-wrap items-center gap-3">

@@ -2,9 +2,8 @@ import { describe, expect, it } from "vitest";
 import { getPortfolioContent } from "@/content";
 
 /**
- * Content parity: both locales must expose the same structure, and every
- * placeholder entry must stay flagged in both — nothing fictional may be
- * presented as real in one language and not the other.
+ * Content parity: both locales must expose the same structure across
+ * projects, subpage sections, skill groups, and experience entries.
  */
 describe("portfolio content", () => {
   it("serves the same structure in pt-BR and en", () => {
@@ -17,23 +16,19 @@ describe("portfolio content", () => {
     expect(en.experience.map((e) => e.id)).toEqual(pt.experience.map((e) => e.id));
   });
 
-  it("keeps placeholder flags identical across locales", () => {
+  it("keeps subpage section counts identical across locales", () => {
     const pt = getPortfolioContent("pt-BR");
     const en = getPortfolioContent("en");
 
-    expect(en.projects.map((p) => p.placeholder)).toEqual(
-      pt.projects.map((p) => p.placeholder),
-    );
-    expect(en.experience.map((e) => e.placeholder)).toEqual(
-      pt.experience.map((e) => e.placeholder),
+    expect(en.projects.map((p) => p.subpageSections?.length ?? 0)).toEqual(
+      pt.projects.map((p) => p.subpageSections?.length ?? 0),
     );
   });
 
-  it("renders links without href as inert text, never as dead anchors", () => {
+  it("uses valid HTTP(S) URLs for all configured project links", () => {
     for (const locale of ["pt-BR", "en"] as const) {
       for (const project of getPortfolioContent(locale).projects) {
         for (const link of project.links) {
-          // a link is either a real URL or explicitly empty (UI renders text)
           expect(link.href === "" || /^https?:\/\//.test(link.href)).toBe(true);
         }
       }

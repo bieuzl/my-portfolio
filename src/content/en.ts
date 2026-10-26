@@ -2,8 +2,6 @@ import type { PortfolioContent } from "./types";
 
 /**
  * English content — Gabriel's professional information.
- * Entries flagged `placeholder: true` still await real data and are
- * badged in the UI.
  */
 export const en: PortfolioContent = {
   name: "Gabriel",
@@ -112,7 +110,6 @@ export const en: PortfolioContent = {
         "Zod",
       ],
       links: [],
-      placeholder: false,
     },
     {
       id: "proj-financer-ai",
@@ -212,7 +209,6 @@ export const en: PortfolioContent = {
       links: [
         { label: "GitHub", href: "https://github.com/EzequielMags/FinancerAI" },
       ],
-      placeholder: false,
     },
   ],
   skillGroups: [
@@ -226,7 +222,6 @@ export const en: PortfolioContent = {
         "Business rules",
         "Application architecture",
       ],
-      placeholder: false,
     },
     {
       id: "sg-ai",
@@ -238,7 +233,6 @@ export const en: PortfolioContent = {
         "AI automation",
         "LLM integration",
       ],
-      placeholder: false,
     },
     {
       id: "sg-data",
@@ -250,7 +244,6 @@ export const en: PortfolioContent = {
         "Data modeling",
         "API integrations",
       ],
-      placeholder: false,
     },
     {
       id: "sg-tooling",
@@ -262,7 +255,6 @@ export const en: PortfolioContent = {
         "AI-assisted development",
         "Code review & validation",
       ],
-      placeholder: false,
     },
   ],
   experience: [
@@ -273,7 +265,6 @@ export const en: PortfolioContent = {
       org: "Ayni · Technology Startup",
       summary:
         "Developing the AI, channels, prospecting, and proposals modules of Ayni CRM using TypeScript, React, Supabase (PostgreSQL with RLS), and Edge Functions.",
-      placeholder: false,
     },
     {
       id: "exp-rocketseat",
@@ -282,7 +273,6 @@ export const en: PortfolioContent = {
       org: "Rocketseat",
       summary:
         "Hands-on training focused on Java, Spring Boot, REST API design, database modeling, and testing.",
-      placeholder: false,
     },
     {
       id: "exp-impacta",
@@ -292,7 +282,6 @@ export const en: PortfolioContent = {
       summary:
         "Undergraduate degree in progress focused on algorithms, software engineering, relational databases, and systems architecture.",
       note: "Note: Completed 3 semesters at Cruzeiro do Sul University (started March 2024) before restarting the degree at Faculdade Impacta.",
-      placeholder: false,
     },
   ],
 };

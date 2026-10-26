@@ -2,8 +2,6 @@ import type { PortfolioContent } from "./types";
 
 /**
  * Conteúdo em português — informações profissionais do Gabriel.
- * Entradas com `placeholder: true` ainda aguardam dados reais e são
- * sinalizadas na interface.
  */
 export const ptBR: PortfolioContent = {
   name: "Gabriel",
@@ -112,7 +110,6 @@ export const ptBR: PortfolioContent = {
         "Zod",
       ],
       links: [],
-      placeholder: false,
     },
     {
       id: "proj-financer-ai",
@@ -212,7 +209,6 @@ export const ptBR: PortfolioContent = {
       links: [
         { label: "GitHub", href: "https://github.com/EzequielMags/FinancerAI" },
       ],
-      placeholder: false,
     },
   ],
   skillGroups: [
@@ -226,7 +222,6 @@ export const ptBR: PortfolioContent = {
         "Regras de negócio",
         "Arquitetura de aplicações",
       ],
-      placeholder: false,
     },
     {
       id: "sg-ai",
@@ -238,7 +233,6 @@ export const ptBR: PortfolioContent = {
         "Automação com IA",
         "Integração com LLMs",
       ],
-      placeholder: false,
     },
     {
       id: "sg-data",
@@ -250,7 +244,6 @@ export const ptBR: PortfolioContent = {
         "Modelagem de dados",
         "Integração entre APIs",
       ],
-      placeholder: false,
     },
     {
       id: "sg-tooling",
@@ -262,7 +255,6 @@ export const ptBR: PortfolioContent = {
         "Desenvolvimento assistido por IA",
         "Revisão e validação de código",
       ],
-      placeholder: false,
     },
   ],
   experience: [
@@ -273,7 +265,6 @@ export const ptBR: PortfolioContent = {
       org: "Ayni · Startup de Tecnologia",
       summary:
         "Desenvolvimento dos módulos de IA, canais, prospecção e propostas do Ayni CRM utilizando TypeScript, React, Supabase (PostgreSQL com RLS) e Edge Functions.",
-      placeholder: false,
     },
     {
       id: "exp-rocketseat",
@@ -282,7 +273,6 @@ export const ptBR: PortfolioContent = {
       org: "Rocketseat",
       summary:
         "Formação prática focada em Java, Spring Boot, criação de APIs REST, modelagem de banco de dados e testes.",
-      placeholder: false,
     },
     {
       id: "exp-impacta",
@@ -292,7 +282,6 @@ export const ptBR: PortfolioContent = {
       summary:
         "Graduação em andamento com foco em algoritmos, engenharia de software, bancos de dados relacionais e arquitetura de sistemas.",
       note: "Obs.: Cursei 3 semestres na Cruzeiro do Sul (início em março de 2024) e reiniciei a graduação na Faculdade Impacta.",
-      placeholder: false,
     },
   ],
 };

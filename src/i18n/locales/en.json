@@ -6,7 +6,6 @@
     "closeMenu": "Close menu",
     "scrollDown": "Scroll to explore",
     "languageSwitcher": "Language",
-    "placeholderBadge": "Sample content",
     "projectsScene": "Exploded-view modular 3D engineering structure"
   },
   "nav": {
@@ -58,7 +57,6 @@
     "privateRepo": "Private repository",
     "techLabel": "Technologies",
     "linksLabel": "Links",
-    "placeholderLink": "Link TBD",
     "viewGithub": "View on GitHub",
     "viewDetails": "How it was built",
     "caseStudyBadge": "Technical case study",

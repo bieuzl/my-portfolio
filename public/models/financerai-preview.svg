@@ -1,62 +1,165 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 420" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" fill="none">
   <defs>
-    <linearGradient id="bgGrad" x1="0" y1="0" x2="680" y2="420" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#0d101c" />
-      <stop offset="100%" stop-color="#080a12" />
+    <!-- Studio ambient background -->
+    <radialGradient id="studioBg" cx="50%" cy="20%" r="85%" fx="50%" fy="15%">
+      <stop offset="0%" stop-color="#1c1c21" />
+      <stop offset="55%" stop-color="#111114" />
+      <stop offset="100%" stop-color="#09090b" />
+    </radialGradient>
+
+    <!-- Soft ambient light behind windows -->
+    <radialGradient id="ambientGlow" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.05" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Surface gradients (Apple Dark Mode / Titanium) -->
+    <linearGradient id="codeSurface" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#18181b" />
+      <stop offset="100%" stop-color="#121215" />
     </linearGradient>
-    <linearGradient id="msgGrad" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#1e3a8a" stop-opacity="0.55" />
-      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.85" />
+
+    <linearGradient id="cardSurface" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#27272a" stop-opacity="0.96" />
+      <stop offset="100%" stop-color="#1c1c1f" stop-opacity="0.96" />
     </linearGradient>
-    <linearGradient id="accentGrad" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#5aa2ff" />
-      <stop offset="100%" stop-color="#38e1ff" />
+
+    <linearGradient id="specularBorder" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.18" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.05" />
     </linearGradient>
+
+    <linearGradient id="windowBorder" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.12" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.04" />
+    </linearGradient>
+
+    <!-- Studio elevation shadows -->
+    <filter id="windowShadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="24" stdDeviation="28" flood-color="#000000" flood-opacity="0.7" />
+    </filter>
+
+    <filter id="floatingShadow" x="-15%" y="-15%" width="130%" height="145%">
+      <feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#000000" flood-opacity="0.65" />
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4" />
+    </filter>
   </defs>
 
-  <!-- Outer Frame -->
-  <rect width="680" height="420" rx="20" fill="url(#bgGrad)" stroke="#1e263d" stroke-width="1.5" />
+  <!-- Studio Canvas -->
+  <rect width="800" height="480" rx="24" fill="url(#studioBg)" />
+  <ellipse cx="400" cy="230" rx="340" ry="180" fill="url(#ambientGlow)" />
 
-  <!-- Top Message Bubble: "Gastei R$ 50 no Uber" -->
-  <g transform="translate(36, 26)">
-    <rect width="608" height="74" rx="16" fill="url(#msgGrad)" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1.2" />
-    <circle cx="38" cy="37" r="18" fill="#38bdf8" fill-opacity="0.16" />
-    <text x="38" y="43" text-anchor="middle" fill="#38e1ff" font-family="Inter, -apple-system, sans-serif" font-size="15" font-weight="600">💬</text>
-    <text x="70" y="31" fill="#94a3b8" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="0.08em">MENSAGEM RECEBIDA · WHATSAPP</text>
-    <text x="70" y="54" fill="#f8fafc" font-family="Inter, -apple-system, sans-serif" font-size="19" font-weight="600">“Gastei R$ 50 no Uber”</text>
-    <rect x="472" y="22" width="116" height="28" rx="14" fill="#0ea5e9" fill-opacity="0.15" stroke="#38e1ff" stroke-opacity="0.4" />
-    <text x="530" y="40" text-anchor="middle" fill="#7dd3fc" font-family="JetBrains Mono, monospace" font-size="11" font-weight="500">Gemini AI ✓</text>
+  <!-- ======================================================================= -->
+  <!-- LAYER 1: macOS Dark Code Window (Center Base)                           -->
+  <!-- ======================================================================= -->
+  <g transform="translate(84, 118)" filter="url(#windowShadow)">
+    <rect width="632" height="304" rx="16" fill="url(#codeSurface)" stroke="url(#windowBorder)" stroke-width="1" />
+
+    <!-- Window Header Bar -->
+    <path d="M 16 0.5 H 616 A 15.5 15.5 0 0 1 631.5 16 V 42 H 0.5 V 16 A 15.5 15.5 0 0 1 16 0.5 Z" fill="#1d1d20" />
+    <line x1="0.5" y1="42" x2="631.5" y2="42" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1" />
+
+    <!-- Muted macOS Window Controls -->
+    <circle cx="22" cy="21" r="5.5" fill="#3f3f46" />
+    <circle cx="40" cy="21" r="5.5" fill="#3f3f46" />
+    <circle cx="58" cy="21" r="5.5" fill="#3f3f46" />
+
+    <!-- File Tab -->
+    <text x="316" y="25" text-anchor="middle" fill="#a1a1aa" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="500" letter-spacing="-0.01em">
+      TransactionService.java
+    </text>
+
+    <!-- Line Numbers -->
+    <g font-family="JetBrains Mono, SF Mono, Menlo, monospace" font-size="12" fill="#52525b" text-anchor="end">
+      <text x="42" y="76">18</text>
+      <text x="42" y="100">19</text>
+      <text x="42" y="124">20</text>
+      <text x="42" y="148">21</text>
+      <text x="42" y="172">22</text>
+      <text x="42" y="196">23</text>
+      <text x="42" y="220">24</text>
+      <text x="42" y="244">25</text>
+      <text x="42" y="268">26</text>
+    </g>
+
+    <!-- Active Line Highlight -->
+    <rect x="1" y="109" width="630" height="22" fill="#ffffff" fill-opacity="0.03" />
+
+    <!-- Code Content (Apple Xcode Dark Inspired Palette) -->
+    <g font-family="JetBrains Mono, SF Mono, Menlo, monospace" font-size="12.5" letter-spacing="-0.01em">
+      <text x="64" y="76" fill="#d4d4d8">
+        <tspan fill="#a1a1aa">@Transactional</tspan>
+      </text>
+      <text x="64" y="100" fill="#f4f4f5">
+        <tspan fill="#93c5fd">public</tspan> Transaction <tspan fill="#e4e4e7">registerFromMessage</tspan><tspan fill="#71717a">(</tspan>String rawText<tspan fill="#71717a">) {</tspan>
+      </text>
+      <text x="84" y="124" fill="#f4f4f5">
+        <tspan fill="#93c5fd">var</tspan> intent = gemini.<tspan fill="#cbd5e1">parse</tspan><tspan fill="#71717a">(</tspan><tspan fill="#fde68a">"Gastei R$ 50 no Uber"</tspan><tspan fill="#71717a">);</tspan>
+      </text>
+      <text x="84" y="148" fill="#f4f4f5">
+        <tspan fill="#93c5fd">var</tspan> tx = Transaction.<tspan fill="#cbd5e1">builder</tspan><tspan fill="#71717a">()</tspan>
+      </text>
+      <text x="112" y="172" fill="#d4d4d8">
+        .<tspan fill="#cbd5e1">type</tspan><tspan fill="#71717a">(</tspan>TransactionType.<tspan fill="#f4f4f5">EXPENSE</tspan><tspan fill="#71717a">)</tspan>
+      </text>
+      <text x="112" y="196" fill="#d4d4d8">
+        .<tspan fill="#cbd5e1">amount</tspan><tspan fill="#71717a">(</tspan><tspan fill="#93c5fd">new</tspan> BigDecimal<tspan fill="#71717a">(</tspan><tspan fill="#fde68a">"50.00"</tspan><tspan fill="#71717a">))</tspan>
+      </text>
+      <text x="112" y="220" fill="#d4d4f8">
+        .<tspan fill="#cbd5e1">category</tspan><tspan fill="#71717a">(</tspan><tspan fill="#fde68a">"Transporte"</tspan><tspan fill="#71717a">)</tspan>
+      </text>
+      <text x="112" y="244" fill="#d4d4d8">
+        .<tspan fill="#cbd5e1">description</tspan><tspan fill="#71717a">(</tspan><tspan fill="#fde68a">"Uber"</tspan><tspan fill="#71717a">).</tspan><tspan fill="#cbd5e1">build</tspan><tspan fill="#71717a">();</tspan>
+      </text>
+      <text x="84" y="268" fill="#f4f4f5">
+        <tspan fill="#93c5fd">return</tspan> repository.<tspan fill="#cbd5e1">save</tspan><tspan fill="#71717a">(</tspan>tx<tspan fill="#71717a">);</tspan>
+      </text>
+    </g>
   </g>
 
-  <!-- Connector Arrow -->
-  <line x1="340" y1="100" x2="340" y2="126" stroke="url(#accentGrad)" stroke-width="1.5" stroke-dasharray="3 3" />
-  <circle cx="340" cy="113" r="3.5" fill="#38e1ff" />
+  <!-- ======================================================================= -->
+  <!-- LAYER 2: Floating iOS / One UI Dark Message Banner (Top)                -->
+  <!-- ======================================================================= -->
+  <g transform="translate(190, 36)" filter="url(#floatingShadow)">
+    <rect width="420" height="76" rx="22" fill="url(#cardSurface)" stroke="url(#specularBorder)" stroke-width="1" />
 
-  <!-- Code Window Below -->
-  <g transform="translate(36, 126)">
-    <rect width="608" height="262" rx="16" fill="#070910" stroke="#1e293b" stroke-width="1.2" />
-    <!-- Window Titlebar -->
-    <rect width="608" height="38" rx="16" fill="#0d111d" />
-    <line x1="0" y1="38" x2="608" y2="38" stroke="#1e293b" stroke-width="1" />
-    <circle cx="22" cy="19" r="5.5" fill="#ef4444" fill-opacity="0.8" />
-    <circle cx="40" cy="19" r="5.5" fill="#f59e0b" fill-opacity="0.8" />
-    <circle cx="58" cy="19" r="5.5" fill="#10b981" fill-opacity="0.8" />
-    <text x="304" y="23" text-anchor="middle" fill="#64748b" font-family="JetBrains Mono, monospace" font-size="11">TransactionService.java — Spring Boot</text>
+    <!-- Minimal App Squircle Icon -->
+    <rect x="16" y="16" width="44" height="44" rx="12" fill="#141417" stroke="#ffffff" stroke-opacity="0.1" stroke-width="1" />
+    <path d="M31 38.5c0-3.5 3-6.5 7-6.5s7 3 7 6.5M33.5 29.5h9M33.5 33.5h6" stroke="#f4f4f5" stroke-width="1.6" stroke-linecap="round" />
 
-    <!-- Code Content -->
-    <g font-family="JetBrains Mono, monospace" font-size="12.5">
-      <text x="24" y="68" fill="#64748b">// 1. Interpretação da mensagem via Gemini + persistência Spring Boot</text>
-      <text x="24" y="92" fill="#c084fc">@PostMapping<tspan fill="#94a3b8">(</tspan><tspan fill="#86efac">"/api/transactions/message"</tspan><tspan fill="#94a3b8">)</tspan></text>
-      <text x="24" y="114" fill="#60a5fa">public <tspan fill="#38e1ff">TransactionDTO</tspan> <tspan fill="#f8fafc">processMessage</tspan><tspan fill="#94a3b8">(String text) {</tspan></text>
-      <text x="44" y="136" fill="#f8fafc">var parsed = geminiClient.<tspan fill="#7dd3fc">extractTransaction</tspan>(<tspan fill="#86efac">"Gastei R$ 50 no Uber"</tspan>);</text>
-      <text x="44" y="158" fill="#60a5fa">return <tspan fill="#f8fafc">transactionRepository.save(parsed);</tspan></text>
-      <text x="24" y="180" fill="#94a3b8">}</text>
+    <!-- Notification Header + Message -->
+    <text x="74" y="33" fill="#a1a1aa" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="500" letter-spacing="-0.01em">
+      Mensagem
+    </text>
+    <text x="398" y="33" text-anchor="end" fill="#71717a" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="400">
+      agora
+    </text>
+    <text x="74" y="55" fill="#fafafa" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="17" font-weight="600" letter-spacing="-0.02em">
+      Gastei R$ 50 no Uber
+    </text>
+  </g>
 
-      <!-- Parsed JSON Output Pill -->
-      <rect x="24" y="196" width="560" height="48" rx="10" fill="#0f172a" stroke="#1e3a8a" stroke-opacity="0.6" />
-      <text x="40" y="216" fill="#38e1ff" font-size="11">OUTPUT JSON →</text>
-      <text x="145" y="216" fill="#e2e8f0" font-size="11.5">{ "type": <tspan fill="#f87171">"EXPENSE"</tspan>, "amount": <tspan fill="#fbbf24">50.00</tspan>, "category": <tspan fill="#86efac">"Transporte"</tspan>, "desc": <tspan fill="#86efac">"Uber"</tspan> }</text>
-      <text x="40" y="234" fill="#64748b" font-size="10.5">✓ Salvo no PostgreSQL · Atualizado no Dashboard React em tempo real</text>
-    </g>
+  <!-- ======================================================================= -->
+  <!-- LAYER 3: Floating Apple Wallet Style Transaction Card (Bottom Right)    -->
+  <!-- ======================================================================= -->
+  <g transform="translate(436, 366)" filter="url(#floatingShadow)">
+    <rect width="312" height="74" rx="20" fill="url(#cardSurface)" stroke="url(#specularBorder)" stroke-width="1" />
+
+    <!-- Minimal Transit Icon Circle -->
+    <circle cx="37" cy="37" r="20" fill="#141417" stroke="#ffffff" stroke-opacity="0.08" stroke-width="1" />
+    <path d="M30.5 39.5v-5l2-4.5h9l2 4.5v5m-13 0h13m-11.5 0v2m10-2v2M33 36.5h1.5m5 0H41" stroke="#e4e4e7" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+
+    <!-- Merchant & Category -->
+    <text x="68" y="34" fill="#fafafa" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="15" font-weight="600" letter-spacing="-0.01em">
+      Uber
+    </text>
+    <text x="68" y="52" fill="#a1a1aa" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="12.5" font-weight="400">
+      Transporte · Registrado
+    </text>
+
+    <!-- Amount -->
+    <text x="292" y="42" text-anchor="end" fill="#fafafa" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="15.5" font-weight="600" letter-spacing="-0.02em">
+      − R$ 50,00
+    </text>
   </g>
 </svg>

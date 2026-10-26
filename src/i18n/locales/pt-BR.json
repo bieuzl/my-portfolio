@@ -23,7 +23,10 @@
     "scroll": "Role",
     "wireframeHint": "gire a estrutura",
     "greeting1": "OLÁ,",
-    "greeting2": "EU SOU"
+    "greeting2": "EU SOU",
+    "surname": "DE FRANÇA CASTRO",
+    "stack": "BACK-END / JAVA / SPRING BOOT",
+    "tagline": "Transformando ideias em soluções reais através de código, tecnologia e boas práticas."
   },
   "sections": {
     "about": "Apresentação",

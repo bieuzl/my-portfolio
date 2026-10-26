@@ -277,6 +277,9 @@ export function Hero() {
           <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.28em] text-muted-foreground md:text-xs">
             {t("hero.role")}
           </p>
+          <p className="mx-auto mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground md:mx-0">
+            {t("hero.tagline")}
+          </p>
         </div>
 
         {/* center: the protagonist */}
@@ -302,8 +305,11 @@ export function Hero() {
               />
             </div>
           </div>
-          <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground md:text-xs">
-            gabriel<span className="text-primary">.</span>dev
+          <p className="mt-3 font-display text-lg font-semibold uppercase tracking-[0.12em] text-foreground md:text-xl">
+            {t("hero.surname")}
+          </p>
+          <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground md:text-xs">
+            {t("hero.stack")}
           </p>
         </div>
       </div>

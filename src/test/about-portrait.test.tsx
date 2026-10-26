@@ -5,17 +5,17 @@ import { About } from "@/sections/About";
 
 /**
  * About portrait contract:
- * - the real photo ships as an inline WebP data URI with localized alt text
+ * - the real photo ships as an inline JPEG data URI with localized alt text
  * - a gradient ring (hero stroke colors) is painted over the frame
  * - a ghost "A" echoes the hero typography behind the portrait
  * - the caption row carries the localized mono caption
  */
 describe("about portrait", () => {
-  it("renders the portrait as an inline WebP with localized alt", () => {
+  it("renders the portrait as an inline JPEG with localized alt", () => {
     const { container } = render(<About />);
     const img = container.querySelector("img");
     expect(img).not.toBeNull();
-    expect(img?.getAttribute("src")).toContain("data:image/webp;base64,");
+    expect(img?.getAttribute("src")).toContain("data:image/jpeg;base64,");
     expect(img?.getAttribute("alt")).toContain("Gabriel");
   });
 

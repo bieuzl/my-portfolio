@@ -45,19 +45,19 @@ export function About() {
     <section
       id="sobre"
       aria-labelledby="sobre-titulo"
-      className="mx-auto max-w-6xl px-5 py-24 md:px-8 md:py-36"
+      className="mx-auto w-full max-w-[1600px] px-6 py-24 md:px-12 md:py-36 lg:px-16"
     >
       <SectionHeading id="sobre-titulo" index="01" title={t("sections.about")} />
 
       <div
         ref={ref}
-        className={`grid items-center gap-12 md:grid-cols-12 md:gap-10${
+        className={`grid items-center gap-12 md:grid-cols-12 md:gap-14 lg:gap-20${
           inView ? " in-view" : ""
         }`}
       >
         {/* retrato editorial */}
         <div
-          className="relative mx-auto w-full max-w-[340px] [perspective:1000px] md:col-span-5 md:max-w-[400px]"
+          className="relative mx-auto w-full max-w-[360px] [perspective:1000px] md:col-span-5 md:max-w-[460px]"
           onPointerMove={onPointerMove}
           onPointerLeave={onPointerLeave}
         >
@@ -140,26 +140,20 @@ export function About() {
 
         {/* texto */}
         <div className="md:col-span-7">
-          <p
-            className={`rv font-display text-2xl font-medium leading-snug text-foreground md:text-3xl${
+          <h3
+            className={`rv font-display text-3xl font-semibold leading-tight tracking-tight text-foreground md:text-4xl lg:text-5xl${
               inView ? " in-view" : ""
             }`}
           >
             {t("about.lead")}
-          </p>
+          </h3>
           <div
-            className={`rv mt-8 space-y-5 text-base leading-relaxed text-muted-foreground${
+            className={`rv mt-6 space-y-5 text-base leading-relaxed text-muted-foreground md:mt-8 md:text-lg lg:text-xl lg:leading-relaxed${
               inView ? " in-view" : ""
             }`}
             style={{ "--rv-delay": "120ms" } as React.CSSProperties}
           >
             <p>{t("about.body")}</p>
-            <div className="border-l-2 border-primary pl-4">
-              <h3 className="mb-1 font-mono text-xs uppercase tracking-widest text-foreground">
-                {t("about.lookingForTitle")}
-              </h3>
-              <p>{t("about.lookingFor")}</p>
-            </div>
           </div>
         </div>
       </div>

@@ -36,8 +36,8 @@
     "contact": "Contact"
   },
   "about": {
-    "lead": "I'm a back-end developer focused on Java and Spring Boot. I enjoy turning business rules into clear, well-tested APIs that are easy to evolve.",
-    "body": "I got into programming out of curiosity about how things work behind the screen — and stayed for the satisfaction of building systems that solve real problems. Today I split my time between personal projects, continuous study and improving this portfolio, which I also built from scratch. I work with attention to detail: readable code, well-described commits, tests that protect refactors and interfaces that respect their users.",
+    "lead": "Software / Back-end Developer",
+    "body": "I am a software developer and a Systems Analysis and Development student at Faculdade Impacta. I work in back-end development using Java and Spring Boot, and I take part in building Ayni, a technology startup. I have a special interest in artificial intelligence, autonomous agents, and automation, areas I continuously study to explore new ways of building smarter and more useful systems. I enjoy understanding technology beyond the code, from system architecture to the possibilities of turning an idea into a real product.",
     "lookingForTitle": "What I'm looking for",
     "lookingFor": "Back-end developer opportunities (Java/Spring), freelance projects with well-defined scope and teams that value clean code and good practices.",
     "portraitAlt": "Portrait of Gabriel wearing headphones and glasses, looking toward the camera",

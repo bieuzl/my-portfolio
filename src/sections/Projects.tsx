@@ -307,52 +307,95 @@ function ProjectDetailsSubpage({
           </div>
 
           {/* Notion Document Content Blocks */}
-          <div className="mt-8 space-y-7 font-sans text-[15px] leading-[1.75] text-[#cfcfcf]">
-            {project.startupIntro && (
-              <div className="rounded-lg border-l-[3px] border-white/30 bg-[#222222] px-4 py-3.5 text-[#dcdcdc]">
-                <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-[#9b9b9b]">
-                  {t("projects.startupLabel")}
-                </p>
-                <p>{project.startupIntro}</p>
-              </div>
+          <div className="mt-8 space-y-8 font-sans text-[15px] leading-[1.75] text-[#cfcfcf]">
+            {project.subpageSections ? (
+              project.subpageSections.map((sec) => (
+                <section key={sec.heading} className="space-y-4">
+                  <h4 className="text-lg font-semibold tracking-[-0.01em] text-white md:text-xl">
+                    {sec.heading}
+                  </h4>
+
+                  {sec.paragraphs?.map((p, idx) => (
+                    <p key={idx}>{p}</p>
+                  ))}
+
+                  {sec.callout && (
+                    <div className="rounded-lg border-l-[3px] border-white/40 bg-[#222222] px-4 py-3.5 text-[#e2e2e2]">
+                      <strong className="font-semibold text-white">
+                        {sec.callout.boldPrefix}{" "}
+                      </strong>
+                      <span>{sec.callout.text}</span>
+                    </div>
+                  )}
+
+                  {sec.items && (
+                    <div className="space-y-4 pt-1">
+                      {sec.items.map((item) => (
+                        <div
+                          key={item.title}
+                          className="rounded-lg border border-white/[0.06] bg-[#202020] p-4"
+                        >
+                          <h5 className="font-sans text-[15px] font-semibold text-white">
+                            {item.title}
+                          </h5>
+                          <p className="mt-1.5 text-[14.5px] leading-[1.7] text-[#c4c4c4]">
+                            {item.body}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </section>
+              ))
+            ) : (
+              <>
+                {project.startupIntro && (
+                  <div className="rounded-lg border-l-[3px] border-white/30 bg-[#222222] px-4 py-3.5 text-[#dcdcdc]">
+                    <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-[#9b9b9b]">
+                      {t("projects.startupLabel")}
+                    </p>
+                    <p>{project.startupIntro}</p>
+                  </div>
+                )}
+
+                {project.previewImage && (
+                  <div className="py-1">
+                    <img
+                      src={project.previewImage}
+                      alt={`${project.title} — Gastei R$ 50 no Uber`}
+                      className="mx-auto w-full select-none object-contain"
+                    />
+                  </div>
+                )}
+
+                <section>
+                  <h4 className="mb-2 text-lg font-semibold tracking-[-0.01em] text-white">
+                    {t("projects.contextLabel")}
+                  </h4>
+                  <p>{project.context}</p>
+                </section>
+
+                <section>
+                  <h4 className="mb-2 text-lg font-semibold tracking-[-0.01em] text-white">
+                    {t("projects.contributionLabel")}
+                  </h4>
+                  <p>{project.contribution}</p>
+                </section>
+
+                <section>
+                  <h4 className="mb-3 text-lg font-semibold tracking-[-0.01em] text-white">
+                    {t("projects.architectureLabel")}
+                  </h4>
+                  <ul className="list-disc space-y-2.5 pl-5 marker:text-[#6b6b6b]">
+                    {project.details.map((step, idx) => (
+                      <li key={idx} className="pl-1">
+                        {step}
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              </>
             )}
-
-            {project.previewImage && (
-              <div className="py-1">
-                <img
-                  src={project.previewImage}
-                  alt={`${project.title} — Gastei R$ 50 no Uber`}
-                  className="mx-auto w-full select-none object-contain"
-                />
-              </div>
-            )}
-
-            <section>
-              <h4 className="mb-2 text-lg font-semibold tracking-[-0.01em] text-white">
-                {t("projects.contextLabel")}
-              </h4>
-              <p>{project.context}</p>
-            </section>
-
-            <section>
-              <h4 className="mb-2 text-lg font-semibold tracking-[-0.01em] text-white">
-                {t("projects.contributionLabel")}
-              </h4>
-              <p>{project.contribution}</p>
-            </section>
-
-            <section>
-              <h4 className="mb-3 text-lg font-semibold tracking-[-0.01em] text-white">
-                {t("projects.architectureLabel")}
-              </h4>
-              <ul className="list-disc space-y-2.5 pl-5 marker:text-[#6b6b6b]">
-                {project.details.map((step, idx) => (
-                  <li key={idx} className="pl-1">
-                    {step}
-                  </li>
-                ))}
-              </ul>
-            </section>
           </div>
         </div>
       </div>

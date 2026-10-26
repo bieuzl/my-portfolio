@@ -11,6 +11,21 @@ export interface ProjectLink {
   href: string;
 }
 
+export interface SubpageSectionItem {
+  title: string;
+  body: string;
+}
+
+export interface SubpageSection {
+  heading: string;
+  paragraphs?: string[];
+  callout?: {
+    boldPrefix: string;
+    text: string;
+  };
+  items?: SubpageSectionItem[];
+}
+
 export interface ProjectEntry {
   id: string;
   year: string;
@@ -25,6 +40,7 @@ export interface ProjectEntry {
   context: string;
   contribution: string;
   details: string[];
+  subpageSections?: SubpageSection[];
   technologies: string[];
   links: ProjectLink[];
   placeholder: boolean;

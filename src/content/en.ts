@@ -12,29 +12,102 @@ export const en: PortfolioContent = {
       id: "proj-ayni-crm",
       year: "Ayni · In development",
       title: "Ayni CRM",
-      subtitle: "Ayni Startup · First product in development",
-      startupIntro:
-        "Ayni is an early-stage startup built by two developers. Ayni CRM is the company's first product, built to manage the commercial workflow of technology service providers from first contact to signed contract.",
+      subtitle: "Ayni Startup · First product · In development",
       role: "AI orchestration, communication channels, lead prospecting, and proposal/contract modules.",
       stackSummary:
-        "TypeScript, React, Supabase (PostgreSQL, RLS, Edge Functions / Deno), Zod",
+        "TypeScript · React · Supabase · PostgreSQL · Row Level Security (RLS) · Deno Edge Functions · Zod",
       team: "2 developers",
       privateRepo: true,
       context:
         "CRM in development for professionals and companies selling technology services. Combines commercial pipeline management, lead prospecting, proposal generation, and AI assistants with human approval on sensitive actions.",
       contribution:
-        "I own four core modules of the platform (ai, channels, prospecting, and proposals): orchestrating the Atlas and Astas AI assistants with a human-approval queue, managing the knowledge base, building the embeddable website chat widget and email dispatch flow, automating website diagnostics for lead prospecting, and implementing versioned proposals and contracts.",
-      details: [
-        "AI module (ai): conversation tracking, agent runs, handoffs, human-approval workflows (ai_approvals) for sensitive actions (pricing, proposals, contracts, prospecting), and document knowledge sources.",
-        "Channels module (channels): embeddable website chat widget, session tracking, email delivery event logging, and global opt-out handling.",
-        "Prospecting module (prospecting): filtered lead searches, automated website diagnostics, niche briefings, and lead prototypes.",
-        "Proposals & Contracts module (proposals): document templates, versioned commercial proposals, contract generation, and document lifecycle events.",
-        "Multi-tenant data isolation in PostgreSQL using Row Level Security (RLS) per workspace, shared Zod schemas (@ayni/shared), and Deno Edge Functions.",
+        "I am responsible for developing the platform's Artificial Intelligence and commercial operations modules.",
+      details: [],
+      subpageSections: [
+        {
+          heading: "About the product",
+          paragraphs: [
+            "Ayni is a startup developing an AI-powered CRM tailored for professionals and companies that sell technology services.",
+            "Its first product, Ayni CRM, was designed to organize the commercial process in a single environment. The goal is to reduce manual prospecting and follow-up work, centralize contact history, and streamline the journey from prospect to signed contract.",
+            "The MVP initially focuses on freelancers, web designers, and small studios that sell websites, landing pages, and digital identities.",
+          ],
+        },
+        {
+          heading: "How it works",
+          paragraphs: [
+            "The workflow starts by identifying potential clients. The platform is designed to support niche searches, analyze website data, and organize relevant information for sales outreach.",
+            "From there, contacts are tracked through the CRM with deal stages, activities, and full history. The Atlas and Astas AI assistants participate in this flow, helping with lead interactions and commercial tasks.",
+            "The platform also includes features to create briefings, browse website templates, generate prompts, and prepare commercial proposals. When it is time to close the deal, the client can accept a proposal via a public link and the contract flow integrates with ZapSign.",
+          ],
+          callout: {
+            boldPrefix: "AI does not act without boundaries:",
+            text: "sensitive actions—such as decisions involving pricing, proposals, contracts, and prospecting—go through a human approval workflow defined in the product architecture.",
+          },
+        },
+        {
+          heading: "My role",
+          paragraphs: [
+            "I am responsible for developing the platform's Artificial Intelligence and commercial operations modules.",
+          ],
+          items: [
+            {
+              title: "AI Orchestration — Atlas and Astas",
+              body: "Structuring communication between the assistants, request routing, conversation history, and human handoff when needed. The architecture also includes a human approval queue for sensitive actions and knowledge source management.",
+            },
+            {
+              title: "Channels — Customer communication channels",
+              body: "Developing the module designed to connect the CRM to external channels, including an embeddable website chat widget, session management, email event logging, and opt-out controls.",
+            },
+            {
+              title: "Prospecting — Smart prospecting",
+              body: "Building features for niche lead searches, technical website diagnostics, briefing creation, and access to a catalog of templates and prototypes. The module also covers custom prompt generation by Atlas based on lead data.",
+            },
+            {
+              title: "Proposals & Contracts",
+              body: "Developing the commercial document structure, templates, proposal versioning, public-link acceptance, and planned ZapSign integration for contract signing.",
+            },
+          ],
+        },
+        {
+          heading: "Architecture and technical decisions",
+          paragraphs: [
+            "The platform follows a modular architecture where each area has well-defined responsibilities and communicates through shared contracts.",
+            "A key principle is the isolation between AI modules and the CRM core: AI modules do not write directly to commercial tables. Changes must go through service functions exposed by the core, keeping business rules centralized.",
+            "The architecture also enforces workspace data isolation with Row Level Security (RLS), schema validation with Zod, and Deno Edge Functions running on Supabase.",
+          ],
+        },
+        {
+          heading: "Technologies",
+          items: [
+            {
+              title: "Documented project stack",
+              body: "TypeScript · React · Supabase · PostgreSQL · Row Level Security (RLS) · Deno Edge Functions · Zod",
+            },
+          ],
+        },
+        {
+          heading: "Team and development",
+          paragraphs: [
+            "Developed by a two-developer team, splitting responsibilities between the platform core and the AI and commercial operations modules.",
+          ],
+          items: [
+            {
+              title: "Status",
+              body: "In development. The features described represent the defined MVP scope; availability of each feature depends on the current implementation stage.",
+            },
+            {
+              title: "Source code",
+              body: "Private repository.",
+            },
+          ],
+        },
       ],
       technologies: [
         "TypeScript",
         "React",
-        "Supabase (PostgreSQL & RLS)",
+        "Supabase",
+        "PostgreSQL",
+        "Row Level Security (RLS)",
         "Deno Edge Functions",
         "Zod",
       ],

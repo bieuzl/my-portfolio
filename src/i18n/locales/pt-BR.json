@@ -11,7 +11,7 @@
   },
   "nav": {
     "about": "Apresentação",
-    "skills": "Habilidades",
+    "skills": "Competências",
     "projects": "Projetos",
     "experience": "Experiência",
     "contact": "Contato"
@@ -30,7 +30,7 @@
   },
   "sections": {
     "about": "Apresentação",
-    "skills": "Habilidades",
+    "skills": "Competências",
     "projects": "Projetos em destaque",
     "experience": "Experiência e formação",
     "contact": "Contato"

@@ -29,7 +29,7 @@ describe("language switching", () => {
     expect(
       screen.getAllByRole("link", { name: "Apresentação" }).length,
     ).toBeGreaterThan(0);
-    expect(screen.getAllByText("Habilidades").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Competências").length).toBeGreaterThan(0);
   });
 
   it("switches visible text to English when EN is chosen", async () => {

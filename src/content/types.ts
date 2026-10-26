@@ -43,6 +43,7 @@ export interface ExperienceEntry {
   role: string;
   org: string;
   summary: string;
+  note?: string;
   placeholder: boolean;
 }
 

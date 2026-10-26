@@ -12,7 +12,7 @@ export function Experience() {
 
   return (
     <section id="experiencia" aria-labelledby="experiencia-titulo" className="border-t border-border/60">
-      <div className="mx-auto max-w-6xl px-5 py-24 md:px-8 md:py-36">
+      <div className="mx-auto w-full max-w-[1600px] px-6 py-24 md:px-12 md:py-36 lg:px-16">
         <SectionHeading id="experiencia-titulo" index="04" title={t("sections.experience")} />
 
         <p className="mb-10 max-w-2xl text-sm leading-relaxed text-muted-foreground">
@@ -41,6 +41,11 @@ export function Experience() {
                 <p className="mt-3 max-w-2xl text-sm leading-relaxed text-foreground/85">
                   {entry.summary}
                 </p>
+                {entry.note && (
+                  <p className="mt-2 max-w-2xl text-xs leading-relaxed text-muted-foreground/70 italic">
+                    {entry.note}
+                  </p>
+                )}
                 {entry.placeholder && (
                   <div className="mt-3">
                     <PlaceholderBadge />

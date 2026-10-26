@@ -18,22 +18,21 @@ interface MonumentWordProps {
 }
 
 /**
- * One layer of the monumental name. Both variants render every glyph so
- * textLength distributes spacing identically — the two layers stack
- * pixel-perfect. SVG text + paint-order keeps the stroke OUTSIDE the glyph
- * (unlike -webkit-text-stroke, which eats the interior and reads "thin").
+ * One layer of the monumental name — a handwritten signature in Caveat.
+ * Both variants render every glyph so the two layers stack pixel-perfect.
+ * SVG text + paint-order keeps the stroke OUTSIDE the glyph (unlike
+ * -webkit-text-stroke, which eats the interior and reads "thin").
  *
  * Finishing, layer by layer:
- * - filled: Archivo 800 Expanded — a professional, editorial grotesque —
- *   with a diagonal ice gradient that a slow sheen sweeps across (SMIL,
- *   skipped under prefers-reduced-motion); every letter solid, one continuous
- *   monument
+ * - filled: Caveat 600 with a diagonal ice gradient that a slow sheen
+ *   sweeps across (SMIL, skipped under prefers-reduced-motion) — every
+ *   letter solid, one continuous signature
  * - outline: blue→cyan gradient stroke tracing every glyph, with a blurred
  *   neon halo behind it (a <use> clone, so the glow matches the glyphs
  *   exactly)
  */
 function MonumentWord({ word, variant, sheen = false, className = "w-[min(94vw,1150px)]" }: MonumentWordProps) {
-  const letters = [...word.toUpperCase()];
+  const letters = [...word];
   return (
     <svg
       viewBox="0 0 1000 260"
@@ -78,17 +77,13 @@ function MonumentWord({ word, variant, sheen = false, className = "w-[min(94vw,1
       <text
         id={variant === "outline" ? "heroWordOutline" : undefined}
         x="500"
-        y="198"
+        y="190"
         textAnchor="middle"
-        textLength="960"
-        lengthAdjust="spacingAndGlyphs"
         className={variant === "outline" ? "text-primary" : "text-foreground"}
         style={{
-          fontFamily: "'Archivo', 'Inter', sans-serif",
-          fontWeight: 800,
-          fontSize: "232px",
-          fontVariationSettings: "'wdth' 125",
-          letterSpacing: "0.005em",
+          fontFamily: "'Caveat', cursive",
+          fontWeight: 600,
+          fontSize: "250px",
         }}
       >
         {letters.map((letter, i) => {

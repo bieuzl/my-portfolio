@@ -1,7 +1,6 @@
 import { useCallback, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { SectionHeading } from "@/components/SectionHeading";
-import { Magnetic } from "@/components/Magnetic";
 import { useInView } from "@/hooks/useInView";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { ABOUT_PORTRAIT_URI } from "@/assets/about-portrait";
@@ -156,21 +155,16 @@ export function About() {
           >
             <p>{t("about.body")}</p>
             <div className="pt-3">
-              <Magnetic strength={0.25}>
-                <a
-                  href="/curriculo-gabriel-castro.pdf"
-                  download="Curriculo-Gabriel-Castro.pdf"
-                  className="group inline-flex items-center gap-3 border border-primary/40 bg-primary/10 px-6 py-3.5 font-mono text-xs uppercase tracking-[0.2em] text-foreground transition-all duration-[var(--dur-hover)] hover:border-primary hover:bg-primary/20 hover:shadow-[0_0_28px_-6px_rgba(56,140,255,0.45)]"
-                >
-                  <span>{t("about.downloadResume")}</span>
-                  <span
-                    aria-hidden="true"
-                    className="text-primary transition-transform duration-[var(--dur-hover)] group-hover:translate-y-0.5"
-                  >
-                    ↓
-                  </span>
-                </a>
-              </Magnetic>
+              <a
+                href="/curriculo-gabriel-castro.pdf"
+                download="Curriculo-Gabriel-Castro.pdf"
+                className="inline-flex items-center gap-3 rounded-full border border-primary/40 bg-primary/10 px-7 py-3.5 font-mono text-xs uppercase tracking-[0.2em] text-foreground transition-colors duration-[var(--dur-hover)] hover:border-primary hover:bg-primary/20 hover:shadow-[0_0_28px_-6px_rgba(56,140,255,0.45)]"
+              >
+                <span>{t("about.downloadResume")}</span>
+                <span aria-hidden="true" className="text-primary">
+                  ↓
+                </span>
+              </a>
             </div>
           </div>
         </div>

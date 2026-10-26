@@ -20,7 +20,10 @@
     "kicker": "Portfólio — desenvolvimento de software",
     "role": "Desenvolvedor de Software",
     "pitch": "[Escreva aqui 2–3 frases sobre quem você é, o que faz e o tipo de oportunidade ou projeto que procura.]",
-    "scroll": "Role"
+    "scroll": "Role",
+    "wireframeHint": "gire a estrutura",
+    "greeting1": "OLÁ,",
+    "greeting2": "EU SOU"
   },
   "sections": {
     "about": "Apresentação",

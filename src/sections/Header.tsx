@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { normalizeLocale, SUPPORTED_LOCALES, type Locale } from "@/i18n";
+import { Magnetic } from "@/components/Magnetic";
+
+const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 
 const NAV_ITEMS = [
   { id: "sobre", key: "nav.about" },
@@ -45,13 +48,19 @@ export function Header() {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   const close = useCallback(() => setOpen(false), []);
 
   /* frosted glass engages only after leaving the hero — Apple-style:
-     chrome appears when it's useful, invisible when it's not. */
+     chrome appears when it's useful, invisible when it's not. The same
+     listener feeds the reading-progress hairline under the top edge. */
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 24);
+      const doc = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(doc > 0 ? clamp01(window.scrollY / doc) : 0);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -80,12 +89,21 @@ export function Header() {
       >
         {t("a11y.skipToContent")}
       </a>
+      {/* reading progress — gradient hairline tracing the top edge */}
+      <div aria-hidden="true" className="absolute inset-x-0 top-0 h-0.5">
+        <div
+          className="h-full origin-left bg-gradient-to-r from-[#5aa2ff] to-[#38e1ff]"
+          style={{ transform: `scaleX(${progress})` }}
+        />
+      </div>
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 md:px-8">
         <a
           href="#topo"
           className="font-mono text-sm tracking-tight text-foreground transition-colors hover:text-primary"
         >
-          gabriel<span className="text-primary">.</span>dev
+          <Magnetic strength={0.35}>
+            gabriel<span className="text-primary">.</span>dev
+          </Magnetic>
         </a>
 
         <nav aria-label={t("a11y.mainNav")} className="hidden items-center gap-7 md:flex">

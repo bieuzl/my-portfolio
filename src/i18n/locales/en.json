@@ -20,7 +20,10 @@
     "kicker": "Portfolio — software development",
     "role": "Software Developer",
     "pitch": "[Write 2–3 sentences here about who you are, what you do, and the kind of opportunity or project you are looking for.]",
-    "scroll": "Scroll"
+    "scroll": "Scroll",
+    "wireframeHint": "spin the structure",
+    "greeting1": "HELLO,",
+    "greeting2": "I'M"
   },
   "sections": {
     "about": "About",

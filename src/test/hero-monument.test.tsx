@@ -6,8 +6,8 @@ import { Hero } from "@/sections/Hero";
  * Monumental hero contract:
  * - the name renders as two stacked SVG layers (filled + outlined)
  * - exactly one microtext anchors each of the four corners
- * - the hero carries no media of its own — the global Atmosphere (rendered
- *   at page root, aria-hidden) is the only backdrop
+ * - the only canvas is the decorative, aria-hidden wireframe sculpture —
+ *   the global Atmosphere (rendered at page root) remains the only backdrop
  */
 describe("monumental hero", () => {
   it("renders the name in two SVG layers with per-letter tspans", () => {
@@ -61,11 +61,14 @@ describe("monumental hero", () => {
     expect(container.querySelectorAll("[data-corner]").length).toBe(4);
   });
 
-  it("keeps a real h1 and nothing between the word and the reader", () => {
+  it("keeps a real h1 and only the decorative wireframe as canvas", () => {
     const { container } = render(<Hero />);
     expect(screen.getByRole("heading", { level: 1 })).toBeInTheDocument();
-    // no canvas or role="img" overlay inside the hero — atmosphere is global
-    expect(container.querySelector("canvas")).not.toBeInTheDocument();
+    // the wireframe canvas is decorative: aria-hidden, keyboard-out, no role=img
+    const canvases = container.querySelectorAll("canvas");
+    expect(canvases.length).toBe(1);
+    expect(canvases[0]?.getAttribute("aria-hidden")).toBe("true");
+    expect(canvases[0]?.hasAttribute("data-wireframe")).toBe(true);
     expect(container.querySelector('[role="img"]')).not.toBeInTheDocument();
   });
 

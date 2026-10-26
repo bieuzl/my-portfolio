@@ -66,24 +66,40 @@ function ProjectCard({
         <button
           type="button"
           onClick={() => onOpenDetails(project, index)}
-          className="inline-flex cursor-pointer items-center gap-2.5 rounded-full border border-primary/45 bg-primary/10 px-5 py-3 font-mono text-xs uppercase tracking-[0.16em] text-foreground transition-colors duration-[var(--dur-hover)] hover:border-primary hover:bg-primary/20"
+          className="group inline-flex h-10 cursor-pointer items-center gap-2 rounded-full bg-foreground px-5 font-sans text-[14px] font-medium tracking-[-0.01em] text-background transition-all duration-200 ease-out hover:bg-foreground/90 active:scale-[0.98]"
         >
           <span>{t("projects.viewDetails")}</span>
-          <span aria-hidden="true" className="text-primary">
-            →
-          </span>
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 16 16"
+            fill="none"
+            className="h-3.5 w-3.5 shrink-0 transition-transform duration-200 ease-out group-hover:translate-x-0.5"
+          >
+            <path
+              d="M6 3.5L10.5 8 6 12.5"
+              stroke="currentColor"
+              strokeWidth="1.75"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
         </button>
 
         <a
           href={githubHref}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-3 font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground transition-colors duration-[var(--dur-hover)] hover:border-primary/60 hover:text-foreground"
+          className="group inline-flex h-10 items-center gap-2 rounded-full bg-white/[0.06] px-5 font-sans text-[14px] font-medium tracking-[-0.01em] text-foreground/90 ring-1 ring-inset ring-white/[0.14] backdrop-blur-md transition-all duration-200 ease-out hover:bg-white/[0.12] hover:text-foreground hover:ring-white/[0.24] active:scale-[0.98]"
         >
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 16 16"
+            fill="currentColor"
+            className="h-4 w-4 shrink-0 text-foreground/85 transition-colors group-hover:text-foreground"
+          >
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" />
+          </svg>
           <span>{t("projects.viewGithub")}</span>
-          <span aria-hidden="true" className="text-primary">
-            ↗
-          </span>
         </a>
       </div>
     </article>
@@ -141,9 +157,16 @@ function ProjectDetailsSubpage({
             type="button"
             onClick={onClose}
             aria-label={t("projects.closeDetails")}
-            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-border/80 bg-background/60 font-mono text-base text-muted-foreground transition-colors hover:border-primary hover:bg-primary/15 hover:text-foreground"
+            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-white/[0.08] text-foreground/80 ring-1 ring-inset ring-white/[0.12] transition-all duration-200 ease-out hover:bg-white/[0.16] hover:text-foreground active:scale-95"
           >
-            ✕
+            <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" className="h-4 w-4">
+              <path
+                d="M4 4l8 8m0-8l-8 8"
+                stroke="currentColor"
+                strokeWidth="1.75"
+                strokeLinecap="round"
+              />
+            </svg>
           </button>
         </div>
 
@@ -160,7 +183,7 @@ function ProjectDetailsSubpage({
               {project.technologies.map((tech) => (
                 <li
                   key={tech}
-                  className="rounded-full border border-primary/35 bg-primary/10 px-3.5 py-1 font-mono text-xs text-foreground"
+                  className="rounded-full bg-white/[0.06] px-3.5 py-1 font-sans text-xs font-medium text-foreground/90 ring-1 ring-inset ring-white/[0.12]"
                 >
                   {tech}
                 </li>
@@ -214,20 +237,25 @@ function ProjectDetailsSubpage({
               href={githubHref}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2.5 rounded-full border border-primary/45 bg-primary/10 px-6 py-3 font-mono text-xs uppercase tracking-[0.18em] text-foreground transition-colors hover:border-primary hover:bg-primary/20"
+              className="group inline-flex h-11 items-center gap-2.5 rounded-full bg-foreground px-6 font-sans text-[14px] font-medium tracking-[-0.01em] text-background transition-all duration-200 ease-out hover:bg-foreground/90 active:scale-[0.98]"
             >
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                className="h-4 w-4 shrink-0"
+              >
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" />
+              </svg>
               <span>{t("projects.viewGithub")}</span>
-              <span aria-hidden="true" className="text-primary">
-                ↗
-              </span>
             </a>
 
             <button
               type="button"
               onClick={onClose}
-              className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-border px-6 py-3 font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:border-primary/60 hover:text-foreground"
+              className="inline-flex h-11 cursor-pointer items-center gap-2 rounded-full bg-white/[0.06] px-6 font-sans text-[14px] font-medium tracking-[-0.01em] text-foreground/90 ring-1 ring-inset ring-white/[0.14] transition-all duration-200 ease-out hover:bg-white/[0.12] hover:text-foreground active:scale-[0.98]"
             >
-              <span>✕</span>
+              <span>Fechar</span>
             </button>
           </div>
         </div>

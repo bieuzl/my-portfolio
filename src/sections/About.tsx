@@ -154,16 +154,27 @@ export function About() {
             style={{ "--rv-delay": "120ms" } as React.CSSProperties}
           >
             <p>{t("about.body")}</p>
-            <div className="pt-3">
+            <div className="pt-4">
               <a
                 href="/curriculo-gabriel-castro.pdf"
                 download="Curriculo-Gabriel-Castro.pdf"
-                className="inline-flex items-center gap-3 rounded-full border border-primary/40 bg-primary/10 px-7 py-3.5 font-mono text-xs uppercase tracking-[0.2em] text-foreground transition-colors duration-[var(--dur-hover)] hover:border-primary hover:bg-primary/20 hover:shadow-[0_0_28px_-6px_rgba(56,140,255,0.45)]"
+                className="group inline-flex h-11 items-center gap-2.5 rounded-full bg-foreground px-6 font-sans text-[14px] font-medium tracking-[-0.01em] text-background transition-all duration-200 ease-out hover:bg-foreground/90 active:scale-[0.98]"
               >
                 <span>{t("about.downloadResume")}</span>
-                <span aria-hidden="true" className="text-primary">
-                  ↓
-                </span>
+                <svg
+                  aria-hidden="true"
+                   viewBox="0 0 16 16"
+                  fill="none"
+                  className="h-4 w-4 shrink-0 transition-transform duration-200 ease-out group-hover:translate-y-0.5"
+                >
+                  <path
+                    d="M8 2.75v7.5m0 0L4.75 7m3.25 3.25L11.25 7M3.25 13.25h9.5"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
               </a>
             </div>
           </div>

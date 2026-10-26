@@ -21,15 +21,12 @@ describe("3D sculpture fallback", () => {
     expect(screen.getByRole("heading", { name: /projetos/i })).toBeInTheDocument();
   });
 
-  it("hero renders the monumental word with no 3D dependency", () => {
-    render(<Hero />);
+  it("hero renders the name and static poster fallback with no 3D dependency", () => {
+    const { container } = render(<Hero />);
     expect(screen.getByRole("heading", { level: 1 })).toBeInTheDocument();
-    // two word layers (filled + outline); helper texts (glyph clip, stroke
-    // ring) carry no tspans and don't count as layers
-    const wordLayers = [
-      ...document.querySelectorAll<SVGTextElement>("svg > text"),
-    ].filter((t) => t.querySelectorAll("tspan").length === 7);
-    expect(wordLayers.length).toBe(2);
+    expect(container.textContent).toContain("Gabriel");
+    const poster = container.querySelector('img[src="/models/wireframe-poster.svg"]');
+    expect(poster).not.toBeNull();
   });
 });
 

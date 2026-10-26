@@ -1,10 +1,7 @@
-import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { getPortfolioContent } from "@/content";
 import { normalizeLocale } from "@/i18n";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
-import { Magnetic } from "@/components/Magnetic";
-import type { WireframeSceneHandle } from "@/scene3d";
 
 const LETTER_STAGGER_MS = 40;
 
@@ -14,7 +11,6 @@ interface MonumentWordProps {
   variant: "filled" | "outline";
   /** filled only: drift a light sheen across the gradient (motion-safe). */
   sheen?: boolean;
-  className?: string;
 }
 
 /**
@@ -24,22 +20,20 @@ interface MonumentWordProps {
  * (unlike -webkit-text-stroke, which eats the interior and reads "thin").
  *
  * Finishing, layer by layer:
- * - filled: Bricolage Grotesque 800 at optical size 96 with a diagonal ice
- *   gradient that a slow sheen sweeps across (SMIL, skipped under
- *   prefers-reduced-motion) — every letter solid, one continuous monument
+ * - filled: Geist 600 — grotesca limpa e precisa, presença sem peso excessivo —
+ *   with a diagonal ice gradient that a slow sheen sweeps across (SMIL,
+ *   skipped under prefers-reduced-motion); every letter solid, one continuous
+ *   monument
  * - outline: blue→cyan gradient stroke tracing every glyph, with a blurred
  *   neon halo behind it (a <use> clone, so the glow matches the glyphs
  *   exactly)
- * - both layers set the "A" in Instrument Serif italic — an editorial
- *   accent that breaks the grotesque rhythm (applied to both layers so the
- *   stack stays pixel-perfect)
  */
-function MonumentWord({ word, variant, sheen = false, className = "w-[min(94vw,1150px)]" }: MonumentWordProps) {
+function MonumentWord({ word, variant, sheen = false }: MonumentWordProps) {
   const letters = [...word.toUpperCase()];
   return (
     <svg
       viewBox="0 0 1000 260"
-      className={`${className} select-none`}
+      className="w-[min(94vw,1150px)] select-none"
       role="presentation"
     >
       <defs>
@@ -86,16 +80,14 @@ function MonumentWord({ word, variant, sheen = false, className = "w-[min(94vw,1
         lengthAdjust="spacingAndGlyphs"
         className={variant === "outline" ? "text-primary" : "text-foreground"}
         style={{
-          fontFamily: "'Bricolage Grotesque', 'Archivo', sans-serif",
-          fontWeight: 800,
+          fontFamily: "'Geist', 'Inter', sans-serif",
+          fontWeight: 600,
           fontSize: "232px",
-          fontVariationSettings: "'opsz' 96",
-          letterSpacing: "0.005em",
+          letterSpacing: "-0.02em",
         }}
       >
         {letters.map((letter, i) => {
           const filledLayer = variant === "filled";
-          const accent = letter === "A";
           return (
             <tspan
               key={`${letter}-${i}`}
@@ -107,13 +99,6 @@ function MonumentWord({ word, variant, sheen = false, className = "w-[min(94vw,1
                 {
                   "--hl-delay": `${200 + i * LETTER_STAGGER_MS}ms`,
                   paintOrder: "stroke",
-                  ...(accent
-                    ? {
-                        fontFamily: "'Instrument Serif', serif",
-                        fontStyle: "italic",
-                        fontSize: "246px",
-                      }
-                    : {}),
                 } as React.CSSProperties
               }
             >
@@ -127,92 +112,9 @@ function MonumentWord({ word, variant, sheen = false, className = "w-[min(94vw,1
 }
 
 /**
- * Wireframe sculpture at the center of the composition — an irregular
- * polyhedron of fine blue/cyan edges with glowing vertices (inspired by
- * referencia1.jpg's crystal, reinterpreted as pure geometry). three.js
- * arrives via dynamic import, the pointer steers parallax, and poking the
- * sculpture kicks its spin. Without WebGL the static poster
- * (public/models/wireframe-poster.svg) stays in its place.
- */
-function HeroWireframe() {
-  const { t } = useTranslation();
-  const reducedMotion = useReducedMotion();
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const handleRef = useRef<WireframeSceneHandle | null>(null);
-  const [live, setLive] = useState(false);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    let cancelled = false;
-    void import("@/scene3d").then(({ isWebGLAvailable, mountWireframeScene }) => {
-      if (cancelled || !isWebGLAvailable()) return;
-      void mountWireframeScene(canvas, { reducedMotion }).then((handle) => {
-        if (cancelled) {
-          handle?.dispose();
-          return;
-        }
-        if (handle) {
-          handleRef.current = handle;
-          setLive(true);
-        }
-      });
-    });
-    return () => {
-      cancelled = true;
-      handleRef.current?.dispose();
-      handleRef.current = null;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    handleRef.current?.setReducedMotion(reducedMotion);
-  }, [reducedMotion]);
-
-  useEffect(() => {
-    if (reducedMotion) return;
-    const onPointer = (e: PointerEvent) => {
-      handleRef.current?.setPointer(
-        (e.clientX / window.innerWidth) * 2 - 1,
-        -((e.clientY / window.innerHeight) * 2 - 1),
-      );
-    };
-    window.addEventListener("pointermove", onPointer, { passive: true });
-    return () => window.removeEventListener("pointermove", onPointer);
-  }, [reducedMotion]);
-
-  return (
-    <div
-      className="hero-corner order-2 w-[min(64vw,300px)] shrink-0 md:w-[clamp(320px,30vw,500px)]"
-      style={{ "--hc-delay": "1450ms" } as React.CSSProperties}
-    >
-      <div className="relative aspect-square">
-        <img
-          src="/models/wireframe-poster.svg"
-          alt=""
-          aria-hidden="true"
-          className={`absolute inset-0 h-full w-full transition-opacity duration-700${live ? " opacity-0" : ""}`}
-        />
-        <canvas
-          ref={canvasRef}
-          aria-hidden="true"
-          data-wireframe
-          className={`relative h-full w-full cursor-pointer transition-opacity duration-700${live ? "" : " opacity-0"}`}
-        />
-      </div>
-      <p className="mt-1 text-center font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
-        {t("hero.wireframeHint")}
-      </p>
-    </div>
-  );
-}
-
-/**
- * Full-viewport hero composed like the reference: greeting and short bio on
- * the left, the wireframe sculpture as the protagonist in the center, the
- * name stacked on the right — all floating above the global Atmosphere
- * backdrop, with microtexts anchored to the four corners.
+ * Full-viewport hero: monumental name floating above the global Atmosphere
+ * backdrop, microtexts anchored to the four corners. Nothing overlaps the
+ * word — motion lives in the atmosphere, not on top of the typography.
  */
 export function Hero() {
   const { t, i18n } = useTranslation();
@@ -230,6 +132,19 @@ export function Hero() {
         {name} — {t("hero.role")}
       </h1>
 
+      {/* monumental word, fully visible — the two layers stack exactly */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center"
+      >
+        <div className="relative">
+          <MonumentWord word={name} variant="filled" sheen={!reducedMotion} />
+          <div className="absolute inset-0">
+            <MonumentWord word={name} variant="outline" />
+          </div>
+        </div>
+      </div>
+
       {/* corner microtexts — one element per corner, never overlapping */}
       <p
         data-corner="specialty"
@@ -244,7 +159,7 @@ export function Hero() {
         className="hero-corner absolute right-5 top-20 z-30 font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground transition-colors duration-[var(--dur-hover)] hover:text-primary md:right-8 md:top-24"
         style={{ "--hc-delay": "1050ms" } as React.CSSProperties}
       >
-        <Magnetic strength={0.4}>{t("nav.projects")} ↓</Magnetic>
+        {t("nav.projects")} ↓
       </a>
       <p
         data-corner="name"
@@ -259,53 +174,17 @@ export function Hero() {
         className="hero-corner absolute bottom-6 right-5 z-30 font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground transition-colors duration-[var(--dur-hover)] hover:text-primary md:bottom-8 md:right-8"
         style={{ "--hc-delay": "1250ms" } as React.CSSProperties}
       >
-        <Magnetic strength={0.4}>{t("nav.contact")} ↗</Magnetic>
+        {t("nav.contact")} ↗
       </a>
 
-      {/* reference composition: text — wireframe sculpture — name */}
-      <div className="relative z-20 flex flex-1 flex-col items-center justify-center gap-10 px-5 pb-24 pt-24 md:flex-row md:gap-8 md:px-8">
-        {/* left: greeting + profession, like the reference's intro block */}
-        <div
-          className="hero-corner order-1 max-w-sm text-center md:flex-1 md:text-left"
+      {/* pitch + scroll cue, centered under the composition */}
+      <div className="relative z-30 flex flex-1 flex-col items-center justify-end px-5 pb-24">
+        <p
+          className="hero-corner max-w-md text-center text-sm leading-relaxed text-muted-foreground md:text-base"
           style={{ "--hc-delay": "1350ms" } as React.CSSProperties}
         >
-          <p className="font-display text-4xl font-semibold leading-[1.05] tracking-tight text-foreground md:text-5xl lg:text-6xl">
-            {t("hero.greeting1")}
-            <br />
-            {t("hero.greeting2")}
-          </p>
-          <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.28em] text-muted-foreground md:text-xs">
-            {t("hero.role")}
-          </p>
-        </div>
-
-        {/* center: the protagonist */}
-        <HeroWireframe />
-
-        {/* right: name + professional id, stacked like the reference's surname block */}
-        <div
-          className="hero-corner order-3 flex flex-col items-center md:flex-1 md:items-end"
-          style={{ "--hc-delay": "1550ms" } as React.CSSProperties}
-        >
-          <div aria-hidden="true" className="relative">
-            <MonumentWord
-              word={name}
-              variant="filled"
-              sheen={!reducedMotion}
-              className="w-[min(72vw,340px)] lg:w-[min(30vw,420px)]"
-            />
-            <div className="absolute inset-0">
-              <MonumentWord
-                word={name}
-                variant="outline"
-                className="w-[min(72vw,340px)] lg:w-[min(30vw,420px)]"
-              />
-            </div>
-          </div>
-          <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground md:text-xs">
-            gabriel<span className="text-primary">.</span>dev
-          </p>
-        </div>
+          {t("hero.pitch")}
+        </p>
       </div>
 
       <a

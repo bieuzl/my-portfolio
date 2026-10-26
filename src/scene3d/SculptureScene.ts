@@ -38,6 +38,9 @@ export function mountSculptureScene(
   /* low segment counts + non-indexed = crisp flat facets */
   const geometry = new THREE.TorusKnotGeometry(1, 0.3, 128, 14, 2, 3).toNonIndexed();
   geometry.computeVertexNormals();
+  /* Centraliza os vértices na origem: o bounding sphere do torus knot não é
+     exatamente centrado em (0,0,0), o que deslocava o objeto no canvas. */
+  geometry.center();
   const material = makeFresnelMaterial();
   const knot = new THREE.Mesh(geometry, material);
 
@@ -80,7 +83,10 @@ export function mountSculptureScene(
     pointer.x += (pointer.tx - pointer.x) * 0.05;
     pointer.y += (pointer.ty - pointer.y) * 0.05;
     pivot.rotation.y = t * 0.3 + scrollProgress * Math.PI * 2 + pointer.x * 0.25;
-    pivot.rotation.x = 0.55 + Math.sin(t * 0.2) * 0.05 + pointer.y * 0.18;
+    /* Base X = 0: sem inclinação fixa — o nó fica reto e centrado; restam
+       apenas a oscilação ambiente sutil e a paralaxe do ponteiro. */
+    pivot.rotation.x = Math.sin(t * 0.2) * 0.05 + pointer.y * 0.18;
+    pivot.rotation.z = 0;
     renderer.render(scene, camera);
   };
 

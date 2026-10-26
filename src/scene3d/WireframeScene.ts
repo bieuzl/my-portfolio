@@ -169,17 +169,41 @@ export async function mountWireframeScene(
   const coreGeometry = buildCoreGeometry();
 
   const model = new THREE.Group();
-  const shell = makeEdgeLines(shellGeometry, SEED + 1, 0.8);
-  const core = makeEdgeLines(coreGeometry, SEED + 2, 0.42);
+  const shell = makeEdgeLines(shellGeometry, SEED + 1, 0.92);
+  const core = makeEdgeLines(coreGeometry, SEED + 2, 0.62);
   const vertices = makeVertexPoints(shellGeometry);
+
+  /* Inner faceted core mesh to catch directional key + rim lighting,
+     giving the wireframe sculpture volumetric depth and specular contrast. */
+  const solidCoreGeometry = coreGeometry.clone().toNonIndexed();
+  solidCoreGeometry.computeVertexNormals();
+  const solidCoreMaterial = new THREE.MeshStandardMaterial({
+    color: new THREE.Color("#0e2147"),
+    emissive: new THREE.Color("#071226"),
+    metalness: 0.82,
+    roughness: 0.26,
+    flatShading: true,
+    transparent: true,
+    opacity: 0.48,
+  });
+  const solidCoreMesh = new THREE.Mesh(solidCoreGeometry, solidCoreMaterial);
+
+  const keyLight = new THREE.DirectionalLight(0x8cebff, 2.2);
+  keyLight.position.set(3, 4, 5);
+  const rimLight = new THREE.DirectionalLight(0x168bff, 1.6);
+  rimLight.position.set(-4, -3, -2);
+  const ambientLight = new THREE.AmbientLight(0x1e3a8a, 0.9);
+  scene.add(keyLight, rimLight, ambientLight);
+
   core.lines.rotation.set(0.5, 0.9, 0.2);
-  model.add(shell.lines, core.lines, vertices);
+  solidCoreMesh.rotation.copy(core.lines.rotation);
+  model.add(solidCoreMesh, shell.lines, core.lines, vertices);
 
   const pivot = new THREE.Group();
   pivot.add(model);
   scene.add(pivot);
 
-  /* Center and frame the sculpture regardless of the viewport. */
+  /* Center and frame the sculpture at the true geometric center. */
   const box = new THREE.Box3().setFromObject(model);
   const size = box.getSize(new THREE.Vector3());
   const center = box.getCenter(new THREE.Vector3());
@@ -187,12 +211,12 @@ export async function mountWireframeScene(
   const fitDist = maxDim / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2));
   model.position.sub(center);
   const modelBaseY = model.position.y;
-  const camDist = fitDist * 1.15;
-  camera.position.set(0, size.y * 0.15, camDist);
+  const camDist = fitDist * 1.03;
+  camera.position.set(0, 0, camDist);
   camera.lookAt(0, 0, 0);
 
   /* Distant edges dissolve into the site background color. */
-  scene.fog = new THREE.Fog(FOG_COLOR, camDist - maxDim * 0.4, camDist + maxDim * 1.1);
+  scene.fog = new THREE.Fog(FOG_COLOR, camDist - maxDim * 0.45, camDist + maxDim * 1.25);
 
   let width = 0;
   let height = 0;
@@ -366,6 +390,8 @@ export async function mountWireframeScene(
       }
       shellGeometry.dispose();
       coreGeometry.dispose();
+      solidCoreGeometry.dispose();
+      solidCoreMaterial.dispose();
       (shell.lines.material as THREE.Material).dispose();
       (core.lines.material as THREE.Material).dispose();
       (vertices.material as THREE.Material).dispose();

@@ -445,22 +445,37 @@ export function Projects() {
       onPointerMove={onPointerMove}
       className="relative border-t border-border/60"
     >
-      {/* decorative sculpture — detail beside the heading */}
+      {/* modular exploded-view 3D engineering sculpture beside the heading */}
       <div
-        className="pointer-events-none absolute right-5 top-20 z-0 h-36 w-36 opacity-70 md:right-8 md:top-24 md:h-64 md:w-64 md:opacity-100"
+        className="pointer-events-none absolute right-4 top-14 z-0 h-44 w-44 opacity-85 md:right-10 md:top-16 md:h-72 md:w-72 md:opacity-100 lg:right-16 lg:h-80 lg:w-80"
         role="img"
         aria-label={t("a11y.projectsScene")}
       >
-        {/* static ornament fallback: rotating dashed rings */}
+        {/* static ornament fallback: modular isometric engineering diagram */}
         <svg
-          viewBox="0 0 100 100"
+          viewBox="0 0 120 120"
           aria-hidden="true"
           className={`orbit-spin absolute inset-0 h-full w-full text-primary transition-opacity duration-700 ${
-            sceneReady ? "opacity-0" : "opacity-50"
+            sceneReady ? "opacity-0" : "opacity-55"
           }`}
         >
-          <circle cx="50" cy="50" r="38" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="4 6" />
-          <circle cx="50" cy="50" r="26" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="2 5" opacity="0.6" />
+          <polygon
+            points="60,14 100,37 100,83 60,106 20,83 20,37"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1"
+            strokeDasharray="3 4"
+          />
+          <polygon
+            points="60,30 86,45 86,75 60,90 34,75 34,45"
+            fill="none"
+            stroke="#38e1ff"
+            strokeWidth="1.2"
+            opacity="0.75"
+          />
+          <line x1="60" y1="14" x2="60" y2="106" stroke="currentColor" strokeWidth="0.75" opacity="0.4" />
+          <line x1="20" y1="37" x2="100" y2="83" stroke="currentColor" strokeWidth="0.75" opacity="0.4" />
+          <line x1="100" y1="37" x2="20" y2="83" stroke="currentColor" strokeWidth="0.75" opacity="0.4" />
         </svg>
         <canvas
           ref={canvasRef}

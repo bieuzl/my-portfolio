@@ -7,7 +7,7 @@
     "scrollDown": "Role para explorar",
     "languageSwitcher": "Idioma",
     "placeholderBadge": "Conteúdo de exemplo",
-    "projectsScene": "Escultura 3D decorativa de um nó toroidal azul"
+    "projectsScene": "Estrutura 3D modular em visão explodida"
   },
   "nav": {
     "about": "Apresentação",
@@ -68,11 +68,12 @@
     "note": "Minha trajetória até aqui — projetos, estudos e o que estou construindo agora."
   },
   "contact": {
-    "lead": "Vamos conversar?",
-    "body": "A melhor forma de falar comigo é por e-mail ou LinkedIn. Respondo rápido — especialmente se o assunto for back-end, Java ou uma ideia para tirar do papel.",
-    "pendingTitle": "Canais a configurar",
-    "pendingBody": "Os links abaixo serão ativados assim que você fornecer seus dados: e-mail, GitHub, LinkedIn e outros perfis profissionais.",
-    "marquee": "Vamos construir algo juntos"
+    "lead": "Vamos construir o próximo passo",
+    "body": "Aberto a oportunidades, conexões e desafios em desenvolvimento de software e inteligência artificial.",
+    "emailLabel": "E-mail",
+    "linkedinLabel": "LinkedIn",
+    "githubLabel": "GitHub",
+    "marquee": "Vamos construir o próximo passo"
   },
   "footer": {
     "built": "Projetado e construído por Gabriel"

@@ -21,24 +21,22 @@ function LanguageSwitch() {
     <div
       role="group"
       aria-label={t("a11y.languageSwitcher")}
-      className="flex items-center font-mono text-xs"
+      className="inline-flex items-center rounded-full bg-white/[0.05] p-0.5 font-sans text-xs font-medium ring-1 ring-inset ring-white/[0.1]"
     >
-      {SUPPORTED_LOCALES.map((locale: Locale, i) => (
-        <span key={locale} className="flex items-center">
-          {i > 0 && <span className="mx-1 text-muted-foreground" aria-hidden="true">/</span>}
-          <button
-            type="button"
-            aria-pressed={active === locale}
-            onClick={() => void i18n.changeLanguage(locale)}
-            className={`cursor-pointer px-1.5 py-2 tracking-widest transition-colors duration-200 ${
-              active === locale
-                ? "text-foreground"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            {locale === "pt-BR" ? t("language.pt") : t("language.en")}
-          </button>
-        </span>
+      {SUPPORTED_LOCALES.map((locale: Locale) => (
+        <button
+          key={locale}
+          type="button"
+          aria-pressed={active === locale}
+          onClick={() => void i18n.changeLanguage(locale)}
+          className={`cursor-pointer rounded-full px-2.5 py-1 tracking-wide transition-all duration-200 ${
+            active === locale
+              ? "bg-foreground text-background shadow-sm"
+              : "text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          {locale === "pt-BR" ? t("language.pt") : t("language.en")}
+        </button>
       ))}
     </div>
   );
@@ -96,45 +94,51 @@ export function Header() {
           style={{ transform: `scaleX(${progress})` }}
         />
       </div>
-      <div className="flex h-16 w-full items-center justify-between px-5 md:px-8">
+      <div className="mx-auto flex h-[68px] w-full max-w-[1600px] items-center justify-between px-6 md:px-12 lg:px-16">
         <a
           href="#topo"
-          className="font-mono text-sm tracking-tight text-foreground transition-colors hover:text-primary"
+          className="font-sans text-[15px] font-semibold tracking-[-0.02em] text-foreground transition-colors hover:text-primary"
         >
-          <Magnetic strength={0.35}>
+          <Magnetic strength={0.25}>
             gabriel<span className="text-primary">.</span>dev
           </Magnetic>
         </a>
 
-        <nav aria-label={t("a11y.mainNav")} className="hidden items-center gap-7 md:flex">
+        <nav
+          aria-label={t("a11y.mainNav")}
+          className="hidden items-center gap-1 rounded-full bg-white/[0.03] px-2 py-1 ring-1 ring-inset ring-white/[0.08] backdrop-blur-md md:flex"
+        >
           {NAV_ITEMS.map((item) => (
             <a
               key={item.id}
               href={`#${item.id}`}
-              className="link-line font-mono text-xs uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground"
+              className="rounded-full px-4 py-1.5 font-sans text-[13.5px] font-medium tracking-[-0.01em] text-foreground/75 transition-all duration-200 hover:bg-white/[0.07] hover:text-foreground"
             >
               {t(item.key)}
             </a>
           ))}
-          <LanguageSwitch />
         </nav>
 
-        <div className="flex items-center gap-2 md:hidden">
+        <div className="hidden items-center gap-3 md:flex">
+          <LanguageSwitch />
+        </div>
+
+        <div className="flex items-center gap-2.5 md:hidden">
           <LanguageSwitch />
           <button
             type="button"
             aria-expanded={open}
             aria-label={open ? t("a11y.closeMenu") : t("a11y.openMenu")}
             onClick={() => setOpen((v) => !v)}
-            className="flex h-11 w-11 cursor-pointer flex-col items-center justify-center gap-1.5"
+            className="flex h-10 w-10 cursor-pointer flex-col items-center justify-center gap-1.5 rounded-full bg-white/[0.05] ring-1 ring-inset ring-white/[0.1] transition-colors hover:bg-white/[0.1]"
           >
             <span
               aria-hidden="true"
-              className={`h-px w-5 bg-foreground transition-transform duration-200 ${open ? "translate-y-[3.5px] rotate-45" : ""}`}
+              className={`h-px w-4 bg-foreground transition-transform duration-200 ${open ? "translate-y-[3.5px] rotate-45" : ""}`}
             />
             <span
               aria-hidden="true"
-              className={`h-px w-5 bg-foreground transition-transform duration-200 ${open ? "-translate-y-[3px] -rotate-45" : ""}`}
+              className={`h-px w-4 bg-foreground transition-transform duration-200 ${open ? "-translate-y-[3px] -rotate-45" : ""}`}
             />
           </button>
         </div>
@@ -146,19 +150,19 @@ export function Header() {
             type="button"
             aria-label={t("a11y.closeMenu")}
             onClick={close}
-            className="fixed inset-0 top-16 z-40 cursor-default bg-background/60 md:hidden"
+            className="fixed inset-0 top-[68px] z-40 cursor-default bg-background/65 backdrop-blur-sm md:hidden"
           />
           <nav
             aria-label={t("a11y.mainNav")}
-            className="absolute inset-x-0 top-16 z-50 border-b border-border bg-background md:hidden"
+            className="absolute inset-x-0 top-[68px] z-50 border-b border-white/[0.08] bg-background/95 backdrop-blur-2xl md:hidden"
           >
-            <ul className="mx-auto max-w-6xl px-5 py-4">
+            <ul className="mx-auto max-w-6xl space-y-1 px-6 py-4">
               {NAV_ITEMS.map((item) => (
                 <li key={item.id}>
                   <a
                     href={`#${item.id}`}
                     onClick={close}
-                    className="block py-3 font-mono text-sm uppercase tracking-widest text-foreground transition-colors hover:text-primary"
+                    className="block rounded-xl px-4 py-3 font-sans text-base font-medium text-foreground/85 transition-colors hover:bg-white/[0.06] hover:text-foreground"
                   >
                     {t(item.key)}
                   </a>

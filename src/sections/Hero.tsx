@@ -168,10 +168,15 @@ function HeroWireframe() {
 
   return (
     <div
-      className="hero-corner order-2 w-[min(64vw,300px)] shrink-0 md:w-[clamp(320px,30vw,500px)]"
+      className="hero-corner order-2 w-[min(76vw,360px)] shrink-0 md:w-[clamp(390px,36vw,610px)]"
       style={{ "--hc-delay": "1450ms" } as React.CSSProperties}
     >
       <div className="relative aspect-square">
+        {/* Subtle radial depth backlight behind the 3D sculpture */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-6 rounded-full bg-[radial-gradient(circle,rgba(56,189,248,0.13)_0%,rgba(30,64,175,0.05)_50%,transparent_75%)] blur-2xl"
+        />
         <img
           src="/models/wireframe-poster.svg"
           alt=""
@@ -217,7 +222,7 @@ export function Hero() {
       {/* reference composition: text — wireframe sculpture — name.
           Grid 1fr/auto/1fr on md+ keeps both side columns exactly equal, so
           the sculpture sits at the true center of the viewport. */}
-      <div className="relative z-20 flex flex-1 flex-col items-center justify-center gap-10 px-5 pb-24 pt-24 md:grid md:grid-cols-[1fr_auto_1fr] md:items-center md:gap-8 md:px-8">
+      <div className="relative z-20 mx-auto flex w-full max-w-[1600px] flex-1 flex-col items-center justify-center gap-10 px-6 pb-24 pt-24 md:grid md:grid-cols-[1fr_auto_1fr] md:items-center md:gap-8 md:px-12 lg:px-16">
         {/* left: greeting + profession, like the reference's intro block */}
         <div
           className="hero-corner order-1 max-w-sm text-center md:justify-self-start md:text-left"

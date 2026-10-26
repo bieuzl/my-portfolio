@@ -7,7 +7,7 @@
     "scrollDown": "Scroll to explore",
     "languageSwitcher": "Language",
     "placeholderBadge": "Sample content",
-    "projectsScene": "Decorative 3D sculpture of a blue torus knot"
+    "projectsScene": "Exploded-view modular 3D engineering structure"
   },
   "nav": {
     "about": "About",
@@ -68,11 +68,12 @@
     "note": "My path so far — projects, studies and what I'm building now."
   },
   "contact": {
-    "lead": "Let's talk?",
-    "body": "The best way to reach me is by email or LinkedIn. I reply quickly — especially if the topic is back-end, Java or an idea worth building.",
-    "pendingTitle": "Channels to configure",
-    "pendingBody": "The links below will be activated once you provide your details: email, GitHub, LinkedIn, and other professional profiles.",
-    "marquee": "Let's build something together"
+    "lead": "Let's build the next step",
+    "body": "Open to opportunities, connections, and challenges in software development and artificial intelligence.",
+    "emailLabel": "Email",
+    "linkedinLabel": "LinkedIn",
+    "githubLabel": "GitHub",
+    "marquee": "Let's build the next step"
   },
   "footer": {
     "built": "Designed and built by Gabriel"

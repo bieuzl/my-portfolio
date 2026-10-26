@@ -13,13 +13,18 @@ export const ptBR: PortfolioContent = {
       year: "2026",
       title: "gabriel.dev — portfólio pessoal",
       context:
-        "Meu site pessoal: hero com escultura 3D renderizada em tempo real, fundo animado, internacionalização PT/EN e design autoral — este que você está vendo agora.",
+        "Meu site pessoal: hero com escultura 3D interativa em tempo real, fundo animado, internacionalização PT/EN e design autoral.",
       contribution:
-        "Projetei e desenvolvi tudo: arquitetura front-end, cenas Three.js procedurais, animações, testes automatizados e deploy.",
+        "Projetei e desenvolvi toda a aplicação do zero: arquitetura front-end em React e TypeScript, cenas Three.js procedurais com rotação livre em 360°, animações coreografadas, suíte de testes automatizados e deploy contínuo.",
+      details: [
+        "Renderização 3D procedural com Three.js (WebGL) carregada sob demanda via dynamic import, garantindo carregamento rápido e fallback estático em SVG.",
+        "Rotação interativa em 360° nos eixos globais (rotateOnWorldAxis) com física de inércia suave ao arrastar com o mouse ou toque.",
+        "Tipografia monumental em duas camadas SVG sincronizadas (preenchimento em gradiente gelo animado + contorno neon azul-ciano com filtro de brilho).",
+        "Internacionalização completa (pt-BR / en) com paridade estrutural validada em tempo de compilação e por testes automatizados com Vitest e Testing Library.",
+      ],
       technologies: ["React", "TypeScript", "Three.js", "Tailwind CSS"],
       links: [
-        { label: "Demo", href: "" },
-        { label: "Repositório", href: "https://github.com/bieuzl/my-portfolio" },
+        { label: "GitHub", href: "https://github.com/bieuzl/my-portfolio" },
       ],
       placeholder: false,
     },
@@ -28,11 +33,17 @@ export const ptBR: PortfolioContent = {
       year: "2025",
       title: "API de Finanças Pessoais",
       context:
-        "API REST para organizar receitas, despesas e metas, com autenticação e visão mensal consolidada. Projeto autoral para aprofundar o ecossistema Spring.",
+        "API REST para gestão de receitas, despesas e metas financeiras, com autenticação segura e visão mensal consolidada.",
       contribution:
-        "Modelei o domínio, implementei os endpoints, a autenticação JWT, as migrações de banco e a suíte de testes de integração.",
+        "Modelei o domínio financeiro, implementei os endpoints RESTful, autenticação stateless com JWT, migrações de banco de dados e testes de integração.",
+      details: [
+        "Arquitetura em camadas com Spring Boot separando regras de negócio, controladores REST, persistência e DTOs de entrada/saída.",
+        "Modelagem relacional no PostgreSQL com versionamento de schema e consultas otimizadas para relatórios mensais e consolidação de saldo.",
+        "Autenticação e proteção de rotas com Spring Security e tokens JWT, garantindo isolamento completo dos dados de cada usuário.",
+        "Validação rigorosa de payloads (Bean Validation) e tratamento global de exceções com respostas padronizadas de erro.",
+      ],
       technologies: ["Java", "Spring Boot", "PostgreSQL", "Docker"],
-      links: [{ label: "Repositório", href: "" }],
+      links: [{ label: "GitHub", href: "https://github.com/bieuzl" }],
       placeholder: false,
     },
     {
@@ -40,11 +51,17 @@ export const ptBR: PortfolioContent = {
       year: "2025",
       title: "Serviço de Autenticação JWT",
       context:
-        "Serviço de autenticação e autorização com tokens JWT, refresh tokens e controle de acesso por papéis, pensado para ser reutilizado em outros projetos.",
+        "Microsserviço de autenticação e autorização com tokens JWT, refresh tokens e controle de acesso baseado em papéis (RBAC).",
       contribution:
-        "Implementei emissão e validação de tokens, cadastro e login de usuários, e a documentação dos endpoints.",
+        "Implementei o fluxo completo de emissão, rotação e revogação de tokens, cadastro e login de usuários com hash seguro de senhas e documentação da API.",
+      details: [
+        "Fluxo de Access Token de curta duração combinado com Refresh Token rotativo para equilibrar segurança e experiência do usuário.",
+        "Controle de acesso baseado em papéis (RBAC) com Spring Security para proteger endpoints administrativos e operacionais.",
+        "Armazenamento rápido em memória com Redis para invalidação imediata de sessões e controle de tokens revogados.",
+        "Criptografia de credenciais com BCrypt e contratos de API claros para integração direta com outros serviços back-end.",
+      ],
       technologies: ["Java", "Spring Security", "Redis"],
-      links: [{ label: "Repositório", href: "" }],
+      links: [{ label: "GitHub", href: "https://github.com/bieuzl" }],
       placeholder: false,
     },
   ],

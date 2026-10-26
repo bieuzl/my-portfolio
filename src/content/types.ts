@@ -17,6 +17,7 @@ export interface ProjectEntry {
   title: string;
   context: string;
   contribution: string;
+  details: string[];
   technologies: string[];
   links: ProjectLink[];
   placeholder: boolean;

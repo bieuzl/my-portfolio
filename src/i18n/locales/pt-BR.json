@@ -48,11 +48,16 @@
     "note": "Tecnologias e práticas que uso no dia a dia — do banco de dados à interface."
   },
   "projects": {
-    "contextLabel": "Contexto",
+    "contextLabel": "Visão geral",
     "contributionLabel": "Minha contribuição",
+    "architectureLabel": "Arquitetura e construção",
     "techLabel": "Tecnologias",
     "linksLabel": "Links",
-    "placeholderLink": "Link a definir"
+    "placeholderLink": "Link a definir",
+    "viewGithub": "Ver no GitHub",
+    "viewDetails": "Detalhes da construção",
+    "caseStudyBadge": "Estudo de caso técnico",
+    "closeDetails": "Fechar detalhes do projeto"
   },
   "experience": {
     "note": "Minha trajetória até aqui — projetos, estudos e o que estou construindo agora."

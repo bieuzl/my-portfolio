@@ -8,14 +8,28 @@ import type { SceneHandle } from "@/scene3d";
 import { getPortfolioContent, type ProjectEntry } from "@/content";
 import { normalizeLocale } from "@/i18n";
 
-function ProjectCard({ project, index }: { project: ProjectEntry; index: number }) {
+function getGithubHref(project: ProjectEntry): string {
+  const link = project.links.find((l) => l.href.trim().length > 0);
+  return link?.href || "https://github.com/bieuzl";
+}
+
+function ProjectCard({
+  project,
+  index,
+  onOpenDetails,
+}: {
+  project: ProjectEntry;
+  index: number;
+  onOpenDetails: (project: ProjectEntry, index: number) => void;
+}) {
   const { t } = useTranslation();
   const { ref, inView } = useInView<HTMLElement>();
+  const githubHref = getGithubHref(project);
 
   return (
     <article
       ref={ref}
-      className={`rv grid gap-8 border-t border-border/60 py-12 md:grid-cols-12${inView ? " in-view" : ""}`}
+      className={`rv grid items-center gap-8 border-t border-border/60 py-12 md:grid-cols-12${inView ? " in-view" : ""}`}
     >
       <div className="md:col-span-4">
         <div className="flex items-baseline gap-4">
@@ -34,64 +48,191 @@ function ProjectCard({ project, index }: { project: ProjectEntry; index: number 
         )}
       </div>
 
-      <div className="space-y-6 md:col-span-5">
-        <div>
-          <h4 className="mb-1.5 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
-            {t("projects.contextLabel")}
-          </h4>
-          <p className="text-sm leading-relaxed text-foreground/85">{project.context}</p>
-        </div>
-        <div>
-          <h4 className="mb-1.5 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
-            {t("projects.contributionLabel")}
-          </h4>
-          <p className="text-sm leading-relaxed text-foreground/85">{project.contribution}</p>
-        </div>
+      <div className="space-y-4 md:col-span-5">
+        <p className="text-base leading-relaxed text-foreground/85">{project.context}</p>
+        <ul className="flex flex-wrap gap-2 pt-1">
+          {project.technologies.map((tech) => (
+            <li
+              key={tech}
+              className="rounded-md border border-border/80 bg-card/40 px-2.5 py-1 font-mono text-[11px] text-muted-foreground"
+            >
+              {tech}
+            </li>
+          ))}
+        </ul>
       </div>
 
-      <div className="space-y-6 md:col-span-3">
-        <div>
-          <h4 className="mb-1.5 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
-            {t("projects.techLabel")}
-          </h4>
-          <ul className="flex flex-wrap gap-2">
-            {project.technologies.map((tech) => (
-              <li
-                key={tech}
-                className="border border-border px-2 py-0.5 font-mono text-[11px] text-muted-foreground"
-              >
-                {tech}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h4 className="mb-1.5 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
-            {t("projects.linksLabel")}
-          </h4>
-          <ul className="space-y-1.5">
-            {project.links.map((link) => (
-              <li key={link.label}>
-                {link.href ? (
-                  <a
-                    href={link.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="link-line font-mono text-xs text-foreground transition-colors hover:text-primary"
-                  >
-                    {link.label} ↗
-                  </a>
-                ) : (
-                  <span className="font-mono text-xs text-muted-foreground">
-                    {link.label} · {t("projects.placeholderLink")}
-                  </span>
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
+      <div className="flex flex-wrap items-center gap-3 md:col-span-3 md:justify-end">
+        <button
+          type="button"
+          onClick={() => onOpenDetails(project, index)}
+          className="inline-flex cursor-pointer items-center gap-2.5 rounded-full border border-primary/45 bg-primary/10 px-5 py-3 font-mono text-xs uppercase tracking-[0.16em] text-foreground transition-colors duration-[var(--dur-hover)] hover:border-primary hover:bg-primary/20"
+        >
+          <span>{t("projects.viewDetails")}</span>
+          <span aria-hidden="true" className="text-primary">
+            →
+          </span>
+        </button>
+
+        <a
+          href={githubHref}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-3 font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground transition-colors duration-[var(--dur-hover)] hover:border-primary/60 hover:text-foreground"
+        >
+          <span>{t("projects.viewGithub")}</span>
+          <span aria-hidden="true" className="text-primary">
+            ↗
+          </span>
+        </a>
       </div>
     </article>
+  );
+}
+
+function ProjectDetailsSubpage({
+  project,
+  index,
+  onClose,
+}: {
+  project: ProjectEntry;
+  index: number;
+  onClose: () => void;
+}) {
+  const { t } = useTranslation();
+  const githubHref = getGithubHref(project);
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [onClose]);
+
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="project-subpage-title"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-background/85 p-4 backdrop-blur-md md:p-8"
+      onClick={onClose}
+    >
+      <div
+        className="relative max-h-[90dvh] w-full max-w-4xl overflow-y-auto rounded-2xl border border-border/90 bg-card/95 shadow-[0_32px_90px_-20px_rgba(0,0,0,0.85)]"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Barra superior fixa da subpágina com botão X para sair */}
+        <div className="sticky top-0 z-20 flex items-center justify-between border-b border-border/80 bg-card/95 px-6 py-4 backdrop-blur-md md:px-10">
+          <div className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.2em] text-primary">
+            <span>{String(index + 1).padStart(2, "0")}</span>
+            <span aria-hidden="true" className="text-muted-foreground/50">·</span>
+            <span>{project.year}</span>
+            <span aria-hidden="true" className="text-muted-foreground/50">·</span>
+            <span className="text-muted-foreground">{t("projects.caseStudyBadge")}</span>
+          </div>
+
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label={t("projects.closeDetails")}
+            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-border/80 bg-background/60 font-mono text-base text-muted-foreground transition-colors hover:border-primary hover:bg-primary/15 hover:text-foreground"
+          >
+            ✕
+          </button>
+        </div>
+
+        {/* Conteúdo detalhado da subpágina */}
+        <div className="space-y-10 px-6 py-8 md:px-10 md:py-10">
+          <div>
+            <h3
+              id="project-subpage-title"
+              className="font-display text-3xl font-semibold tracking-tight text-foreground md:text-5xl"
+            >
+              {project.title}
+            </h3>
+            <ul className="mt-5 flex flex-wrap gap-2">
+              {project.technologies.map((tech) => (
+                <li
+                  key={tech}
+                  className="rounded-full border border-primary/35 bg-primary/10 px-3.5 py-1 font-mono text-xs text-foreground"
+                >
+                  {tech}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="grid gap-8 border-t border-border/60 pt-8 md:grid-cols-2">
+            <div className="rounded-xl border border-border/70 bg-background/40 p-6">
+              <h4 className="mb-2.5 font-mono text-xs uppercase tracking-[0.2em] text-primary">
+                01 · {t("projects.contextLabel")}
+              </h4>
+              <p className="text-base leading-relaxed text-foreground/85">
+                {project.context}
+              </p>
+            </div>
+
+            <div className="rounded-xl border border-border/70 bg-background/40 p-6">
+              <h4 className="mb-2.5 font-mono text-xs uppercase tracking-[0.2em] text-primary">
+                02 · {t("projects.contributionLabel")}
+              </h4>
+              <p className="text-base leading-relaxed text-foreground/85">
+                {project.contribution}
+              </p>
+            </div>
+          </div>
+
+          <div className="rounded-xl border border-border/70 bg-background/40 p-6 md:p-8">
+            <h4 className="mb-5 font-mono text-xs uppercase tracking-[0.2em] text-primary">
+              03 · {t("projects.architectureLabel")}
+            </h4>
+            <ul className="space-y-4">
+              {project.details.map((step, idx) => (
+                <li
+                  key={idx}
+                  className="flex items-start gap-4 border-b border-border/40 pb-4 last:border-b-0 last:pb-0"
+                >
+                  <span className="mt-0.5 font-mono text-xs text-primary">
+                    {String(idx + 1).padStart(2, "0")}
+                  </span>
+                  <p className="text-sm leading-relaxed text-foreground/85 md:text-base">
+                    {step}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-between gap-4 border-t border-border/60 pt-6">
+            <a
+              href={githubHref}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2.5 rounded-full border border-primary/45 bg-primary/10 px-6 py-3 font-mono text-xs uppercase tracking-[0.18em] text-foreground transition-colors hover:border-primary hover:bg-primary/20"
+            >
+              <span>{t("projects.viewGithub")}</span>
+              <span aria-hidden="true" className="text-primary">
+                ↗
+              </span>
+            </a>
+
+            <button
+              type="button"
+              onClick={onClose}
+              className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-border px-6 py-3 font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:border-primary/60 hover:text-foreground"
+            >
+              <span>✕</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -103,6 +244,10 @@ export function Projects() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const handleRef = useRef<SceneHandle | null>(null);
   const [sceneReady, setSceneReady] = useState(false);
+  const [activeProject, setActiveProject] = useState<{
+    project: ProjectEntry;
+    index: number;
+  } | null>(null);
 
   /* Small 3D sculpture beside the heading — a detail that moves with the
      page, not a centerpiece. three.js stays off the critical path via
@@ -201,14 +346,27 @@ export function Projects() {
         />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-6xl px-5 py-24 md:px-8 md:py-36">
+      <div className="relative z-10 mx-auto w-full max-w-[1600px] px-6 py-24 md:px-12 md:py-36 lg:px-16">
         <SectionHeading id="projetos-titulo" index="03" title={t("sections.projects")} />
         <div>
           {projects.map((project, i) => (
-            <ProjectCard key={project.id} project={project} index={i} />
+            <ProjectCard
+              key={project.id}
+              project={project}
+              index={i}
+              onOpenDetails={(proj, idx) => setActiveProject({ project: proj, index: idx })}
+            />
           ))}
         </div>
       </div>
+
+      {activeProject && (
+        <ProjectDetailsSubpage
+          project={activeProject.project}
+          index={activeProject.index}
+          onClose={() => setActiveProject(null)}
+        />
+      )}
     </section>
   );
 }

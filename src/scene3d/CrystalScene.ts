@@ -1,12 +1,45 @@
 import * as THREE from "three";
-import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 
-export interface SceneOptions {
+/**
+ * Estúdio procedural escuro com tiras de luz (softboxes): o vidro reflete
+ * streaks brancos e azul-gelo bem definidos, em vez do cinza uniforme de um
+ * ambiente claro. Zero assets — tudo gerado em runtime.
+ */
+function createStudioEnvironment(): THREE.Scene {
+  const env = new THREE.Scene();
+  env.background = new THREE.Color(0x000000);
+  const strip = (
+    w: number,
+    h: number,
+    color: number,
+    intensity: number,
+    position: [number, number, number],
+  ) => {
+    const mesh = new THREE.Mesh(
+      new THREE.BoxGeometry(w, h, 0.1),
+      new THREE.MeshBasicMaterial({
+        color: new THREE.Color(color).multiplyScalar(intensity),
+      }),
+    );
+    mesh.position.set(...position);
+    mesh.lookAt(0, 0, 0);
+    env.add(mesh);
+  };
+  strip(2, 10, 0xffffff, 14, [-6, 2, 4]); // softbox vertical esquerda
+  strip(1.2, 9, 0x9cc8ff, 9, [6, 0, 3]); // tira azul-gelo direita
+  strip(8, 2, 0xffffff, 10, [0, 6, 2]); // luz de topo
+  strip(3, 1, 0x66d9ff, 5, [0, -4, -5]); // rim cyan inferior traseira
+  strip(1, 6, 0xffffff, 7, [2, 0, -6]); // tira traseira para refração
+  strip(5, 7, 0xbcd8ff, 1.6, [0, 0, 8]); // softbox frontal ampla e suave
+  return env;
+}
+
+export interface CrystalOptions {
   /** When true, renders one static frame and never starts the loop. */
   reducedMotion: boolean;
 }
 
-export interface SceneHandle {
+export interface CrystalHandle {
   /** Normalized pointer (-1..1 on both axes) driving subtle parallax. */
   setPointer(nx: number, ny: number): void;
   setReducedMotion(value: boolean): void;
@@ -14,154 +47,183 @@ export interface SceneHandle {
 }
 
 /**
- * Crystal blades: flattened torus arcs with a 5-sided tube — the low radial
- * count turns the sweep into a faceted prism, so every face catches the
- * environment like a cut gem. Mirrored by scripts/generate-crystal-poster.mjs.
+ * Metade da escultura (sign = 1 direita, -1 esquerda), 100% paramétrica:
+ * um perfil octogonal chanfrado varrido verticalmente. A aresta interna é
+ * CÔNCAVA (recua no meio), a externa é CONVEXA, e topo/base têm facetas
+ * angulares. As superfícies curvas dão normais contínuas — é o que faz o
+ * estúdio aparecer como streaks de vidro, e não como painéis cinza chapados.
  */
-interface BladeSpec {
-  radius: number;
-  tube: number;
-  arc: number;
-  /** true mirrors the blade (arc bulges left, like a "(" facing a ")"). */
-  mirror?: boolean;
-  scale: [number, number, number];
-  position: [number, number, number];
-  rotation: [number, number, number];
-}
+function createHalfGeometry(sign: 1 | -1): THREE.BufferGeometry {
+  const HEIGHT = 3.6;
+  const HALF_DEPTH = 0.34;
+  const BEVEL = 0.07;
+  const RINGS = 72;
 
-const BLADES: BladeSpec[] = [
-  /* main fin, bulging right, standing tall on the left */
-  {
-    radius: 1.05,
-    tube: 0.4,
-    arc: 2.0,
-    scale: [1, 1.5, 0.5],
-    position: [-0.36, 0.05, 0],
-    rotation: [0.1, 0.35, -0.08],
-  },
-  /* mirrored partner, smaller and lower — asymmetry keeps it sculptural */
-  {
-    radius: 0.85,
-    tube: 0.34,
-    arc: 1.7,
-    mirror: true,
-    scale: [1, 1.3, 0.5],
-    position: [0.44, -0.16, 0.08],
-    rotation: [-0.08, -0.35, 0.1],
-  },
-  /* small shard floating between the two, slightly toward the camera */
-  {
-    radius: 0.5,
-    tube: 0.2,
-    arc: 1.5,
-    scale: [1, 1.25, 0.5],
-    position: [0.04, 0.3, 0.45],
-    rotation: [0.35, 0.15, -0.3],
-  },
-];
+  // perfil transversal (u = posição interna→externa 0..1, z = profundidade)
+  const profile: Array<[number, number]> = [
+    [BEVEL, -HALF_DEPTH],
+    [1 - BEVEL, -HALF_DEPTH],
+    [1, -HALF_DEPTH + BEVEL],
+    [1, HALF_DEPTH - BEVEL],
+    [1 - BEVEL, HALF_DEPTH],
+    [BEVEL, HALF_DEPTH],
+    [0, HALF_DEPTH - BEVEL],
+    [0, -HALF_DEPTH + BEVEL],
+  ];
+  const P = profile.length;
 
-function makeBladeGeometry(spec: BladeSpec): THREE.BufferGeometry {
-  const geometry = new THREE.TorusGeometry(spec.radius, spec.tube, 5, 26, spec.arc);
-  /* center the arc on its bulge axis so the blade stands upright */
-  geometry.rotateZ((spec.mirror ? Math.PI : 0) - spec.arc / 2);
-  geometry.scale(...spec.scale);
-  geometry.rotateX(spec.rotation[0]);
-  geometry.rotateY(spec.rotation[1]);
-  geometry.rotateZ(spec.rotation[2]);
-  geometry.translate(...spec.position);
+  const positions: number[] = [];
+  const indices: number[] = [];
+
+  for (let ring = 0; ring <= RINGS; ring++) {
+    const v = ring / RINGS; // 0 base → 1 topo
+    const bow = Math.sin(v * Math.PI); // 0 nas pontas, 1 no meio
+    const innerX = 0.3 + 0.55 * bow; // aresta interna côncava
+    const outerX = 1.25 + 0.25 * bow; // aresta externa convexa
+    const y = (v - 0.5) * HEIGHT;
+    for (const [u, z] of profile) {
+      const x = innerX + (outerX - innerX) * u;
+      // facetas angulares: topo sobe para fora, base desce para fora
+      const yFacet = y + (x - 0.9) * 0.22 * (2 * v - 1);
+      positions.push(sign * x, yFacet, z);
+    }
+  }
+
+  for (let ring = 0; ring < RINGS; ring++) {
+    for (let j = 0; j < P; j++) {
+      const a = ring * P + j;
+      const b = ring * P + ((j + 1) % P);
+      const c = (ring + 1) * P + j;
+      const d = (ring + 1) * P + ((j + 1) % P);
+      if (sign === 1) {
+        indices.push(a, c, b, b, c, d);
+      } else {
+        indices.push(a, b, c, b, d, c); // espelhado: winding invertido
+      }
+    }
+  }
+
+  // tampas (fan) na base e no topo
+  const capCenter = (ring: number) => {
+    const idx = positions.length / 3;
+    let x = 0;
+    let y = 0;
+    let z = 0;
+    for (let j = 0; j < P; j++) {
+      x += positions[(ring * P + j) * 3];
+      y += positions[(ring * P + j) * 3 + 1];
+      z += positions[(ring * P + j) * 3 + 2];
+    }
+    positions.push(x / P, y / P, z / P);
+    return idx;
+  };
+  const bottom = capCenter(0);
+  const top = capCenter(RINGS);
+  for (let j = 0; j < P; j++) {
+    const a = j;
+    const b = (j + 1) % P;
+    const c = RINGS * P + j;
+    const d = RINGS * P + ((j + 1) % P);
+    if (sign === 1) {
+      indices.push(bottom, b, a, top, c, d);
+    } else {
+      indices.push(bottom, a, b, top, d, c);
+    }
+  }
+
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+  geometry.setIndex(indices);
+  geometry.computeVertexNormals();
   return geometry;
 }
 
 /**
- * Crystal material: fully transmissive physical glass with iridescence and
- * chromatic dispersion — the blue/cyan flare along the facets comes from
- * the studio environment refracting through the blades, not from paint.
+ * Escultura cristalina do hero: duas metades prismáticas espelhadas em vidro
+ * óptico (transmission + dispersão azulada), arestas azul-gelo, ambiente de
+ * estúdio para reflexos reais. Movimento lento e controlado: oscilação
+ * suave em Y que preserva a silhueta frontal, sem tombos nem inclinações.
  */
-function makeCrystalMaterial(): THREE.MeshPhysicalMaterial {
-  return new THREE.MeshPhysicalMaterial({
-    color: 0xffffff,
-    metalness: 0,
-    roughness: 0.1,
-    transmission: 1,
-    thickness: 1.6,
-    ior: 1.52,
-    attenuationColor: new THREE.Color("#2f6fd0"),
-    attenuationDistance: 1.1,
-    iridescence: 1,
-    iridescenceIOR: 1.9,
-    iridescenceThicknessRange: [120, 900],
-    dispersion: 6,
-    clearcoat: 0.35,
-    clearcoatRoughness: 0.18,
-    envMapIntensity: 0.8,
-    specularIntensity: 0.9,
-    flatShading: true,
-  });
-}
-
-/**
- * Mounts the crystal sculpture on a canvas: two mirrored glass blades and a
- * shard, lit by a procedural studio environment (no HDR asset needed). Slow
- * continuous spin, pointer parallax, and a poke that kicks the spin. Fully
- * procedural — the caller falls back to the static poster only when WebGL
- * itself is unavailable.
- */
-export async function mountCrystalScene(
+export function mountCrystalScene(
   canvas: HTMLCanvasElement,
-  options: SceneOptions,
-): Promise<SceneHandle | null> {
+  options: CrystalOptions,
+): Promise<CrystalHandle> {
   const renderer = new THREE.WebGLRenderer({
     canvas,
     antialias: true,
     alpha: true,
     powerPreference: "low-power",
   });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setClearColor(0x000000, 0);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.15;
 
   const scene = new THREE.Scene();
+  /* Fundo preto explícito (o painel já é preto): sem isso o transmission
+     pass do Three compõe sobre branco e o vidro sai cinza leitoso. */
+  scene.background = new THREE.Color(0x000000);
 
-  /* Procedural studio HDRI: RoomEnvironment through PMREM gives the glass
-     real reflections and refraction sources without shipping an asset. */
+  /* Estúdio procedural (sem assets): reflete como tiras claras nas facetas. */
   const pmrem = new THREE.PMREMGenerator(renderer);
-  const envTexture = pmrem.fromScene(new RoomEnvironment(), 0.06).texture;
-  scene.environment = envTexture;
-  /* dim the studio so the glass reads deep blue, not blown-out white */
-  scene.environmentIntensity = 0.45;
+  const envScene = createStudioEnvironment();
+  const envTarget = pmrem.fromScene(envScene, 0.03);
+  scene.environment = envTarget.texture;
 
-  /* crisp key light + cyan kicker for the brand-colored edge sparkle */
-  const keyLight = new THREE.DirectionalLight(0xdfeaff, 2.2);
-  keyLight.position.set(2.5, 3, 4);
-  const kicker = new THREE.PointLight(0x38e1ff, 6, 20);
-  kicker.position.set(-3, -1.5, 2.5);
-  scene.add(keyLight, kicker);
+  const glass = new THREE.MeshPhysicalMaterial({
+    color: 0xffffff,
+    metalness: 0,
+    roughness: 0.03,
+    transmission: 1,
+    thickness: 0.9,
+    ior: 1.46,
+    dispersion: 1.4,
+    attenuationColor: new THREE.Color(0x9cc8ff),
+    attenuationDistance: 2.8,
+    clearcoat: 1,
+    clearcoatRoughness: 0.06,
+    envMapIntensity: 1.6,
+  });
+  const edgeMaterial = new THREE.LineBasicMaterial({
+    color: 0xbfe2ff,
+    transparent: true,
+    opacity: 0.28,
+  });
 
-  const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
-
-  const material = makeCrystalMaterial();
-  const model = new THREE.Group();
+  const inner = new THREE.Group();
   const geometries: THREE.BufferGeometry[] = [];
-  for (const spec of BLADES) {
-    const geometry = makeBladeGeometry(spec);
+  for (const sign of [1, -1] as const) {
+    const geometry = createHalfGeometry(sign);
     geometries.push(geometry);
-    model.add(new THREE.Mesh(geometry, material));
+    inner.add(new THREE.Mesh(geometry, glass));
+    const edges = new THREE.EdgesGeometry(geometry, 32);
+    geometries.push(edges);
+    inner.add(new THREE.LineSegments(edges, edgeMaterial));
   }
 
+  /* Centralização pelo centro geométrico real do PAR (não por CSS): o grupo
+     interno é deslocado pelo negativo do centro da bounding box, então o
+     pivô externo gira exatamente em torno do centro visual da escultura. */
+  const bounds = new THREE.Box3().setFromObject(inner);
+  const center = bounds.getCenter(new THREE.Vector3());
+  inner.position.copy(center.negate());
+
   const pivot = new THREE.Group();
-  pivot.add(model);
+  pivot.add(inner);
   scene.add(pivot);
 
-  /* Center and frame the sculpture regardless of the viewport. */
-  const box = new THREE.Box3().setFromObject(model);
-  const size = box.getSize(new THREE.Vector3());
-  const center = box.getCenter(new THREE.Vector3());
-  const maxDim = Math.max(size.x, size.y, size.z);
-  const fitDist = maxDim / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2));
-  model.position.sub(center);
-  const modelBaseY = model.position.y;
-  camera.position.set(0, size.y * 0.3, fitDist * 1.12);
+  const keyLight = new THREE.DirectionalLight(0xdfefff, 0.8);
+  keyLight.position.set(3, 4, 5);
+  scene.add(keyLight);
+  const rimLight = new THREE.DirectionalLight(0x7fb8ff, 0.6);
+  rimLight.position.set(-4, -2, -3);
+  scene.add(rimLight);
+
+
+  const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
+  const size = bounds.getSize(new THREE.Vector3());
+  const radius = Math.max(size.x, size.y, size.z) / 2;
+  const fitDist = radius / Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2);
+  camera.position.set(0, 0, fitDist * 1.35);
   camera.lookAt(0, 0, 0);
 
   let width = 0;
@@ -169,7 +231,7 @@ export async function mountCrystalScene(
   const resize = () => {
     const w = canvas.clientWidth;
     const h = canvas.clientHeight;
-    if (w === width && h === height) return;
+    if (!w || !h || (w === width && h === height)) return;
     width = w;
     height = h;
     renderer.setSize(w, h, false);
@@ -179,15 +241,6 @@ export async function mountCrystalScene(
   resize();
   const resizeObserver = new ResizeObserver(resize);
   resizeObserver.observe(canvas);
-
-  /* Poke: clicking the crystal kicks the spin, like flicking a desk toy. */
-  let spin = 0;
-  let spinKick = 0;
-  const onPoke = (e: PointerEvent) => {
-    if (e.pointerType === "mouse" && e.button !== 0) return;
-    spinKick += 2.4;
-  };
-  canvas.addEventListener("pointerdown", onPoke);
 
   const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
   let reducedMotion = options.reducedMotion;
@@ -199,19 +252,16 @@ export async function mountCrystalScene(
     const t = clock.getElapsedTime();
     pointer.x += (pointer.tx - pointer.x) * 0.05;
     pointer.y += (pointer.ty - pointer.y) * 0.05;
-    spinKick *= 0.94;
-    spin += 0.0035 + spinKick * 0.02;
-    pivot.rotation.y = spin + pointer.x * 0.35;
-    pivot.rotation.x = Math.sin(t * 0.22) * 0.08 + pointer.y * 0.14;
-    pivot.rotation.z = Math.sin(t * 0.16) * 0.05;
-    model.position.y = modelBaseY + Math.sin(t * 0.7) * 0.05;
+    /* Oscilação lenta e simétrica — a peça nunca "tomba" nem fica torta. */
+    pivot.rotation.y = Math.sin(t * 0.22) * 0.38 + pointer.x * 0.2;
+    pivot.rotation.x = pointer.y * 0.12;
+    pivot.rotation.z = 0;
     renderer.render(scene, camera);
   };
 
   const loop = () => {
     if (visible && !reducedMotion) renderFrame();
   };
-
   const start = () => {
     if (running || reducedMotion) return;
     running = true;
@@ -229,13 +279,12 @@ export async function mountCrystalScene(
 
   if (reducedMotion) {
     resize();
-    pivot.rotation.y = 0.6;
     renderer.render(scene, camera);
   } else {
     start();
   }
 
-  return {
+  return Promise.resolve({
     setPointer(nx, ny) {
       pointer.tx = THREE.MathUtils.clamp(nx, -1, 1);
       pointer.ty = THREE.MathUtils.clamp(ny, -1, 1);
@@ -244,7 +293,6 @@ export async function mountCrystalScene(
       reducedMotion = value;
       if (value) {
         stop();
-        pivot.rotation.y = 0.6;
         renderer.render(scene, camera);
       } else {
         start();
@@ -254,12 +302,18 @@ export async function mountCrystalScene(
       stop();
       resizeObserver.disconnect();
       visibilityObserver.disconnect();
-      canvas.removeEventListener("pointerdown", onPoke);
-      for (const geometry of geometries) geometry.dispose();
-      material.dispose();
-      envTexture.dispose();
+      envScene.traverse((obj) => {
+        if (obj instanceof THREE.Mesh) {
+          obj.geometry.dispose();
+          (obj.material as THREE.Material).dispose();
+        }
+      });
+      geometries.forEach((g) => g.dispose());
+      glass.dispose();
+      edgeMaterial.dispose();
+      envTarget.dispose();
       pmrem.dispose();
       renderer.dispose();
     },
-  };
+  });
 }

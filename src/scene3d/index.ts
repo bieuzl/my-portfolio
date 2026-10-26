@@ -7,5 +7,5 @@
 export { isWebGLAvailable } from "./support";
 export { mountSculptureScene } from "./SculptureScene";
 export type { SceneHandle, SceneOptions } from "./SculptureScene";
-export { mountWireframeScene } from "./WireframeScene";
-export type { WireframeSceneHandle } from "./WireframeScene";
+export { mountCrystalScene } from "./CrystalScene";
+export type { CrystalHandle, CrystalOptions } from "./CrystalScene";

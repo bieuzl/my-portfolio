@@ -51,14 +51,9 @@ describe("monumental hero", () => {
     }
   });
 
-  it("anchors exactly one microtext to each of the four corners", () => {
+  it("keeps the hero corners clean with no corner microtexts", () => {
     const { container } = render(<Hero />);
-    const corners = ["specialty", "projects", "name", "contact"];
-    for (const corner of corners) {
-      const matches = container.querySelectorAll(`[data-corner="${corner}"]`);
-      expect(matches.length).toBe(1);
-    }
-    expect(container.querySelectorAll("[data-corner]").length).toBe(4);
+    expect(container.querySelectorAll("[data-corner]").length).toBe(0);
   });
 
   it("keeps a real h1 and only the decorative wireframe as canvas", () => {
@@ -72,9 +67,10 @@ describe("monumental hero", () => {
     expect(container.querySelector('[role="img"]')).not.toBeInTheDocument();
   });
 
-  it("links project and contact corners to their sections", () => {
-    const { container } = render(<Hero />);
-    expect(container.querySelector('[data-corner="projects"]')?.getAttribute("href")).toBe("#projetos");
-    expect(container.querySelector('[data-corner="contact"]')?.getAttribute("href")).toBe("#contato");
+  it("renders the updated tagline below the developer role", () => {
+    render(<Hero />);
+    expect(
+      screen.getByText(/Do conceito ao código, criando o que vem a seguir\./i),
+    ).toBeInTheDocument();
   });
 });

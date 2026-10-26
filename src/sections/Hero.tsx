@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import { getPortfolioContent } from "@/content";
 import { normalizeLocale } from "@/i18n";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
-import { Magnetic } from "@/components/Magnetic";
 import type { WireframeSceneHandle } from "@/scene3d";
 
 const LETTER_STAGGER_MS = 40;
@@ -183,7 +182,7 @@ function HeroWireframe() {
           ref={canvasRef}
           aria-hidden="true"
           data-wireframe
-          className={`relative h-full w-full cursor-pointer transition-opacity duration-700${live ? "" : " opacity-0"}`}
+          className={`relative h-full w-full cursor-grab touch-none transition-opacity duration-700 active:cursor-grabbing${live ? "" : " opacity-0"}`}
         />
       </div>
       <p className="mt-1 text-center font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
@@ -197,7 +196,7 @@ function HeroWireframe() {
  * Full-viewport hero composed like the reference: greeting and short bio on
  * the left, the wireframe sculpture as the protagonist in the center, the
  * name stacked on the right — all floating above the global Atmosphere
- * backdrop, with microtexts anchored to the four corners.
+ * backdrop.
  */
 export function Hero() {
   const { t, i18n } = useTranslation();
@@ -214,38 +213,6 @@ export function Hero() {
       <h1 className="sr-only">
         {name} — {t("hero.role")}
       </h1>
-
-      {/* corner microtexts — one element per corner, never overlapping */}
-      <p
-        data-corner="specialty"
-        className="hero-corner absolute left-5 top-20 z-30 font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground md:left-8 md:top-24"
-        style={{ "--hc-delay": "950ms" } as React.CSSProperties}
-      >
-        {t("hero.role")}
-      </p>
-      <a
-        data-corner="projects"
-        href="#projetos"
-        className="hero-corner absolute right-5 top-20 z-30 font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground transition-colors duration-[var(--dur-hover)] hover:text-primary md:right-8 md:top-24"
-        style={{ "--hc-delay": "1050ms" } as React.CSSProperties}
-      >
-        <Magnetic strength={0.4}>{t("nav.projects")} ↓</Magnetic>
-      </a>
-      <p
-        data-corner="name"
-        className="hero-corner absolute bottom-6 left-5 z-30 font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground md:bottom-8 md:left-8"
-        style={{ "--hc-delay": "1150ms" } as React.CSSProperties}
-      >
-        {name} — © 2026
-      </p>
-      <a
-        data-corner="contact"
-        href="#contato"
-        className="hero-corner absolute bottom-6 right-5 z-30 font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground transition-colors duration-[var(--dur-hover)] hover:text-primary md:bottom-8 md:right-8"
-        style={{ "--hc-delay": "1250ms" } as React.CSSProperties}
-      >
-        <Magnetic strength={0.4}>{t("nav.contact")} ↗</Magnetic>
-      </a>
 
       {/* reference composition: text — wireframe sculpture — name.
           Grid 1fr/auto/1fr on md+ keeps both side columns exactly equal, so
@@ -272,7 +239,7 @@ export function Hero() {
         {/* center: the protagonist */}
         <HeroWireframe />
 
-        {/* right: name + professional id, stacked like the reference's surname block */}
+        {/* right: name + surname signature stacked */}
         <div
           className="hero-corner order-3 flex flex-col items-center md:items-end md:justify-self-end"
           style={{ "--hc-delay": "1550ms" } as React.CSSProperties}
@@ -298,9 +265,6 @@ export function Hero() {
             style={{ fontFamily: "'Great Vibes', cursive", transform: "rotate(-2deg)" }}
           >
             {t("hero.surname")}
-          </p>
-          <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground md:text-xs">
-            {t("hero.stack")}
           </p>
         </div>
       </div>

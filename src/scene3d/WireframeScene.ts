@@ -210,14 +210,75 @@ export async function mountWireframeScene(
   const resizeObserver = new ResizeObserver(resize);
   resizeObserver.observe(canvas);
 
-  /* Poke: clicking the sculpture kicks the spin, like flicking a desk toy. */
-  let spin = 0;
-  let spinKick = 0;
-  const onPoke = (e: PointerEvent) => {
+  /* Free 360° drag rotation in any direction + momentum inertia. */
+  const WORLD_Y = new THREE.Vector3(0, 1, 0);
+  const WORLD_X = new THREE.Vector3(1, 0, 0);
+  let isDragging = false;
+  let activePointerId: number | null = null;
+  let lastX = 0;
+  let lastY = 0;
+  let dragDistance = 0;
+  let velYaw = 0;
+  let velPitch = 0;
+
+  const onPointerDown = (e: PointerEvent) => {
     if (e.pointerType === "mouse" && e.button !== 0) return;
-    spinKick += 2.4;
+    isDragging = true;
+    activePointerId = e.pointerId;
+    lastX = e.clientX;
+    lastY = e.clientY;
+    dragDistance = 0;
+    velYaw = 0;
+    velPitch = 0;
+    try {
+      canvas.setPointerCapture(e.pointerId);
+    } catch {
+      // ignore if unsupported in test environment
+    }
   };
-  canvas.addEventListener("pointerdown", onPoke);
+
+  const onPointerMove = (e: PointerEvent) => {
+    if (!isDragging || e.pointerId !== activePointerId) return;
+    const dx = e.clientX - lastX;
+    const dy = e.clientY - lastY;
+    lastX = e.clientX;
+    lastY = e.clientY;
+    dragDistance += Math.hypot(dx, dy);
+
+    const yawDelta = dx * 0.009;
+    const pitchDelta = dy * 0.009;
+    model.rotateOnWorldAxis(WORLD_Y, yawDelta);
+    model.rotateOnWorldAxis(WORLD_X, pitchDelta);
+    core.lines.rotation.y -= yawDelta * 0.6;
+    core.lines.rotation.x -= pitchDelta * 0.6;
+
+    velYaw = yawDelta;
+    velPitch = pitchDelta;
+
+    if (reducedMotion) {
+      renderer.render(scene, camera);
+    }
+  };
+
+  const onPointerUp = (e: PointerEvent) => {
+    if (!isDragging || e.pointerId !== activePointerId) return;
+    isDragging = false;
+    activePointerId = null;
+    try {
+      canvas.releasePointerCapture(e.pointerId);
+    } catch {
+      // ignore
+    }
+    if (dragDistance < 4) {
+      // Simple click/tap without dragging gives a playful spin impulse
+      velYaw += 0.06;
+    }
+  };
+
+  canvas.addEventListener("pointerdown", onPointerDown);
+  canvas.addEventListener("pointermove", onPointerMove);
+  canvas.addEventListener("pointerup", onPointerUp);
+  canvas.addEventListener("pointercancel", onPointerUp);
 
   const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
   let reducedMotion = options.reducedMotion;
@@ -229,12 +290,23 @@ export async function mountWireframeScene(
     const t = clock.getElapsedTime();
     pointer.x += (pointer.tx - pointer.x) * 0.05;
     pointer.y += (pointer.ty - pointer.y) * 0.05;
-    spinKick *= 0.94;
-    spin += 0.0035 + spinKick * 0.02;
-    pivot.rotation.y = spin + pointer.x * 0.35;
-    pivot.rotation.x = Math.sin(t * 0.22) * 0.08 + pointer.y * 0.14;
+
+    if (!isDragging) {
+      velYaw *= 0.95;
+      velPitch *= 0.95;
+      const yawStep = 0.0035 + velYaw;
+      const pitchStep = velPitch;
+      model.rotateOnWorldAxis(WORLD_Y, yawStep);
+      if (Math.abs(pitchStep) > 0.00001) {
+        model.rotateOnWorldAxis(WORLD_X, pitchStep);
+      }
+      core.lines.rotation.y -= yawStep * 0.6;
+      core.lines.rotation.x -= pitchStep * 0.6;
+    }
+
+    pivot.rotation.y = pointer.x * 0.35;
+    pivot.rotation.x = Math.sin(t * 0.22) * 0.08 + pointer.y * 0.25;
     pivot.rotation.z = Math.sin(t * 0.16) * 0.04;
-    core.lines.rotation.y = 0.9 - spin * 0.6; // inner core counter-rotates
     model.position.y = modelBaseY + Math.sin(t * 0.7) * 0.05;
     renderer.render(scene, camera);
   };
@@ -285,7 +357,10 @@ export async function mountWireframeScene(
       stop();
       resizeObserver.disconnect();
       visibilityObserver.disconnect();
-      canvas.removeEventListener("pointerdown", onPoke);
+      canvas.removeEventListener("pointerdown", onPointerDown);
+      canvas.removeEventListener("pointermove", onPointerMove);
+      canvas.removeEventListener("pointerup", onPointerUp);
+      canvas.removeEventListener("pointercancel", onPointerUp);
       for (const geometry of [...shell.disposables, ...core.disposables]) {
         geometry.dispose();
       }

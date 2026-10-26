@@ -24,15 +24,13 @@ interface MonumentWordProps {
  * (unlike -webkit-text-stroke, which eats the interior and reads "thin").
  *
  * Finishing, layer by layer:
- * - filled: Bricolage Grotesque 800 at optical size 96 with a diagonal ice
- *   gradient that a slow sheen sweeps across (SMIL, skipped under
- *   prefers-reduced-motion) — every letter solid, one continuous monument
+ * - filled: Archivo 800 Expanded — a professional, editorial grotesque —
+ *   with a diagonal ice gradient that a slow sheen sweeps across (SMIL,
+ *   skipped under prefers-reduced-motion); every letter solid, one continuous
+ *   monument
  * - outline: blue→cyan gradient stroke tracing every glyph, with a blurred
  *   neon halo behind it (a <use> clone, so the glow matches the glyphs
  *   exactly)
- * - both layers set the "A" in Instrument Serif italic — an editorial
- *   accent that breaks the grotesque rhythm (applied to both layers so the
- *   stack stays pixel-perfect)
  */
 function MonumentWord({ word, variant, sheen = false, className = "w-[min(94vw,1150px)]" }: MonumentWordProps) {
   const letters = [...word.toUpperCase()];
@@ -86,16 +84,15 @@ function MonumentWord({ word, variant, sheen = false, className = "w-[min(94vw,1
         lengthAdjust="spacingAndGlyphs"
         className={variant === "outline" ? "text-primary" : "text-foreground"}
         style={{
-          fontFamily: "'Bricolage Grotesque', 'Archivo', sans-serif",
+          fontFamily: "'Archivo', 'Inter', sans-serif",
           fontWeight: 800,
           fontSize: "232px",
-          fontVariationSettings: "'opsz' 96",
+          fontVariationSettings: "'wdth' 125",
           letterSpacing: "0.005em",
         }}
       >
         {letters.map((letter, i) => {
           const filledLayer = variant === "filled";
-          const accent = letter === "A";
           return (
             <tspan
               key={`${letter}-${i}`}
@@ -107,13 +104,6 @@ function MonumentWord({ word, variant, sheen = false, className = "w-[min(94vw,1
                 {
                   "--hl-delay": `${200 + i * LETTER_STAGGER_MS}ms`,
                   paintOrder: "stroke",
-                  ...(accent
-                    ? {
-                        fontFamily: "'Instrument Serif', serif",
-                        fontStyle: "italic",
-                        fontSize: "246px",
-                      }
-                    : {}),
                 } as React.CSSProperties
               }
             >
@@ -262,11 +252,13 @@ export function Hero() {
         <Magnetic strength={0.4}>{t("nav.contact")} ↗</Magnetic>
       </a>
 
-      {/* reference composition: text — wireframe sculpture — name */}
-      <div className="relative z-20 flex flex-1 flex-col items-center justify-center gap-10 px-5 pb-24 pt-24 md:flex-row md:gap-8 md:px-8">
+      {/* reference composition: text — wireframe sculpture — name.
+          Grid 1fr/auto/1fr on md+ keeps both side columns exactly equal, so
+          the sculpture sits at the true center of the viewport. */}
+      <div className="relative z-20 flex flex-1 flex-col items-center justify-center gap-10 px-5 pb-24 pt-24 md:grid md:grid-cols-[1fr_auto_1fr] md:items-center md:gap-8 md:px-8">
         {/* left: greeting + profession, like the reference's intro block */}
         <div
-          className="hero-corner order-1 max-w-sm text-center md:flex-1 md:text-left"
+          className="hero-corner order-1 max-w-sm text-center md:justify-self-start md:text-left"
           style={{ "--hc-delay": "1350ms" } as React.CSSProperties}
         >
           <p className="font-display text-4xl font-semibold leading-[1.05] tracking-tight text-foreground md:text-5xl lg:text-6xl">
@@ -287,7 +279,7 @@ export function Hero() {
 
         {/* right: name + professional id, stacked like the reference's surname block */}
         <div
-          className="hero-corner order-3 flex flex-col items-center md:flex-1 md:items-end"
+          className="hero-corner order-3 flex flex-col items-center md:items-end md:justify-self-end"
           style={{ "--hc-delay": "1550ms" } as React.CSSProperties}
         >
           <div aria-hidden="true" className="relative">

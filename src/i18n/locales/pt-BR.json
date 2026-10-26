@@ -41,7 +41,8 @@
     "lookingForTitle": "O que procuro",
     "lookingFor": "Oportunidades como desenvolvedor back-end (Java/Spring), projetos freelance com escopo bem definido e times que valorizem código limpo e boas práticas.",
     "portraitAlt": "Retrato de Gabriel usando fones de ouvido e óculos, olhando na direção da câmera",
-    "portraitCaption": "retrato — gabriel"
+    "portraitCaption": "retrato — gabriel",
+    "downloadResume": "Baixar currículo"
   },
   "skills": {
     "note": "Tecnologias e práticas que uso no dia a dia — do banco de dados à interface."

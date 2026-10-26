@@ -41,7 +41,8 @@
     "lookingForTitle": "What I'm looking for",
     "lookingFor": "Back-end developer opportunities (Java/Spring), freelance projects with well-defined scope and teams that value clean code and good practices.",
     "portraitAlt": "Portrait of Gabriel wearing headphones and glasses, looking toward the camera",
-    "portraitCaption": "portrait — gabriel"
+    "portraitCaption": "portrait — gabriel",
+    "downloadResume": "Download resume"
   },
   "skills": {
     "note": "Technologies and practices I use every day — from the database to the interface."

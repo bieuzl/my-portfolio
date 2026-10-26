@@ -297,7 +297,11 @@ export function Hero() {
               />
             </div>
           </div>
-          <p className="mt-3 font-display text-lg font-semibold uppercase tracking-[0.12em] text-foreground md:text-xl">
+          {/* surname as a signature — handwritten, slightly tilted */}
+          <p
+            className="mt-1 text-3xl font-medium text-foreground md:text-4xl"
+            style={{ fontFamily: "'Caveat', cursive", transform: "rotate(-2deg)" }}
+          >
             {t("hero.surname")}
           </p>
           <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground md:text-xs">

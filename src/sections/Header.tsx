@@ -96,7 +96,7 @@ export function Header() {
           style={{ transform: `scaleX(${progress})` }}
         />
       </div>
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 md:px-8">
+      <div className="flex h-16 w-full items-center justify-between px-5 md:px-8">
         <a
           href="#topo"
           className="font-mono text-sm tracking-tight text-foreground transition-colors hover:text-primary"

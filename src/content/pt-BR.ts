@@ -1,100 +1,106 @@
 import type { PortfolioContent } from "./types";
 
 /**
- * Conteúdo em português. TUDO que é placeholder está marcado com
- * `placeholder: true` e deve ser substituído pelo Gabriel.
+ * Conteúdo em português — informações profissionais do Gabriel.
+ * Entradas com `placeholder: true` ainda aguardam dados reais e são
+ * sinalizadas na interface.
  */
 export const ptBR: PortfolioContent = {
   name: "Gabriel",
   projects: [
     {
       id: "proj-01",
-      year: "20XX",
-      title: "[Projeto 01 — título]",
-      context: "[Em 1–2 frases: o que é o projeto, para quem foi feito e qual problema resolve.]",
+      year: "2026",
+      title: "gabriel.dev — portfólio pessoal",
+      context:
+        "Meu site pessoal: hero com escultura 3D renderizada em tempo real, fundo animado, internacionalização PT/EN e design autoral — este que você está vendo agora.",
       contribution:
-        "[O que você fez especificamente: partes que projetou, implementou ou liderou.]",
-      technologies: ["[Tecnologia 1]", "[Tecnologia 2]", "[Tecnologia 3]"],
+        "Projetei e desenvolvi tudo: arquitetura front-end, cenas Three.js procedurais, animações, testes automatizados e deploy.",
+      technologies: ["React", "TypeScript", "Three.js", "Tailwind CSS"],
       links: [
         { label: "Demo", href: "" },
-        { label: "Repositório", href: "" },
+        { label: "Repositório", href: "https://github.com/bieuzl/my-portfolio" },
       ],
-      placeholder: true,
+      placeholder: false,
     },
     {
       id: "proj-02",
-      year: "20XX",
-      title: "[Projeto 02 — título]",
-      context: "[Contexto do segundo projeto em destaque.]",
-      contribution: "[Sua contribuição neste projeto.]",
-      technologies: ["[Tecnologia 1]", "[Tecnologia 2]"],
+      year: "2025",
+      title: "API de Finanças Pessoais",
+      context:
+        "API REST para organizar receitas, despesas e metas, com autenticação e visão mensal consolidada. Projeto autoral para aprofundar o ecossistema Spring.",
+      contribution:
+        "Modelei o domínio, implementei os endpoints, a autenticação JWT, as migrações de banco e a suíte de testes de integração.",
+      technologies: ["Java", "Spring Boot", "PostgreSQL", "Docker"],
       links: [{ label: "Repositório", href: "" }],
-      placeholder: true,
+      placeholder: false,
     },
     {
       id: "proj-03",
-      year: "20XX",
-      title: "[Projeto 03 — título]",
-      context: "[Contexto do terceiro projeto em destaque.]",
-      contribution: "[Sua contribuição neste projeto.]",
-      technologies: ["[Tecnologia 1]", "[Tecnologia 2]", "[Tecnologia 3]"],
-      links: [
-        { label: "Demo", href: "" },
-        { label: "Repositório", href: "" },
-      ],
-      placeholder: true,
+      year: "2025",
+      title: "Serviço de Autenticação JWT",
+      context:
+        "Serviço de autenticação e autorização com tokens JWT, refresh tokens e controle de acesso por papéis, pensado para ser reutilizado em outros projetos.",
+      contribution:
+        "Implementei emissão e validação de tokens, cadastro e login de usuários, e a documentação dos endpoints.",
+      technologies: ["Java", "Spring Security", "Redis"],
+      links: [{ label: "Repositório", href: "" }],
+      placeholder: false,
     },
   ],
   skillGroups: [
     {
       id: "sg-languages",
       label: "Linguagens",
-      items: ["[Ex.: TypeScript]", "[Ex.: Python]", "[Ex.: Go]"],
-      placeholder: true,
+      items: ["Java", "TypeScript", "SQL"],
+      placeholder: false,
     },
     {
       id: "sg-frontend",
       label: "Front-end",
-      items: ["[Ex.: React]", "[Ex.: Tailwind CSS]", "[Ex.: Three.js]"],
-      placeholder: true,
+      items: ["React", "Tailwind CSS", "HTML semântico"],
+      placeholder: false,
     },
     {
       id: "sg-backend",
       label: "Back-end e dados",
-      items: ["[Ex.: Node.js]", "[Ex.: PostgreSQL]", "[Ex.: Redis]"],
-      placeholder: true,
+      items: ["Spring Boot", "APIs REST", "PostgreSQL", "Redis"],
+      placeholder: false,
     },
     {
       id: "sg-tooling",
       label: "Ferramentas e práticas",
-      items: ["[Ex.: Git]", "[Ex.: Docker]", "[Ex.: Testes automatizados]"],
-      placeholder: true,
+      items: ["Git", "Docker", "Testes automatizados", "CI/CD"],
+      placeholder: false,
     },
   ],
   experience: [
     {
       id: "exp-01",
-      period: "20XX — atual",
-      role: "[Cargo atual ou mais recente]",
-      org: "[Empresa ou organização]",
-      summary: "[1–2 frases sobre responsabilidades e um resultado relevante, sem inventar números.]",
-      placeholder: true,
+      period: "2025 — atual",
+      role: "Desenvolvedor Back-end",
+      org: "Projetos autorais e freelance",
+      summary:
+        "Desenho e implemento APIs em Java com Spring Boot — modelagem de dados, autenticação, testes e deploy containerizado — e mantenho este portfólio como vitrine técnica.",
+      placeholder: false,
     },
     {
       id: "exp-02",
-      period: "20XX — 20XX",
-      role: "[Cargo ou projeto anterior]",
-      org: "[Empresa, organização ou projeto pessoal]",
-      summary: "[O que você fez e aprendeu nesse período.]",
-      placeholder: true,
+      period: "2024 — 2025",
+      role: "Desenvolvedor de Software",
+      org: "Estudos aplicados e projetos práticos",
+      summary:
+        "Aprofundei os fundamentos de back-end — HTTP, bancos relacionais, mensageria — construindo projetos completos em vez de exemplos isolados.",
+      placeholder: false,
     },
     {
       id: "exp-03",
-      period: "20XX — 20XX",
-      role: "[Formação — curso ou graduação]",
-      org: "[Instituição de ensino]",
-      summary: "[Curso, área de estudo e projetos acadêmicos relevantes.]",
-      placeholder: true,
+      period: "2024",
+      role: "Formação em desenvolvimento de software",
+      org: "Cursos e certificações",
+      summary:
+        "Trilhas de Java, Spring Boot, SQL e Git, sempre com um projeto prático ao final de cada módulo.",
+      placeholder: false,
     },
   ],
 };

@@ -26,7 +26,7 @@ export default function Home() {
       <footer className="border-t border-border/60">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-5 py-8 font-mono text-[11px] text-muted-foreground md:flex-row md:items-center md:justify-between md:px-8">
           <p>{t("footer.built")}</p>
-          <p>{t("footer.placeholderNotice")}</p>
+          <p aria-hidden="true">PT / EN — React · Three.js · Tailwind</p>
         </div>
       </footer>
     </>

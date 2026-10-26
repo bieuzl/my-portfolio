@@ -1,7 +1,6 @@
 import { useCallback, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { SectionHeading } from "@/components/SectionHeading";
-import { PlaceholderBadge } from "@/components/PlaceholderBadge";
 import { useInView } from "@/hooks/useInView";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { ABOUT_PORTRAIT_URI } from "@/assets/about-portrait";
@@ -161,7 +160,6 @@ export function About() {
               </h3>
               <p>{t("about.lookingFor")}</p>
             </div>
-            <PlaceholderBadge />
           </div>
         </div>
       </div>

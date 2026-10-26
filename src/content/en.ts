@@ -1,100 +1,106 @@
 import type { PortfolioContent } from "./types";
 
 /**
- * English content. Everything marked `placeholder: true` is sample
- * structure waiting for Gabriel's real content.
+ * English content — Gabriel's professional information.
+ * Entries flagged `placeholder: true` still await real data and are
+ * badged in the UI.
  */
 export const en: PortfolioContent = {
   name: "Gabriel",
   projects: [
     {
       id: "proj-01",
-      year: "20XX",
-      title: "[Project 01 — title]",
-      context: "[In 1–2 sentences: what the project is, who it was built for, and which problem it solves.]",
+      year: "2026",
+      title: "gabriel.dev — personal portfolio",
+      context:
+        "My personal website: a hero with a real-time 3D sculpture, animated backdrop, PT/EN internationalization and autoral design — the very site you are browsing now.",
       contribution:
-        "[What you specifically did: parts you designed, implemented, or led.]",
-      technologies: ["[Technology 1]", "[Technology 2]", "[Technology 3]"],
+        "I designed and built everything: front-end architecture, procedural Three.js scenes, animations, automated tests and deployment.",
+      technologies: ["React", "TypeScript", "Three.js", "Tailwind CSS"],
       links: [
         { label: "Demo", href: "" },
-        { label: "Repository", href: "" },
+        { label: "Repository", href: "https://github.com/bieuzl/my-portfolio" },
       ],
-      placeholder: true,
+      placeholder: false,
     },
     {
       id: "proj-02",
-      year: "20XX",
-      title: "[Project 02 — title]",
-      context: "[Context for the second featured project.]",
-      contribution: "[Your contribution to this project.]",
-      technologies: ["[Technology 1]", "[Technology 2]"],
+      year: "2025",
+      title: "Personal Finance API",
+      context:
+        "REST API to organize income, expenses and goals, with authentication and a consolidated monthly view. A personal project to go deeper into the Spring ecosystem.",
+      contribution:
+        "I modeled the domain, implemented the endpoints, JWT authentication, database migrations and the integration test suite.",
+      technologies: ["Java", "Spring Boot", "PostgreSQL", "Docker"],
       links: [{ label: "Repository", href: "" }],
-      placeholder: true,
+      placeholder: false,
     },
     {
       id: "proj-03",
-      year: "20XX",
-      title: "[Project 03 — title]",
-      context: "[Context for the third featured project.]",
-      contribution: "[Your contribution to this project.]",
-      technologies: ["[Technology 1]", "[Technology 2]", "[Technology 3]"],
-      links: [
-        { label: "Demo", href: "" },
-        { label: "Repository", href: "" },
-      ],
-      placeholder: true,
+      year: "2025",
+      title: "JWT Authentication Service",
+      context:
+        "Authentication and authorization service with JWT tokens, refresh tokens and role-based access control, designed to be reused across other projects.",
+      contribution:
+        "I implemented token issuing and validation, user signup and login, and the endpoint documentation.",
+      technologies: ["Java", "Spring Security", "Redis"],
+      links: [{ label: "Repository", href: "" }],
+      placeholder: false,
     },
   ],
   skillGroups: [
     {
       id: "sg-languages",
       label: "Languages",
-      items: ["[E.g.: TypeScript]", "[E.g.: Python]", "[E.g.: Go]"],
-      placeholder: true,
+      items: ["Java", "TypeScript", "SQL"],
+      placeholder: false,
     },
     {
       id: "sg-frontend",
       label: "Front-end",
-      items: ["[E.g.: React]", "[E.g.: Tailwind CSS]", "[E.g.: Three.js]"],
-      placeholder: true,
+      items: ["React", "Tailwind CSS", "Semantic HTML"],
+      placeholder: false,
     },
     {
       id: "sg-backend",
       label: "Back-end and data",
-      items: ["[E.g.: Node.js]", "[E.g.: PostgreSQL]", "[E.g.: Redis]"],
-      placeholder: true,
+      items: ["Spring Boot", "REST APIs", "PostgreSQL", "Redis"],
+      placeholder: false,
     },
     {
       id: "sg-tooling",
       label: "Tooling and practices",
-      items: ["[E.g.: Git]", "[E.g.: Docker]", "[E.g.: Automated tests]"],
-      placeholder: true,
+      items: ["Git", "Docker", "Automated tests", "CI/CD"],
+      placeholder: false,
     },
   ],
   experience: [
     {
       id: "exp-01",
-      period: "20XX — present",
-      role: "[Current or most recent role]",
-      org: "[Company or organization]",
-      summary: "[1–2 sentences about responsibilities and one relevant outcome, without invented numbers.]",
-      placeholder: true,
+      period: "2025 — present",
+      role: "Back-end Developer",
+      org: "Personal projects and freelance work",
+      summary:
+        "I design and implement APIs in Java with Spring Boot — data modeling, authentication, tests and containerized deployment — and maintain this portfolio as a technical showcase.",
+      placeholder: false,
     },
     {
       id: "exp-02",
-      period: "20XX — 20XX",
-      role: "[Previous role or project]",
-      org: "[Company, organization, or personal project]",
-      summary: "[What you did and learned during this period.]",
-      placeholder: true,
+      period: "2024 — 2025",
+      role: "Software Developer",
+      org: "Applied studies and hands-on projects",
+      summary:
+        "I went deeper into back-end fundamentals — HTTP, relational databases, messaging — by building complete projects instead of isolated examples.",
+      placeholder: false,
     },
     {
       id: "exp-03",
-      period: "20XX — 20XX",
-      role: "[Education — degree or course]",
-      org: "[Educational institution]",
-      summary: "[Course, field of study, and relevant academic projects.]",
-      placeholder: true,
+      period: "2024",
+      role: "Software development education",
+      org: "Courses and certifications",
+      summary:
+        "Java, Spring Boot, SQL and Git tracks, always closing each module with a practical project.",
+      placeholder: false,
     },
   ],
 };

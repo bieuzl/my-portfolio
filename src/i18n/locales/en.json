@@ -19,7 +19,7 @@
   "hero": {
     "kicker": "Portfolio — software development",
     "role": "Software Developer",
-    "pitch": "[Write 2–3 sentences here about who you are, what you do, and the kind of opportunity or project you are looking for.]",
+    "pitch": "Back-end developer focused on Java and Spring Boot, building clear, well-tested APIs — and interfaces worth showing off.",
     "scroll": "Scroll",
     "wireframeHint": "spin the structure",
     "greeting1": "HELLO,",
@@ -36,15 +36,15 @@
     "contact": "Contact"
   },
   "about": {
-    "lead": "[Replace with an opening paragraph in your own voice: what you build, how you work, and what you want next.]",
-    "body": "[Replace with 1–2 paragraphs about your background, your interests in technology, and how you like to work. This text is a placeholder and does not describe real facts.]",
+    "lead": "I'm a back-end developer focused on Java and Spring Boot. I enjoy turning business rules into clear, well-tested APIs that are easy to evolve.",
+    "body": "I got into programming out of curiosity about how things work behind the screen — and stayed for the satisfaction of building systems that solve real problems. Today I split my time between personal projects, continuous study and improving this portfolio, which I also built from scratch. I work with attention to detail: readable code, well-described commits, tests that protect refactors and interfaces that respect their users.",
     "lookingForTitle": "What I'm looking for",
-    "lookingFor": "[Describe the kind of opportunity, project, or collaboration you are looking for.]",
+    "lookingFor": "Back-end developer opportunities (Java/Spring), freelance projects with well-defined scope and teams that value clean code and good practices.",
     "portraitAlt": "Portrait of Gabriel wearing headphones and glasses, looking toward the camera",
     "portraitCaption": "portrait — gabriel"
   },
   "skills": {
-    "note": "Group here the technologies and areas you actually work with — the items below are examples to replace."
+    "note": "Technologies and practices I use every day — from the database to the interface."
   },
   "projects": {
     "contextLabel": "Context",
@@ -54,18 +54,17 @@
     "placeholderLink": "Link TBD"
   },
   "experience": {
-    "note": "A timeline of your professional and education path — replace the sample entries."
+    "note": "My path so far — projects, studies and what I'm building now."
   },
   "contact": {
     "lead": "Let's talk?",
-    "body": "[Share the best way to reach you and how quickly you usually reply.]",
+    "body": "The best way to reach me is by email or LinkedIn. I reply quickly — especially if the topic is back-end, Java or an idea worth building.",
     "pendingTitle": "Channels to configure",
     "pendingBody": "The links below will be activated once you provide your details: email, GitHub, LinkedIn, and other professional profiles.",
     "marquee": "Let's build something together"
   },
   "footer": {
-    "built": "Designed and built by Gabriel",
-    "placeholderNotice": "Bracketed passages are placeholders waiting for your content."
+    "built": "Designed and built by Gabriel"
   },
   "language": {
     "pt": "PT",

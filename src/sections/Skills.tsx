@@ -1,6 +1,5 @@
 import { useTranslation } from "react-i18next";
 import { SectionHeading } from "@/components/SectionHeading";
-import { PlaceholderBadge } from "@/components/PlaceholderBadge";
 import { useInView } from "@/hooks/useInView";
 import { getPortfolioContent } from "@/content";
 import { normalizeLocale } from "@/i18n";
@@ -16,7 +15,7 @@ export function Skills() {
         <SectionHeading id="habilidades-titulo" index="02" title={t("sections.skills")} />
 
         <p className="mb-10 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-          {t("skills.note")} <PlaceholderBadge />
+          {t("skills.note")}
         </p>
 
         <div ref={ref} className="grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">

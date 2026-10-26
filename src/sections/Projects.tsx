@@ -164,12 +164,12 @@ function ProjectCard({
         </div>
 
         {project.previewImage && (
-          <div className="overflow-hidden rounded-2xl border border-border/80 bg-card/40 shadow-[0_24px_60px_-20px_rgba(0,0,0,0.65)]">
+          <div className="pt-2">
             <img
               src={project.previewImage}
               alt={`${project.title} — Gastei R$ 50 no Uber`}
               loading="lazy"
-              className="w-full object-cover"
+              className="mx-auto w-full max-w-2xl select-none object-contain"
             />
           </div>
         )}
@@ -180,7 +180,6 @@ function ProjectCard({
 
 function ProjectDetailsSubpage({
   project,
-  index,
   onClose,
 }: {
   project: ProjectEntry;
@@ -208,154 +207,152 @@ function ProjectDetailsSubpage({
       role="dialog"
       aria-modal="true"
       aria-labelledby="project-subpage-title"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-background/85 p-4 backdrop-blur-md md:p-8"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-3 backdrop-blur-sm md:p-6"
       onClick={onClose}
     >
+      {/* Notion-style dark document surface (#191919) */}
       <div
-        className="relative max-h-[90dvh] w-full max-w-4xl overflow-y-auto rounded-2xl border border-border/90 bg-card/95 shadow-[0_32px_90px_-20px_rgba(0,0,0,0.85)]"
+        className="relative max-h-[90dvh] w-full max-w-3xl overflow-y-auto rounded-xl border border-white/[0.08] bg-[#191919] text-[#e6e6e5] shadow-[0_28px_80px_rgba(0,0,0,0.75)]"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Barra superior fixa da subpágina com botão X para sair */}
-        <div className="sticky top-0 z-20 flex items-center justify-between border-b border-border/80 bg-card/95 px-6 py-4 backdrop-blur-md md:px-10">
-          <div className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.2em] text-primary">
-            <span>{String(index + 1).padStart(2, "0")}</span>
-            <span aria-hidden="true" className="text-muted-foreground/50">·</span>
-            <span>{project.year}</span>
-            <span aria-hidden="true" className="text-muted-foreground/50">·</span>
-            <span className="text-muted-foreground">{t("projects.caseStudyBadge")}</span>
+        {/* Notion top breadcrumb & action bar */}
+        <div className="sticky top-0 z-20 flex h-12 items-center justify-between border-b border-white/[0.06] bg-[#191919]/90 px-4 backdrop-blur-md md:px-6">
+          <div className="flex items-center gap-1.5 font-sans text-[13px] text-[#9b9b9b]">
+            <span>{t("nav.projects")}</span>
+            <span className="text-[#5a5a5a]">/</span>
+            <span className="font-medium text-[#e6e6e5]">{project.title}</span>
           </div>
 
           <button
             type="button"
             onClick={onClose}
             aria-label={t("projects.closeDetails")}
-            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-white/[0.08] text-foreground/80 ring-1 ring-inset ring-white/[0.12] transition-all duration-200 ease-out hover:bg-white/[0.16] hover:text-foreground active:scale-95"
+            className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-[#9b9b9b] transition-colors hover:bg-white/[0.08] hover:text-white"
           >
             <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" className="h-4 w-4">
               <path
                 d="M4 4l8 8m0-8l-8 8"
                 stroke="currentColor"
-                strokeWidth="1.75"
+                strokeWidth="1.6"
                 strokeLinecap="round"
               />
             </svg>
           </button>
         </div>
 
-        {/* Conteúdo detalhado da subpágina */}
-        <div className="space-y-10 px-6 py-8 md:px-10 md:py-10">
-          <div>
-            <h3
-              id="project-subpage-title"
-              className="font-display text-3xl font-semibold tracking-tight text-foreground md:text-5xl"
-            >
-              {project.title}
-            </h3>
-            <ul className="mt-5 flex flex-wrap gap-2">
-              {project.technologies.map((tech) => (
-                <li
-                  key={tech}
-                  className="rounded-full bg-white/[0.06] px-3.5 py-1 font-sans text-xs font-medium text-foreground/90 ring-1 ring-inset ring-white/[0.12]"
-                >
-                  {tech}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {project.startupIntro && (
-            <div className="rounded-xl border border-primary/30 bg-primary/[0.06] p-6 md:p-7">
-              <h4 className="mb-2.5 font-mono text-xs uppercase tracking-[0.2em] text-primary">
-                {t("projects.startupLabel")}
-              </h4>
-              <p className="text-base leading-relaxed text-foreground/90">
-                {project.startupIntro}
-              </p>
-            </div>
+        {/* Notion document body */}
+        <div className="mx-auto max-w-2xl px-6 py-10 md:px-12 md:py-12">
+          {/* Document Title */}
+          <h3
+            id="project-subpage-title"
+            className="font-sans text-3xl font-bold tracking-[-0.02em] text-white md:text-4xl"
+          >
+            {project.title}
+          </h3>
+          {project.subtitle && (
+            <p className="mt-1.5 font-sans text-[15px] text-[#9b9b9b]">
+              {project.subtitle}
+            </p>
           )}
 
-          {project.previewImage && (
-            <div className="overflow-hidden rounded-xl border border-border/80 bg-background/60">
-              <img
-                src={project.previewImage}
-                alt={`${project.title} — Gastei R$ 50 no Uber`}
-                className="w-full object-cover"
-              />
-            </div>
-          )}
-
-          <div className="grid gap-8 border-t border-border/60 pt-8 md:grid-cols-2">
-            <div className="rounded-xl border border-border/70 bg-background/40 p-6">
-              <h4 className="mb-2.5 font-mono text-xs uppercase tracking-[0.2em] text-primary">
-                01 · {t("projects.contextLabel")}
-              </h4>
-              <p className="text-base leading-relaxed text-foreground/85">
-                {project.context}
-              </p>
+          {/* Notion Database Properties Table */}
+          <div className="mt-6 space-y-2.5 border-b border-white/[0.08] pb-6 font-sans text-[14px]">
+            <div className="grid grid-cols-[110px_1fr] items-baseline gap-3">
+              <span className="text-[#8a8a8a]">Status</span>
+              <div>
+                <span className="inline-flex items-center gap-1.5 rounded bg-[#2c2c2b] px-2 py-0.5 text-xs font-medium text-[#d4d4d4]">
+                  <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                  {project.year}
+                </span>
+              </div>
             </div>
 
-            <div className="rounded-xl border border-border/70 bg-background/40 p-6">
-              <h4 className="mb-2.5 font-mono text-xs uppercase tracking-[0.2em] text-primary">
-                02 · {t("projects.contributionLabel")}
-              </h4>
-              <p className="text-base leading-relaxed text-foreground/85">
-                {project.contribution}
-              </p>
+            <div className="grid grid-cols-[110px_1fr] items-baseline gap-3">
+              <span className="text-[#8a8a8a]">{t("projects.teamLabel")}</span>
+              <span className="text-[#d4d4d4]">{project.team}</span>
             </div>
-          </div>
 
-          <div className="rounded-xl border border-border/70 bg-background/40 p-6 md:p-8">
-            <h4 className="mb-5 font-mono text-xs uppercase tracking-[0.2em] text-primary">
-              03 · {t("projects.architectureLabel")}
-            </h4>
-            <ul className="space-y-4">
-              {project.details.map((step, idx) => (
-                <li
-                  key={idx}
-                  className="flex items-start gap-4 border-b border-border/40 pb-4 last:border-b-0 last:pb-0"
-                >
-                  <span className="mt-0.5 font-mono text-xs text-primary">
-                    {String(idx + 1).padStart(2, "0")}
+            <div className="grid grid-cols-[110px_1fr] items-baseline gap-3">
+              <span className="text-[#8a8a8a]">{t("projects.stackLabel")}</span>
+              <div className="flex flex-wrap gap-1.5">
+                {project.technologies.map((tech) => (
+                  <span
+                    key={tech}
+                    className="rounded bg-[#262626] px-2 py-0.5 text-xs text-[#d4d4d4]"
+                  >
+                    {tech}
                   </span>
-                  <p className="text-sm leading-relaxed text-foreground/85 md:text-base">
-                    {step}
-                  </p>
-                </li>
-              ))}
-            </ul>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid grid-cols-[110px_1fr] items-baseline gap-3">
+              <span className="text-[#8a8a8a]">Código</span>
+              <div>
+                {project.privateRepo ? (
+                  <span className="text-[#8a8a8a]">{t("projects.privateRepo")}</span>
+                ) : (
+                  <a
+                    href={githubHref}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1 text-[#d4d4d4] underline decoration-white/25 underline-offset-4 transition-colors hover:text-white hover:decoration-white"
+                  >
+                    <span>{t("projects.viewGithub")}</span>
+                    <span aria-hidden="true" className="text-xs">↗</span>
+                  </a>
+                )}
+              </div>
+            </div>
           </div>
 
-          <div className="flex flex-wrap items-center justify-between gap-4 border-t border-border/60 pt-6">
-            {project.privateRepo ? (
-              <span className="inline-flex h-11 items-center gap-2 rounded-full bg-white/[0.04] px-5 font-sans text-[14px] font-medium tracking-[-0.01em] text-muted-foreground ring-1 ring-inset ring-white/[0.1]">
-                <span>{t("projects.privateRepo")}</span>
-              </span>
-            ) : (
-              <a
-                href={githubHref}
-                target="_blank"
-                rel="noreferrer"
-                className="group inline-flex h-11 items-center gap-2.5 rounded-full bg-foreground px-6 font-sans text-[14px] font-medium tracking-[-0.01em] text-background transition-all duration-200 ease-out hover:bg-foreground/90 active:scale-[0.98]"
-              >
-                <svg
-                  aria-hidden="true"
-                  viewBox="0 0 16 16"
-                  fill="currentColor"
-                  className="h-4 w-4 shrink-0"
-                >
-                  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" />
-                </svg>
-                <span>{t("projects.viewGithub")}</span>
-              </a>
+          {/* Notion Document Content Blocks */}
+          <div className="mt-8 space-y-7 font-sans text-[15px] leading-[1.75] text-[#cfcfcf]">
+            {project.startupIntro && (
+              <div className="rounded-lg border-l-[3px] border-white/30 bg-[#222222] px-4 py-3.5 text-[#dcdcdc]">
+                <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-[#9b9b9b]">
+                  {t("projects.startupLabel")}
+                </p>
+                <p>{project.startupIntro}</p>
+              </div>
             )}
 
-            <button
-              type="button"
-              onClick={onClose}
-              className="inline-flex h-11 cursor-pointer items-center gap-2 rounded-full bg-white/[0.06] px-6 font-sans text-[14px] font-medium tracking-[-0.01em] text-foreground/90 ring-1 ring-inset ring-white/[0.14] transition-all duration-200 ease-out hover:bg-white/[0.12] hover:text-foreground active:scale-[0.98]"
-            >
-              <span>Fechar</span>
-            </button>
+            {project.previewImage && (
+              <div className="py-1">
+                <img
+                  src={project.previewImage}
+                  alt={`${project.title} — Gastei R$ 50 no Uber`}
+                  className="mx-auto w-full select-none object-contain"
+                />
+              </div>
+            )}
+
+            <section>
+              <h4 className="mb-2 text-lg font-semibold tracking-[-0.01em] text-white">
+                {t("projects.contextLabel")}
+              </h4>
+              <p>{project.context}</p>
+            </section>
+
+            <section>
+              <h4 className="mb-2 text-lg font-semibold tracking-[-0.01em] text-white">
+                {t("projects.contributionLabel")}
+              </h4>
+              <p>{project.contribution}</p>
+            </section>
+
+            <section>
+              <h4 className="mb-3 text-lg font-semibold tracking-[-0.01em] text-white">
+                {t("projects.architectureLabel")}
+              </h4>
+              <ul className="list-disc space-y-2.5 pl-5 marker:text-[#6b6b6b]">
+                {project.details.map((step, idx) => (
+                  <li key={idx} className="pl-1">
+                    {step}
+                  </li>
+                ))}
+              </ul>
+            </section>
           </div>
         </div>
       </div>

@@ -1,63 +1,78 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" fill="none">
   <defs>
-    <!-- Studio ambient background -->
-    <radialGradient id="studioBg" cx="50%" cy="20%" r="85%" fx="50%" fy="15%">
-      <stop offset="0%" stop-color="#1c1c21" />
-      <stop offset="55%" stop-color="#111114" />
-      <stop offset="100%" stop-color="#09090b" />
-    </radialGradient>
-
-    <!-- Soft ambient light behind windows -->
-    <radialGradient id="ambientGlow" cx="50%" cy="45%" r="50%">
-      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.05" />
-      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
-    </radialGradient>
+    <style>
+      @keyframes floatWindow {
+        0%, 100% { transform: translate(84px, 124px) translateY(0px); }
+        50% { transform: translate(84px, 124px) translateY(-8px); }
+      }
+      @keyframes floatMessage {
+        0%, 100% { transform: translate(190px, 38px) translateY(0px); }
+        50% { transform: translate(190px, 38px) translateY(-14px); }
+      }
+      @keyframes floatReceipt {
+        0%, 100% { transform: translate(436px, 376px) translateY(0px); }
+        50% { transform: translate(436px, 376px) translateY(-11px); }
+      }
+      .layer-window {
+        transform: translate(84px, 124px);
+        animation: floatWindow 6.5s ease-in-out infinite;
+      }
+      .layer-message {
+        transform: translate(190px, 38px);
+        animation: floatMessage 5.2s ease-in-out infinite;
+      }
+      .layer-receipt {
+        transform: translate(436px, 376px);
+        animation: floatReceipt 5.8s ease-in-out -1.8s infinite;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .layer-window, .layer-message, .layer-receipt {
+          animation: none;
+        }
+      }
+    </style>
 
     <!-- Surface gradients (Apple Dark Mode / Titanium) -->
     <linearGradient id="codeSurface" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#18181b" />
-      <stop offset="100%" stop-color="#121215" />
+      <stop offset="0%" stop-color="#18181b" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#111114" stop-opacity="0.98" />
     </linearGradient>
 
     <linearGradient id="cardSurface" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#27272a" stop-opacity="0.96" />
-      <stop offset="100%" stop-color="#1c1c1f" stop-opacity="0.96" />
+      <stop offset="100%" stop-color="#1b1b1e" stop-opacity="0.96" />
     </linearGradient>
 
     <linearGradient id="specularBorder" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.18" />
-      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.05" />
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.2" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.06" />
     </linearGradient>
 
     <linearGradient id="windowBorder" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.12" />
-      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.04" />
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.14" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.05" />
     </linearGradient>
 
-    <!-- Studio elevation shadows -->
-    <filter id="windowShadow" x="-10%" y="-10%" width="120%" height="130%">
-      <feDropShadow dx="0" dy="24" stdDeviation="28" flood-color="#000000" flood-opacity="0.7" />
+    <!-- Studio elevation shadows over transparent canvas -->
+    <filter id="windowShadow" x="-12%" y="-12%" width="124%" height="135%">
+      <feDropShadow dx="0" dy="26" stdDeviation="24" flood-color="#000000" flood-opacity="0.65" />
     </filter>
 
-    <filter id="floatingShadow" x="-15%" y="-15%" width="130%" height="145%">
-      <feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#000000" flood-opacity="0.65" />
-      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4" />
+    <filter id="floatingShadow" x="-18%" y="-18%" width="136%" height="150%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#000000" flood-opacity="0.6" />
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.35" />
     </filter>
   </defs>
 
-  <!-- Studio Canvas -->
-  <rect width="800" height="480" rx="24" fill="url(#studioBg)" />
-  <ellipse cx="400" cy="230" rx="340" ry="180" fill="url(#ambientGlow)" />
-
   <!-- ======================================================================= -->
-  <!-- LAYER 1: macOS Dark Code Window (Center Base)                           -->
+  <!-- LAYER 1: Floating macOS Dark Code Window (Center Base)                  -->
   <!-- ======================================================================= -->
-  <g transform="translate(84, 118)" filter="url(#windowShadow)">
+  <g class="layer-window" filter="url(#windowShadow)">
     <rect width="632" height="304" rx="16" fill="url(#codeSurface)" stroke="url(#windowBorder)" stroke-width="1" />
 
     <!-- Window Header Bar -->
-    <path d="M 16 0.5 H 616 A 15.5 15.5 0 0 1 631.5 16 V 42 H 0.5 V 16 A 15.5 15.5 0 0 1 16 0.5 Z" fill="#1d1d20" />
-    <line x1="0.5" y1="42" x2="631.5" y2="42" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1" />
+    <path d="M 16 0.5 H 616 A 15.5 15.5 0 0 1 631.5 16 V 42 H 0.5 V 16 A 15.5 15.5 0 0 1 16 0.5 Z" fill="#1e1e22" />
+    <line x1="0.5" y1="42" x2="631.5" y2="42" stroke="#ffffff" stroke-opacity="0.07" stroke-width="1" />
 
     <!-- Muted macOS Window Controls -->
     <circle cx="22" cy="21" r="5.5" fill="#3f3f46" />
@@ -83,9 +98,9 @@
     </g>
 
     <!-- Active Line Highlight -->
-    <rect x="1" y="109" width="630" height="22" fill="#ffffff" fill-opacity="0.03" />
+    <rect x="1" y="109" width="630" height="22" fill="#ffffff" fill-opacity="0.035" />
 
-    <!-- Code Content (Apple Xcode Dark Inspired Palette) -->
+    <!-- Code Content -->
     <g font-family="JetBrains Mono, SF Mono, Menlo, monospace" font-size="12.5" letter-spacing="-0.01em">
       <text x="64" y="76" fill="#d4d4d8">
         <tspan fill="#a1a1aa">@Transactional</tspan>
@@ -105,7 +120,7 @@
       <text x="112" y="196" fill="#d4d4d8">
         .<tspan fill="#cbd5e1">amount</tspan><tspan fill="#71717a">(</tspan><tspan fill="#93c5fd">new</tspan> BigDecimal<tspan fill="#71717a">(</tspan><tspan fill="#fde68a">"50.00"</tspan><tspan fill="#71717a">))</tspan>
       </text>
-      <text x="112" y="220" fill="#d4d4f8">
+      <text x="112" y="220" fill="#d4d4d8">
         .<tspan fill="#cbd5e1">category</tspan><tspan fill="#71717a">(</tspan><tspan fill="#fde68a">"Transporte"</tspan><tspan fill="#71717a">)</tspan>
       </text>
       <text x="112" y="244" fill="#d4d4d8">
@@ -118,9 +133,9 @@
   </g>
 
   <!-- ======================================================================= -->
-  <!-- LAYER 2: Floating iOS / One UI Dark Message Banner (Top)                -->
+  <!-- LAYER 2: Floating iOS Dark Message Banner (Top)                         -->
   <!-- ======================================================================= -->
-  <g transform="translate(190, 36)" filter="url(#floatingShadow)">
+  <g class="layer-message" filter="url(#floatingShadow)">
     <rect width="420" height="76" rx="22" fill="url(#cardSurface)" stroke="url(#specularBorder)" stroke-width="1" />
 
     <!-- Minimal App Squircle Icon -->
@@ -142,7 +157,7 @@
   <!-- ======================================================================= -->
   <!-- LAYER 3: Floating Apple Wallet Style Transaction Card (Bottom Right)    -->
   <!-- ======================================================================= -->
-  <g transform="translate(436, 366)" filter="url(#floatingShadow)">
+  <g class="layer-receipt" filter="url(#floatingShadow)">
     <rect width="312" height="74" rx="20" fill="url(#cardSurface)" stroke="url(#specularBorder)" stroke-width="1" />
 
     <!-- Minimal Transit Icon Circle -->

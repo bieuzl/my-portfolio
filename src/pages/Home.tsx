@@ -24,9 +24,9 @@ export default function Home() {
         <Contact />
       </main>
       <footer className="border-t border-border/60">
-        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-5 py-8 font-mono text-[11px] text-muted-foreground md:flex-row md:items-center md:justify-between md:px-8">
+        <div className="mx-auto flex w-full max-w-[1600px] flex-col gap-2 px-6 py-8 font-sans text-xs text-muted-foreground md:flex-row md:items-center md:justify-between md:px-12 lg:px-16">
           <p>{t("footer.built")}</p>
-          <p aria-hidden="true">PT / EN — React · Three.js · Tailwind</p>
+          <p>© 2026 Gabriel de França Castro</p>
         </div>
       </footer>
     </>

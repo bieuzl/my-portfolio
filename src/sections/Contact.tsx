@@ -85,25 +85,6 @@ export function Contact() {
           </div>
         </div>
       </div>
-
-      {/* footer marquee band */}
-      <div className="marquee border-t border-border/60 py-6" aria-hidden="true">
-        <div className="marquee-track">
-          {[0, 1].map((copy) => (
-            <div key={copy} className="flex shrink-0 items-center">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <span
-                  key={i}
-                  className="mx-6 font-display text-2xl font-light text-muted-foreground/60 md:text-4xl"
-                >
-                  {t("contact.marquee")}
-                  <span className="ml-12 text-primary">↗</span>
-                </span>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
     </section>
   );
 }

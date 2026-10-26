@@ -45,18 +45,12 @@ export function Skills() {
 
               {/* Linhas da tabela */}
               <ul className="flex-1 divide-y divide-border/50">
-                {group.items.map((item, ii) => (
+                {group.items.map((item) => (
                   <li
                     key={item}
-                    className="flex items-center justify-between gap-3 px-6 py-4 text-sm text-foreground/85 transition-colors duration-200 hover:bg-primary/[0.05] hover:text-foreground md:text-base"
+                    className="flex items-center px-6 py-4 text-sm text-foreground/85 transition-colors duration-200 hover:bg-primary/[0.05] hover:text-foreground md:text-base"
                   >
                     <span>{item}</span>
-                    <span
-                      aria-hidden="true"
-                      className="font-mono text-[10px] text-muted-foreground/50"
-                    >
-                      {String(ii + 1).padStart(2, "0")}
-                    </span>
                   </li>
                 ))}
               </ul>

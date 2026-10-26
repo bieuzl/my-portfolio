@@ -9,59 +9,68 @@ export const en: PortfolioContent = {
   name: "Gabriel",
   projects: [
     {
-      id: "proj-01",
-      year: "2026",
-      title: "gabriel.dev — personal portfolio",
+      id: "proj-ayni-crm",
+      year: "Ayni · In development",
+      title: "Ayni CRM",
+      subtitle: "Ayni Startup · Flagship ecosystem product",
+      startupIntro:
+        "Ayni is a technology startup that builds intelligent solutions to optimize processes, connect information, and turn business challenges into more efficient experiences powered by artificial intelligence. Ayni CRM is the first product of this ecosystem, which will expand with new upcoming projects.",
+      role: "AI and commercial solutions development: intelligent agent orchestration, channel automation, lead prospecting, and proposal & contract modules.",
+      stackSummary:
+        "Platform technologies, AI model integration, and automation tools.",
+      team: "2 developers · Collaborative development with AI agents.",
+      privateRepo: true,
       context:
-        "My personal website: a hero with a real-time interactive 3D sculpture, animated backdrop, PT/EN internationalization and custom editorial design.",
+        "AI-powered CRM for professionals and companies selling technology services. A platform that integrates commercial management, lead prospecting, and intelligent agents into a single workflow.",
       contribution:
-        "I designed and built the entire application from scratch: React and TypeScript front-end architecture, procedural Three.js scenes with 360° free rotation, choreographed animations, automated tests and continuous deployment.",
+        "I work directly on the Artificial Intelligence layer and commercial modules of the platform: from orchestrating autonomous intelligent agents and channel automation to lead prospecting workflows, proposal generation, and contract management.",
       details: [
-        "Procedural 3D rendering with Three.js (WebGL) loaded on demand via dynamic import, ensuring fast initial load and a static SVG fallback.",
-        "Interactive 360° world-axis rotation (rotateOnWorldAxis) with smooth momentum inertia on mouse or touch drag.",
-        "Monumental dual-layer SVG typography (animated ice-gradient fill + blue-cyan neon stroke with glow filter).",
-        "Full internationalization (pt-BR / en) with compile-time structural parity and automated test suites using Vitest and Testing Library.",
+        "Orchestration of autonomous intelligent agents and multi-agent workflows for commercial qualification, opportunity tracking, and decision support.",
+        "Omnichannel communication automation and active lead prospecting, connecting interactions directly into the commercial pipeline in real time.",
+        "Integrated commercial proposal generation and contract management modules built right into the CRM flow.",
+        "Lean collaborative engineering (2 developers) augmented by specialized AI agents to accelerate architecture, review, and delivery cycles.",
       ],
-      technologies: ["React", "TypeScript", "Three.js", "Tailwind CSS"],
+      technologies: [
+        "Artificial Intelligence",
+        "Autonomous Agents",
+        "Channel Automation",
+        "CRM & Commercial Flow",
+        "LLM Integration",
+      ],
+      links: [],
+      placeholder: false,
+    },
+    {
+      id: "proj-financer-ai",
+      year: "In development",
+      title: "FinancerAI",
+      subtitle: "Smart message-driven financial control",
+      role: "Complete Back-end development (Java / Spring Boot architecture, business rules, JWT authentication, security, and persistence).",
+      stackSummary:
+        "React, Node.js (Fastify), Java (Spring Boot), PostgreSQL, Google Gemini",
+      team: "3 developers",
+      privateRepo: false,
+      previewImage: "/models/financerai-preview.svg",
+      context:
+        "Message-based financial tracking: AI reads phrases like “Spent R$ 50 on Uber” (“Gastei R$ 50 no Uber”) and turns them into categorized income and expenses.",
+      contribution:
+        "Responsible for the complete Back-end development of the platform: financial business logic in Java and Spring Boot, stateless JWT authentication and authorization, API security, service integration, and PostgreSQL persistence.",
+      details: [
+        "Natural language processing with Google Gemini: user messages (such as “Gastei R$ 50 no Uber”) are parsed and converted into structured transactions (type, amount, category, and description).",
+        "Distributed architecture combining Node.js (Fastify) for messaging/integrations and Java (Spring Boot) as the core engine for financial business rules.",
+        "Security and access control powered by Spring Security and stateless JWT authentication.",
+        "Relational persistence in PostgreSQL with automated income/expense categorization feeding the React dashboard in real time.",
+      ],
+      technologies: [
+        "Java (Spring Boot)",
+        "Node.js (Fastify)",
+        "PostgreSQL",
+        "Google Gemini",
+        "React",
+      ],
       links: [
-        { label: "GitHub", href: "https://github.com/bieuzl/my-portfolio" },
+        { label: "GitHub", href: "https://github.com/EzequielMags/FinancerAI" },
       ],
-      placeholder: false,
-    },
-    {
-      id: "proj-02",
-      year: "2025",
-      title: "Personal Finance API",
-      context:
-        "REST API for managing income, expenses and financial goals, featuring secure authentication and consolidated monthly reporting.",
-      contribution:
-        "I modeled the financial domain, implemented the RESTful endpoints, stateless JWT authentication, database migrations and integration tests.",
-      details: [
-        "Layered Spring Boot architecture cleanly separating business rules, REST controllers, persistence and input/output DTOs.",
-        "Relational data modeling in PostgreSQL with schema versioning and optimized queries for monthly reports and balance consolidation.",
-        "Route protection and authentication with Spring Security and JWT tokens, ensuring strict data isolation per user.",
-        "Strict payload validation (Bean Validation) and centralized exception handling with standardized error responses.",
-      ],
-      technologies: ["Java", "Spring Boot", "PostgreSQL", "Docker"],
-      links: [{ label: "GitHub", href: "https://github.com/bieuzl" }],
-      placeholder: false,
-    },
-    {
-      id: "proj-03",
-      year: "2025",
-      title: "JWT Authentication Service",
-      context:
-        "Authentication and authorization microservice with JWT tokens, refresh tokens and role-based access control (RBAC).",
-      contribution:
-        "I implemented the full token issuing, rotation and revocation lifecycle, user registration and login with secure password hashing, and API documentation.",
-      details: [
-        "Short-lived Access Token flow paired with rotating Refresh Tokens to balance security and user experience.",
-        "Role-based access control (RBAC) with Spring Security to guard administrative and operational endpoints.",
-        "Fast in-memory storage with Redis for immediate session invalidation and revoked token tracking.",
-        "BCrypt credential hashing and clean API contracts designed for seamless integration with other back-end services.",
-      ],
-      technologies: ["Java", "Spring Security", "Redis"],
-      links: [{ label: "GitHub", href: "https://github.com/bieuzl" }],
       placeholder: false,
     },
   ],

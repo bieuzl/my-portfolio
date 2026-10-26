@@ -9,59 +9,68 @@ export const ptBR: PortfolioContent = {
   name: "Gabriel",
   projects: [
     {
-      id: "proj-01",
-      year: "2026",
-      title: "gabriel.dev — portfólio pessoal",
+      id: "proj-ayni-crm",
+      year: "Ayni · Em desenvolvimento",
+      title: "Ayni CRM",
+      subtitle: "Startup Ayni · Primeiro produto do ecossistema",
+      startupIntro:
+        "A Ayni é uma startup de tecnologia que desenvolve soluções inteligentes para otimizar processos, conectar informações e transformar desafios de negócio em experiências mais eficientes, com o apoio da inteligência artificial. O Ayni CRM marca o início desse ecossistema, que contará com novos projetos e produtos próprios.",
+      role: "Desenvolvimento de IA e soluções comerciais: orquestração de agentes inteligentes, automação de canais, prospecção de leads e módulos de propostas e contratos.",
+      stackSummary:
+        "Tecnologias da plataforma, integração com modelos de IA e ferramentas de automação.",
+      team: "2 desenvolvedores · Desenvolvimento colaborativo com agentes de IA.",
+      privateRepo: true,
       context:
-        "Meu site pessoal: hero com escultura 3D interativa em tempo real, fundo animado, internacionalização PT/EN e design autoral.",
+        "CRM com Inteligência Artificial para profissionais e empresas que vendem serviços de tecnologia. Plataforma que integra gestão comercial, prospecção de leads e agentes inteligentes em um único fluxo.",
       contribution:
-        "Projetei e desenvolvi toda a aplicação do zero: arquitetura front-end em React e TypeScript, cenas Three.js procedurais com rotação livre em 360°, animações coreografadas, suíte de testes automatizados e deploy contínuo.",
+        "Atuo diretamente no desenvolvimento da camada de Inteligência Artificial e dos módulos comerciais da plataforma: desde a orquestração de agentes inteligentes autônomos e automação de canais até o fluxo completo de prospecção de leads, geração de propostas e gestão de contratos.",
       details: [
-        "Renderização 3D procedural com Three.js (WebGL) carregada sob demanda via dynamic import, garantindo carregamento rápido e fallback estático em SVG.",
-        "Rotação interativa em 360° nos eixos globais (rotateOnWorldAxis) com física de inércia suave ao arrastar com o mouse ou toque.",
-        "Tipografia monumental em duas camadas SVG sincronizadas (preenchimento em gradiente gelo animado + contorno neon azul-ciano com filtro de brilho).",
-        "Internacionalização completa (pt-BR / en) com paridade estrutural validada em tempo de compilação e por testes automatizados com Vitest e Testing Library.",
+        "Orquestração de agentes inteligentes e fluxos multiagentes para qualificação comercial, acompanhamento de oportunidades e apoio à tomada de decisão.",
+        "Automação de canais de comunicação e prospecção ativa de leads, conectando interações diretamente ao funil comercial em tempo real.",
+        "Módulos integrados de geração de propostas comerciais e gestão de contratos dentro do próprio fluxo do CRM.",
+        "Engenharia colaborativa enxuta (2 desenvolvedores) potencializada por agentes de IA para acelerar ciclos de arquitetura, revisão e entrega.",
       ],
-      technologies: ["React", "TypeScript", "Three.js", "Tailwind CSS"],
+      technologies: [
+        "Inteligência Artificial",
+        "Agentes Autônomos",
+        "Automação de Canais",
+        "CRM & Gestão Comercial",
+        "Integração com LLMs",
+      ],
+      links: [],
+      placeholder: false,
+    },
+    {
+      id: "proj-financer-ai",
+      year: "Em desenvolvimento",
+      title: "FinancerAI",
+      subtitle: "Controle financeiro inteligente por mensagem",
+      role: "Desenvolvimento Back-end completo (arquitetura em Java com Spring Boot, regras de negócio, autenticação JWT, segurança e persistência).",
+      stackSummary:
+        "React, Node.js (Fastify), Java (Spring Boot), PostgreSQL, Google Gemini",
+      team: "3 desenvolvedores",
+      privateRepo: false,
+      previewImage: "/models/financerai-preview.svg",
+      context:
+        "Controle financeiro por mensagem: a IA lê frases como “Gastei R$ 50 no Uber” e as transforma em receitas e despesas organizadas por categoria.",
+      contribution:
+        "Responsável pelo desenvolvimento Back-end completo da plataforma: modelagem das regras de negócio financeiras em Java e Spring Boot, autenticação e autorização com JWT, segurança da API, integração entre serviços e persistência no PostgreSQL.",
+      details: [
+        "Processamento de linguagem natural com Google Gemini: frases enviadas pelo usuário (como “Gastei R$ 50 no Uber”) são interpretadas e convertidas em transações estruturadas (tipo, valor, categoria e descrição).",
+        "Arquitetura distribuída combinando Node.js (Fastify) para mensageria/integrações e Java (Spring Boot) como núcleo das regras de negócio financeiras.",
+        "Segurança e controle de acesso com Spring Security e autenticação stateless via tokens JWT.",
+        "Persistência relacional em PostgreSQL com categorização automática de receitas e despesas, alimentando o dashboard em React em tempo real.",
+      ],
+      technologies: [
+        "Java (Spring Boot)",
+        "Node.js (Fastify)",
+        "PostgreSQL",
+        "Google Gemini",
+        "React",
+      ],
       links: [
-        { label: "GitHub", href: "https://github.com/bieuzl/my-portfolio" },
+        { label: "GitHub", href: "https://github.com/EzequielMags/FinancerAI" },
       ],
-      placeholder: false,
-    },
-    {
-      id: "proj-02",
-      year: "2025",
-      title: "API de Finanças Pessoais",
-      context:
-        "API REST para gestão de receitas, despesas e metas financeiras, com autenticação segura e visão mensal consolidada.",
-      contribution:
-        "Modelei o domínio financeiro, implementei os endpoints RESTful, autenticação stateless com JWT, migrações de banco de dados e testes de integração.",
-      details: [
-        "Arquitetura em camadas com Spring Boot separando regras de negócio, controladores REST, persistência e DTOs de entrada/saída.",
-        "Modelagem relacional no PostgreSQL com versionamento de schema e consultas otimizadas para relatórios mensais e consolidação de saldo.",
-        "Autenticação e proteção de rotas com Spring Security e tokens JWT, garantindo isolamento completo dos dados de cada usuário.",
-        "Validação rigorosa de payloads (Bean Validation) e tratamento global de exceções com respostas padronizadas de erro.",
-      ],
-      technologies: ["Java", "Spring Boot", "PostgreSQL", "Docker"],
-      links: [{ label: "GitHub", href: "https://github.com/bieuzl" }],
-      placeholder: false,
-    },
-    {
-      id: "proj-03",
-      year: "2025",
-      title: "Serviço de Autenticação JWT",
-      context:
-        "Microsserviço de autenticação e autorização com tokens JWT, refresh tokens e controle de acesso baseado em papéis (RBAC).",
-      contribution:
-        "Implementei o fluxo completo de emissão, rotação e revogação de tokens, cadastro e login de usuários com hash seguro de senhas e documentação da API.",
-      details: [
-        "Fluxo de Access Token de curta duração combinado com Refresh Token rotativo para equilibrar segurança e experiência do usuário.",
-        "Controle de acesso baseado em papéis (RBAC) com Spring Security para proteger endpoints administrativos e operacionais.",
-        "Armazenamento rápido em memória com Redis para invalidação imediata de sessões e controle de tokens revogados.",
-        "Criptografia de credenciais com BCrypt e contratos de API claros para integração direta com outros serviços back-end.",
-      ],
-      technologies: ["Java", "Spring Security", "Redis"],
-      links: [{ label: "GitHub", href: "https://github.com/bieuzl" }],
       placeholder: false,
     },
   ],

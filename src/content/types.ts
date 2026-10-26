@@ -15,6 +15,13 @@ export interface ProjectEntry {
   id: string;
   year: string;
   title: string;
+  subtitle?: string;
+  startupIntro?: string;
+  role: string;
+  stackSummary: string;
+  team: string;
+  privateRepo?: boolean;
+  previewImage?: string;
   context: string;
   contribution: string;
   details: string[];

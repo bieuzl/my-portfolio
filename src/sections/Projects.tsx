@@ -29,78 +29,150 @@ function ProjectCard({
   return (
     <article
       ref={ref}
-      className={`rv grid items-center gap-8 border-t border-border/60 py-12 md:grid-cols-12${inView ? " in-view" : ""}`}
+      className={`rv grid items-start gap-10 border-t border-border/60 py-14 md:grid-cols-12${inView ? " in-view" : ""}`}
     >
       <div className="md:col-span-4">
-        <div className="flex items-baseline gap-4">
+        <div className="flex flex-wrap items-center gap-3">
           <span className="font-mono text-xs text-primary">
             {String(index + 1).padStart(2, "0")}
           </span>
-          <span className="font-mono text-xs text-muted-foreground">{project.year}</span>
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 font-sans text-xs font-medium text-primary ring-1 ring-inset ring-primary/25">
+            <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-primary" />
+            {project.year}
+          </span>
         </div>
-        <h3 className="mt-3 font-display text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
+
+        <h3 className="mt-4 font-display text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
           {project.title}
         </h3>
+
+        {project.subtitle && (
+          <p className="mt-1.5 font-sans text-sm text-muted-foreground">
+            {project.subtitle}
+          </p>
+        )}
+
         {project.placeholder && (
           <div className="mt-3">
             <PlaceholderBadge />
           </div>
         )}
-      </div>
 
-      <div className="space-y-4 md:col-span-5">
-        <p className="text-base leading-relaxed text-foreground/85">{project.context}</p>
-        <ul className="flex flex-wrap gap-2 pt-1">
-          {project.technologies.map((tech) => (
-            <li
-              key={tech}
-              className="rounded-md border border-border/80 bg-card/40 px-2.5 py-1 font-mono text-[11px] text-muted-foreground"
+        <div className="mt-7 flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            onClick={() => onOpenDetails(project, index)}
+            className="group inline-flex h-10 cursor-pointer items-center gap-2 rounded-full bg-foreground px-5 font-sans text-[14px] font-medium tracking-[-0.01em] text-background transition-all duration-200 ease-out hover:bg-foreground/90 active:scale-[0.98]"
+          >
+            <span>{t("projects.viewDetails")}</span>
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 16 16"
+              fill="none"
+              className="h-3.5 w-3.5 shrink-0 transition-transform duration-200 ease-out group-hover:translate-x-0.5"
             >
-              {tech}
-            </li>
-          ))}
-        </ul>
+              <path
+                d="M6 3.5L10.5 8 6 12.5"
+                stroke="currentColor"
+                strokeWidth="1.75"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+
+          {project.privateRepo ? (
+            <span className="inline-flex h-10 items-center gap-2 rounded-full bg-white/[0.04] px-4 font-sans text-[13px] font-medium tracking-[-0.01em] text-muted-foreground ring-1 ring-inset ring-white/[0.1]">
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 16 16"
+                fill="none"
+                className="h-3.5 w-3.5 shrink-0 text-muted-foreground/80"
+              >
+                <rect
+                  x="3.25"
+                  y="7.25"
+                  width="9.5"
+                  height="6.5"
+                  rx="1.75"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                />
+                <path
+                  d="M5.25 7.25V5a2.75 2.75 0 0 1 5.5 0v2.25"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                />
+              </svg>
+              <span>{t("projects.privateRepo")}</span>
+            </span>
+          ) : (
+            <a
+              href={githubHref}
+              target="_blank"
+              rel="noreferrer"
+              className="group inline-flex h-10 items-center gap-2 rounded-full bg-white/[0.06] px-5 font-sans text-[14px] font-medium tracking-[-0.01em] text-foreground/90 ring-1 ring-inset ring-white/[0.14] backdrop-blur-md transition-all duration-200 ease-out hover:bg-white/[0.12] hover:text-foreground hover:ring-white/[0.24] active:scale-[0.98]"
+            >
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                className="h-4 w-4 shrink-0 text-foreground/85 transition-colors group-hover:text-foreground"
+              >
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" />
+              </svg>
+              <span>{t("projects.viewGithub")}</span>
+            </a>
+          )}
+        </div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-3 md:col-span-3 md:justify-end">
-        <button
-          type="button"
-          onClick={() => onOpenDetails(project, index)}
-          className="group inline-flex h-10 cursor-pointer items-center gap-2 rounded-full bg-foreground px-5 font-sans text-[14px] font-medium tracking-[-0.01em] text-background transition-all duration-200 ease-out hover:bg-foreground/90 active:scale-[0.98]"
-        >
-          <span>{t("projects.viewDetails")}</span>
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 16 16"
-            fill="none"
-            className="h-3.5 w-3.5 shrink-0 transition-transform duration-200 ease-out group-hover:translate-x-0.5"
-          >
-            <path
-              d="M6 3.5L10.5 8 6 12.5"
-              stroke="currentColor"
-              strokeWidth="1.75"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
+      <div className="space-y-6 md:col-span-8">
+        <p className="text-lg leading-relaxed text-foreground/90 md:text-xl">
+          {project.context}
+        </p>
 
-        <a
-          href={githubHref}
-          target="_blank"
-          rel="noreferrer"
-          className="group inline-flex h-10 items-center gap-2 rounded-full bg-white/[0.06] px-5 font-sans text-[14px] font-medium tracking-[-0.01em] text-foreground/90 ring-1 ring-inset ring-white/[0.14] backdrop-blur-md transition-all duration-200 ease-out hover:bg-white/[0.12] hover:text-foreground hover:ring-white/[0.24] active:scale-[0.98]"
-        >
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 16 16"
-            fill="currentColor"
-            className="h-4 w-4 shrink-0 text-foreground/85 transition-colors group-hover:text-foreground"
-          >
-            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" />
-          </svg>
-          <span>{t("projects.viewGithub")}</span>
-        </a>
+        {/* Informações estruturadas e simples na tela principal */}
+        <div className="grid gap-4 rounded-2xl border border-border/70 bg-card/30 p-5 sm:grid-cols-3">
+          <div>
+            <h4 className="mb-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-primary">
+              {t("projects.roleLabel")}
+            </h4>
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              {project.role}
+            </p>
+          </div>
+
+          <div>
+            <h4 className="mb-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-primary">
+              {t("projects.stackLabel")}
+            </h4>
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              {project.stackSummary}
+            </p>
+          </div>
+
+          <div>
+            <h4 className="mb-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-primary">
+              {t("projects.teamLabel")}
+            </h4>
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              {project.team}
+            </p>
+          </div>
+        </div>
+
+        {project.previewImage && (
+          <div className="overflow-hidden rounded-2xl border border-border/80 bg-card/40 shadow-[0_24px_60px_-20px_rgba(0,0,0,0.65)]">
+            <img
+              src={project.previewImage}
+              alt={`${project.title} — Gastei R$ 50 no Uber`}
+              loading="lazy"
+              className="w-full object-cover"
+            />
+          </div>
+        )}
       </div>
     </article>
   );
@@ -191,6 +263,27 @@ function ProjectDetailsSubpage({
             </ul>
           </div>
 
+          {project.startupIntro && (
+            <div className="rounded-xl border border-primary/30 bg-primary/[0.06] p-6 md:p-7">
+              <h4 className="mb-2.5 font-mono text-xs uppercase tracking-[0.2em] text-primary">
+                {t("projects.startupLabel")}
+              </h4>
+              <p className="text-base leading-relaxed text-foreground/90">
+                {project.startupIntro}
+              </p>
+            </div>
+          )}
+
+          {project.previewImage && (
+            <div className="overflow-hidden rounded-xl border border-border/80 bg-background/60">
+              <img
+                src={project.previewImage}
+                alt={`${project.title} — Gastei R$ 50 no Uber`}
+                className="w-full object-cover"
+              />
+            </div>
+          )}
+
           <div className="grid gap-8 border-t border-border/60 pt-8 md:grid-cols-2">
             <div className="rounded-xl border border-border/70 bg-background/40 p-6">
               <h4 className="mb-2.5 font-mono text-xs uppercase tracking-[0.2em] text-primary">
@@ -233,22 +326,28 @@ function ProjectDetailsSubpage({
           </div>
 
           <div className="flex flex-wrap items-center justify-between gap-4 border-t border-border/60 pt-6">
-            <a
-              href={githubHref}
-              target="_blank"
-              rel="noreferrer"
-              className="group inline-flex h-11 items-center gap-2.5 rounded-full bg-foreground px-6 font-sans text-[14px] font-medium tracking-[-0.01em] text-background transition-all duration-200 ease-out hover:bg-foreground/90 active:scale-[0.98]"
-            >
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 16 16"
-                fill="currentColor"
-                className="h-4 w-4 shrink-0"
+            {project.privateRepo ? (
+              <span className="inline-flex h-11 items-center gap-2 rounded-full bg-white/[0.04] px-5 font-sans text-[14px] font-medium tracking-[-0.01em] text-muted-foreground ring-1 ring-inset ring-white/[0.1]">
+                <span>{t("projects.privateRepo")}</span>
+              </span>
+            ) : (
+              <a
+                href={githubHref}
+                target="_blank"
+                rel="noreferrer"
+                className="group inline-flex h-11 items-center gap-2.5 rounded-full bg-foreground px-6 font-sans text-[14px] font-medium tracking-[-0.01em] text-background transition-all duration-200 ease-out hover:bg-foreground/90 active:scale-[0.98]"
               >
-                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" />
-              </svg>
-              <span>{t("projects.viewGithub")}</span>
-            </a>
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  className="h-4 w-4 shrink-0"
+                >
+                  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" />
+                </svg>
+                <span>{t("projects.viewGithub")}</span>
+              </a>
+            )}
 
             <button
               type="button"
